@@ -12,7 +12,8 @@ class Endereco {
             this.Municipio = endereco.Municipio,
             this.Cep = endereco.Cep,
             this.Enderecoprincipal = endereco.Enderecoprincipal,
-            this.Observacoes = endereco.Observacoes;
+            this.Observacoes = endereco.Observacoes,
+            this.TipoEndereco = endereco.TipoEndereco;
     }
 }
 exports.Endereco = Endereco;

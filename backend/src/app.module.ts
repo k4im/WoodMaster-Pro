@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './inbound/http-controllers/app.controller';
-import { AppService } from './inbound/http-services/app.service';
 import { CustomLogger } from './helpers/logger/logger.service';
 import { DatabaseService } from './outbound/database/database.service';
-import { RepositoryService } from './outbound/repository/repository.service';
+import { PessoaRepositoryService } from './outbound/repository/pessoa-repository/pessoa-repository.service';
 
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [AppService, CustomLogger, DatabaseService, RepositoryService],
+  controllers: [],
+  providers: [ CustomLogger, DatabaseService, PessoaRepositoryService],
 })
 export class AppModule {}

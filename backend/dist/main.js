@@ -7,7 +7,7 @@ async function bootstrap() {
     let logger = new logger_service_1.CustomLogger();
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     await app.listen(3000);
-    logger.log("Listening on port: 3000");
+    logger.error("Listening on port: 3000");
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

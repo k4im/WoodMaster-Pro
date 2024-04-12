@@ -1,59 +1,10 @@
-import { UUID, randomUUID } from "crypto";
-import { Email } from "./ValueObjects/email.value.object";
-import { Endereco } from "./ValueObjects/endereco.value.object";
-import { Telefone } from "./ValueObjects/telefone.value.object";
-
-
-export class Pessoa {
-    Uuid: string
-    Nome: string;
-    Matricula: string | null;
-    Codigo: number | null;
-    Datainclusao: Date;
-    Inativo: boolean;
-    Estrangeiro: boolean;
-    
-    Email: Email;
-    PessoaEndereco: Endereco[]
-
-    PessoaTelefone: Telefone[]
-
-    Cliente: boolean;
-    Colaborador: boolean;
-    Fornecedor: boolean;
-    Tipopj: boolean;
-    
-    Datanascimento: Date;
-    
-    Pai: string | null;
-    Mae: string | null;
-    Sexo: string| null; 
-    
-    Rg: string | null;
-    Emissor: string | null;
-    Ufemissor: string  | null; 
-    Datarg: Date | null;
-    Cpf: string;
-    Ctps: string | null;
-    Datactps: Date | null;
-    Nrpis: string | null;
-    Datapis: Date | null;
-    Regprofnumero: string | null;
-    Conselho: string | null;  
-    Ufconselho: string | null; 
-    Regprofserie: string | null;
-    
-    Profissao: string | null; 
-    Dependentes: number | null;
-    Razaosocial: string | null;
-    Cnpj: string | null;
-    Inscricaoestadual: string | null;
-    Inscricaomunicipal: string | null;
-    Objetosocial: string | null; 
-    Observacoes: string | null;
-  
-    constructor(pessoa: Pessoa) {
-        this.Uuid = randomUUID();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Pessoa = void 0;
+const crypto_1 = require("crypto");
+class Pessoa {
+    constructor(pessoa) {
+        this.Uuid = (0, crypto_1.randomUUID)();
         this.Nome = pessoa.Nome;
         this.Matricula = pessoa.Matricula || null;
         this.Codigo = pessoa.Codigo || null;
@@ -92,4 +43,7 @@ export class Pessoa {
         this.Inscricaomunicipal = pessoa.Inscricaomunicipal || null;
         this.Objetosocial = pessoa.Objetosocial || null;
         this.Observacoes = pessoa.Observacoes || null;
-    }  }
+    }
+}
+exports.Pessoa = Pessoa;
+//# sourceMappingURL=Pessoa.model.js.map

@@ -1,7 +1,8 @@
 import { Email } from "./ValueObjects/email.value.object";
 import { Endereco } from "./ValueObjects/endereco.value.object";
+import { Telefone } from "./ValueObjects/telefone.value.object";
 export declare class Pessoa {
-    Handle: number;
+    Uuid: string;
     Nome: string;
     Matricula: string | null;
     Codigo: number | null;
@@ -10,6 +11,7 @@ export declare class Pessoa {
     Estrangeiro: boolean;
     Email: Email;
     PessoaEndereco: Endereco[];
+    PessoaTelefone: Telefone[];
     Cliente: boolean;
     Colaborador: boolean;
     Fornecedor: boolean;

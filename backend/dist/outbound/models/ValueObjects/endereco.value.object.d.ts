@@ -9,5 +9,6 @@ export declare class Endereco {
     Cep: string;
     Enderecoprincipal: string;
     Observacoes: string;
+    TipoEndereco: string;
     constructor(endereco: Endereco);
 }
