@@ -13,10 +13,25 @@ export class PessoaRepositoryService {
      * Receberá um mapeamento de uma pessoa para que então seja criada uma nova pessoa no banco de dados
      * @param pessoa recebe uma pessoa que é uma mapeamento do schema presente no banco de dados.
      */
-    criarNovaPessoa(pessoa: Pessoa) {
+    async criarNovaPessoa(pessoa: Pessoa) {
         try {
-            this.databaseService.pessoa.create({data: pessoa});
-            this.logger.log("")
+            if (await this.databaseService.pessoa.create({data: pessoa})) {
+                this.logger.log("Criado usuario com sucesso!")
+                return true;
+            }
+        } catch (error) {
+            this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
+        }
+    }
+
+    async buscarPessoaPorId(id: string) {
+        try {
+            let pessoa: Pessoa = await this.databaseService.pessoa.findFirst({
+                where: {
+                    Uuid : id
+                }
+            })
+            return pessoa;
         } catch (error) {
             this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
         }
