@@ -21,9 +21,9 @@ model Pessoa {
   Uuid              String
   Handle            Int      @default(autoincrement()) @id
   Nome              String
-  Apelido           String
+  Apelido           String?
   Matricula         String
-  Codigo            Int 
+  Codigo            Int? 
   Datainclusao      DateTime
   Inativo           Boolean
   Estrangeiro       Boolean
@@ -37,32 +37,32 @@ model Pessoa {
   PessoaEndereco    PessoaEnderecos[] 
   PessoaTelefones   PessoaTelefones[]
 
-  Estadocivil       String    // Alterei para string pois a tabela ESTADOCIVIL não está definida
-  Pai               String
-  Mae               String
-  Sexo              String    // Alterei para string pois a tabela SEXO não está definida
-  Rg                String
-  Emissor           String
-  Ufemissor         String    // Alterei para string pois a tabela UFEMISSOR não está definida
-  Datarg            DateTime
-  Cpf               String
-  Ctps              String
-  Datactps          DateTime
-  Nrpis             String
-  Datapis           DateTime
-  Regprofnumero     String
-  Conselho          String    // Alterei para string pois a tabela CONSELHO não está definida
-  Ufconselho        String    // Alterei para string pois a tabela UFCONSELHO não está definida
-  Regprofserie      String
-  Profissao         String    // Alterei para string pois a tabela PROFISSAO não está definida
-  Dependentes       Int
-  Razaosocial       String
-  Cnpj              String
-  Inscricaoestadual String
-  Inscricaomunicipal String
-  Objetosocial      String    // Alterei para string, removendo espaço e caracteres especiais
-  Observacoes       String
-  
+  Estadocivil       String?    // Alterei para string pois a tabela ESTADOCIVIL não está definida
+  Pai               String?
+  Mae               String?
+  Sexo              String?    // Alterei para string pois a tabela SEXO não está definida
+  Rg                String?
+  Emissor           String?
+  Ufemissor         String?   // Alterei para string pois a tabela UFEMISSOR não está definida
+  Datarg            DateTime?
+  Cpf               String?
+  Ctps              String?
+  Datactps          DateTime?
+  Nrpis             String?
+  Datapis           DateTime?
+  Regprofnumero     String?
+  Conselho          String?    // Alterei para string pois a tabela CONSELHO não está definida
+  Ufconselho        String?    // Alterei para string pois a tabela UFCONSELHO não está definida
+  Regprofserie      String?
+  Profissao         String?    // Alterei para string pois a tabela PROFISSAO não está definida
+  Dependentes       Int?
+  Razaosocial       String?
+  Cnpj              String?
+  Inscricaoestadual String?
+  Inscricaomunicipal String?
+  Objetosocial      String?    // Alterei para string, removendo espaço e caracteres especiais
+  Observacoes       String?
+
   Usuario           Usuario?
 }
 // Begin region     ---- Pessoa
@@ -80,10 +80,9 @@ model PessoaEnderecos {
   Pais              String    // Alterei para string pois a tabela PAIS não está definida
   Estado            String    // Alterei para string pois a tabela ESTADO não está definida
   Municipio         String    // Alterei para string pois a tabela MUNICIPIO não está definida
-  Cep               String
+  Cep               String?
   Enderecoprincipal Boolean
-  Tipo              String    // Alterei para string pois a tabela TIPO não está definida
-  Observacoes       String
+  Observacoes       String?
   TiposEnderecos    TiposEnderecos[]
 
 }
