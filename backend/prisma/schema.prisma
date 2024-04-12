@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+// Begin Region     ---- Models
+
+// Begin region     ---- Pessoa
+model Pessoa {
+  Uuid              String
+  Handle            Int      @default(autoincrement()) @id
+  Nome              String
+  Apelido           String
+  Matricula         String
+  Codigo            Int 
+  Datainclusao      DateTime
+  Inativo           Boolean
+  Estrangeiro       Boolean
+  Email             String
+  Cliente           Boolean
+  Colaborador       Boolean
+  Fornecedor        Boolean
+  Tipopj            Boolean
+  Datanascimento    DateTime
+  
+  PessoaEndereco    PessoaEnderecos[] 
+  PessoaTelefones   PessoaTelefones[]
+
+  Estadocivil       String    // Alterei para string pois a tabela ESTADOCIVIL não está definida
+  Pai               String
+  Mae               String
+  Sexo              String    // Alterei para string pois a tabela SEXO não está definida
+  Rg                String
+  Emissor           String
+  Ufemissor         String    // Alterei para string pois a tabela UFEMISSOR não está definida
+  Datarg            DateTime
+  Cpf               String
+  Ctps              String
+  Datactps          DateTime
+  Nrpis             String
+  Datapis           DateTime
+  Regprofnumero     String
+  Conselho          String    // Alterei para string pois a tabela CONSELHO não está definida
+  Ufconselho        String    // Alterei para string pois a tabela UFCONSELHO não está definida
+  Regprofserie      String
+  Profissao         String    // Alterei para string pois a tabela PROFISSAO não está definida
+  Dependentes       Int
+  Razaosocial       String
+  Cnpj              String
+  Inscricaoestadual String
+  Inscricaomunicipal String
+  Objetosocial      String    // Alterei para string, removendo espaço e caracteres especiais
+  Observacoes       String
+  
+  Usuario           Usuario?
+}
+// Begin region     ---- Pessoa
+
+
+// Begin region     ---- Endereços
+model PessoaEnderecos {
+  Handle            Int      @default(autoincrement()) @id
+  Pessoa            Pessoa   @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)    // Alterei para string pois a tabela PESSOA não está definida
+  PessoaId          Int    // Alterei para string pois a tabela PESSOA não está definida
+  Logradouro        String
+  Complemento       String
+  Bairro            String
+  Caixapostal       String
+  Pais              String    // Alterei para string pois a tabela PAIS não está definida
+  Estado            String    // Alterei para string pois a tabela ESTADO não está definida
+  Municipio         String    // Alterei para string pois a tabela MUNICIPIO não está definida
+  Cep               String
+  Enderecoprincipal Boolean
+  Tipo              String    // Alterei para string pois a tabela TIPO não está definida
+  Observacoes       String
+  TiposEnderecos    TiposEnderecos[]
+
+}
+
+model TiposEnderecos {
+  Handle          Int @id
+  Descricao       String
+  PessoaEndereco  PessoaEnderecos @relation(fields: [PessoaEnderecoId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
+  PessoaEnderecoId  Int
+}
+// Emd region     ---- Endereço
+
+// Begin region     ---- Telefone
+model PessoaTelefones {
+  Handle             Int      @id
+  Pessoa             Pessoa @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
+  PessoaId           Int    
+  Telefone           String
+  Ddi                String
+  Ddd                String
+  Ramal              String
+  Telefonoprincipal  Boolean
+  TipoTelefone       TiposTelefone @relation(fields: [TipoTelefoneId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)    
+  TipoTelefoneId     Int    
+  Observacoes        String
+}
+
+model TiposTelefone {
+  Handle          Int @id
+  Descricao       String
+  PessoaTelefone  PessoaTelefones[]
+}
+// End region     ---- Telefone
+
+
+// Begin region     ---- Usuario
+// Begin region     ---- Usuario
+model Usuario {
+  Uuid      Int      
+  Handle    Int      @id
+  Pessoa    Pessoa  @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
+  PessoaId  Int @unique
+  Email     String @unique
+  Senha     String
+  Inativo   Boolean
+
+  @@index([Uuid, PessoaId, Email])
+}
+// End Region     ---- Models
