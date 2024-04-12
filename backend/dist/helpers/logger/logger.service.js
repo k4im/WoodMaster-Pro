@@ -20,7 +20,7 @@ let CustomLogger = class CustomLogger {
         console.log(`${logger_enum_1.LogLevel.LIGHT_GRAY}${new Date()} ${logger_enum_1.LogLevel.WARNING}WARN: ${logger_enum_1.LogLevel.RESET}${message}`);
     }
     debug(message, ...optionalParams) {
-        console.log(`${logger_enum_1.LogLevel.LIGHT_GRAY}${new Date()} ${logger_enum_1.LogLevel.DEBUG}INFO: ${logger_enum_1.LogLevel.RESET}${message}`);
+        console.log(`${logger_enum_1.LogLevel.LIGHT_GRAY}${new Date()} ${logger_enum_1.LogLevel.DEBUG}DEBUG: ${logger_enum_1.LogLevel.RESET}${message}`);
     }
     verbose(message, ...optionalParams) {
         throw new Error('Method not implemented.');
