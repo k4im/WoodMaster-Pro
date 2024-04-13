@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Pessoa } from '@prisma/client';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
+import { IReponse } from 'src/interfaces/IReponse';
 import { DatabaseService } from 'src/outbound/database/database.service';
 
 @Injectable()
@@ -8,7 +9,36 @@ export class PessoaRepositoryService {
 
     constructor(private readonly databaseService: DatabaseService,
         private readonly logger: CustomLogger) {}
+    
+    /**
+     * Realiza a operação de paginação no banco de dados na tabela de pessoa.
+     * @param pagina recebe a pagina que sera acessada
+     * @param limit recebe o limite de resultados por pagina.
+     * @returns Pessoa[]
+     */
+    async paginarPessoas(pagina: number, limit: number) { 
+        try {
+            let calculoPagina = (pagina - 1) * limit; 
+            
+            let resultado: Pessoa[] =await this.databaseService.pessoa.findMany({
+                skip: limit,
+                take: calculoPagina
+            })
 
+            let totalDeRegistos: number = await this.databaseService.pessoa.count();
+            let totalDePaginas: number = totalDeRegistos / limit;
+            
+            let resposta: IReponse = {
+                pagina_atual: calculoPagina,
+                total_itens: totalDeRegistos,
+                total_paginas: Math.max(totalDePaginas),
+                resultados: resultado
+            }
+            return resposta;
+        } catch (error) {
+            this.logger.error(`Não foi possivel realizar a paginação: [${error}]`);
+        }
+    }
     /**
      * Receberá um mapeamento de uma pessoa para que então seja criada uma nova pessoa no banco de dados
      * @param pessoa recebe uma pessoa que é uma mapeamento do schema presente no banco de dados.
@@ -39,7 +69,7 @@ export class PessoaRepositoryService {
             })
             return pessoa;
         } catch (error) {
-            this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
+            this.logger.error(`Não foi possivel encontrar a pessoa por UUID: [${error}]`);
         }
     }   
     /**
@@ -55,7 +85,7 @@ export class PessoaRepositoryService {
             })
             return result;
         } catch (error) {
-            this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
+            this.logger.error(`Não foi possivel atualizar pessoa: [${error}]`);
         }
     }
 
@@ -72,7 +102,7 @@ export class PessoaRepositoryService {
             })
             return true;
         } catch (error) {
-            this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
+            this.logger.error(`Não foi possivel deletar pessoa com base no UUID: [${error}]`);
         }  
     }
 }
