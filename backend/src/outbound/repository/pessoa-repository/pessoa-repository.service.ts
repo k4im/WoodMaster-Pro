@@ -24,17 +24,55 @@ export class PessoaRepositoryService {
         }
     }
 
-    async buscarPessoaPorId(id: string) {
+    /**
+     * Metodo será utilizado para efetuar a busca de uma pessoa que encontra-se no banco de dados
+     * com base no seu uuid.
+     * @param uuid recebe o UUID para que seja possivel estar buscando a pessoa com base no mesmo. 
+     * @returns pessoa | error
+     */
+    async buscarPessoaPorId(uuid: string) {
         try {
             let pessoa: Pessoa = await this.databaseService.pessoa.findFirst({
                 where: {
-                    Uuid : id
+                    Uuid : uuid
                 }
             })
             return pessoa;
         } catch (error) {
             this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
         }
+    }   
+    /**
+     * 
+     * @param pessoa Recebe uma pessoa que será um mapeamento identico da tabela no banco de dados.
+     * @returns 
+     */
+    async atualizarPessoa(pessoa: Pessoa, uuid: string) { 
+        try {
+            let result = await this.databaseService.pessoa.update({
+                where: {Uuid: uuid},
+                data: pessoa
+            })
+            return result;
+        } catch (error) {
+            this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
+        }
     }
 
+    /**
+     * O metodo sera utilizado para realizar a operação de CRUD de pessoa
+     * fazendo com que seja removido uma pessoa com base em seu uuid
+     * @param uuid recebe o uuid do cliente que será uma string.
+     * @returns true | error 
+     */
+    async deletarPessoa(uuid: string) {
+        try {
+            let result = await this.databaseService.pessoa.delete({
+                where: {Uuid: uuid}
+            })
+            return true;
+        } catch (error) {
+            this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
+        }  
+    }
 }
