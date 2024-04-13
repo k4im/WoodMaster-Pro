@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Pessoa } from '@prisma/client';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
-import { IReponse } from 'src/interfaces/IReponse';
+import { IResponse } from 'src/interfaces/IResponse';
 import { DatabaseService } from 'src/outbound/database/database.service';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class PessoaRepositoryService {
             let totalDeRegistos: number = await this.databaseService.pessoa.count();
             let totalDePaginas: number = totalDeRegistos / limit;
             
-            let resposta: IReponse = {
+            let resposta: IResponse = {
                 pagina_atual: calculoPagina,
                 total_itens: totalDeRegistos,
                 total_paginas: Math.max(totalDePaginas),

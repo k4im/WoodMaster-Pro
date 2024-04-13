@@ -2,8 +2,8 @@ export class Email {
 
     email: string
 
-    constructor(email: Email) { 
-        this.email = this.validacaoEmail(email.email);
+    constructor(email: string) { 
+        this.email = this.validacaoEmail(email);
     }
     
     /**

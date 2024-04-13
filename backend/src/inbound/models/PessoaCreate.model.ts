@@ -3,7 +3,55 @@ import { Email } from "./ValueObjects/email.value.object";
 import { Endereco } from "./ValueObjects/endereco.value.object";
 import { Telefone } from "./ValueObjects/telefone.value.object";
 
+interface IPessoa {
+    Uuid: string;
+    Nome: string;
+    Matricula: string | null;
+    Codigo: number | null;
+    Datainclusao: Date;
+    Inativo: boolean;
+    Estrangeiro: boolean;
+    
+    Email: Email;
+    PessoaEndereco: Endereco[]
 
+    PessoaTelefone: Telefone[]
+
+    Cliente: boolean;
+    Colaborador: boolean;
+    Fornecedor: boolean;
+    Tipopj: boolean;
+    
+    Datanascimento: Date;
+    
+    Pai: string | null;
+    Mae: string | null;
+    Sexo: string| null; 
+    
+    Rg: string | null;
+    Emissor: string | null;
+    Ufemissor: string  | null; 
+    Datarg: Date | null;
+    Cpf: string;
+    Ctps: string | null;
+    Datactps: Date | null;
+    Nrpis: string | null;
+    Datapis: Date | null;
+    Regprofnumero: string | null;
+    Conselho: string | null;  
+    Ufconselho: string | null; 
+    Regprofserie: string | null;
+    
+    Profissao: string | null; 
+    Dependentes: number | null;
+    Razaosocial: string | null;
+    Cnpj: string | null;
+    Inscricaoestadual: string | null;
+    Inscricaomunicipal: string | null;
+    Objetosocial: string | null; 
+    Observacoes: string | null;
+
+}
 export class Pessoa {
     Uuid: string = randomUUID();
     Nome: string;
@@ -130,5 +178,54 @@ export class Pessoa {
         this.Inscricaomunicipal = Inscricaomunicipal;
         this.Objetosocial = Objetosocial;
         this.Observacoes = Observacoes;
+    }
+    /**
+     * O metodo poderá ser utilizado para criação de testes desta entidade
+     * facilitando desta maneira a criação desta entidade sem a necessidade de
+     * fornecer todos os campos presentes na mesma.
+     * @returns Retorna uma pessoa com o padrão default.
+     */
+    default() { 
+        let pessoa: IPessoa = {
+            Uuid: randomUUID(),
+            Nome: "Jonas",
+            Email: new Email("jonas@email.com.br"),
+            PessoaEndereco: [new Endereco().default()],
+            PessoaTelefone: [new Telefone().default()],
+            Cliente: false,
+            Cnpj: null,
+            Codigo: null,
+            Colaborador: false,
+            Conselho: null,
+            Cpf: null,
+            Ctps: null,
+            Datactps: null,
+            Datainclusao: null,
+            Datanascimento: new Date(),
+            Datapis: null,
+            Datarg: null,
+            Dependentes: null,
+            Emissor: null,
+            Estrangeiro: null,
+            Fornecedor: true,
+            Inativo: false,
+            Inscricaoestadual: null,
+            Inscricaomunicipal: null,
+            Mae: null,
+            Matricula: null,
+            Nrpis: null,
+            Objetosocial: null,
+            Observacoes: null,
+            Pai: null,
+            Profissao: null,
+            Razaosocial: null,
+            Regprofnumero: null,
+            Regprofserie: null,
+            Rg: null,
+            Sexo: null,
+            Tipopj: null,
+            Ufconselho: null,
+            Ufemissor: null
+        }
     }
 }

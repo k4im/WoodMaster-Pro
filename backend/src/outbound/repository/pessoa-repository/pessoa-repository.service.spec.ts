@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PessoaRepositoryService } from './pessoa-repository.service';
-import { IReponse } from 'src/interfaces/IReponse';
+import { IResponse } from 'src/interfaces/IResponse';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { DatabaseService } from 'src/outbound/database/database.service';
 
@@ -28,7 +28,7 @@ describe('PessoaRepositoryService', () => {
 
   it('devera buscar clientes paginados', async () => {
     
-    const resultados: IReponse = {
+    const resultados: IResponse = {
       pagina_atual: 1,
       resultados: [],
       total_itens: 1,
@@ -41,7 +41,7 @@ describe('PessoaRepositoryService', () => {
   });
 
   it('devera criar nova pessoa', async() =>  {
-
+    
     jest.spyOn(service, 'criarNovaPessoa').mockImplementation(async () => true);
     
   })

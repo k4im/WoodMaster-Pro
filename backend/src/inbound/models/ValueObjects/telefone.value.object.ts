@@ -1,5 +1,12 @@
 import { CustomLogger } from "src/helpers/logger/logger.service"
 
+interface ITelefone { 
+    Telefone : string
+    Ddi : string       
+    Ddd : string      
+    Ramal: string 
+    Telefonoprincipal: boolean
+}
 export class Telefone { 
     
     Telefone : string
@@ -8,13 +15,19 @@ export class Telefone {
     Ramal: string 
     Telefonoprincipal: boolean
 
-    constructor(telefone: Telefone, private logger: CustomLogger) {
-        this.Telefone = this.validarTelefone(telefone.Telefone),
-        this.Ddi = this.validarDdi(telefone.Ddi),
-        this.Ddd = this.validarDDD(telefone.Ddd),
-        this.Ramal = telefone.Ramal,
-        this.Telefonoprincipal = telefone.Telefonoprincipal
-    }
+    constructor( 
+        private logger?: CustomLogger,
+        telefone?: string,
+        ddi? : string,       
+        ddd? : string,     
+        ramal?: string, 
+        telefonoprincipal?: boolean) {
+            this.Telefone = this.validarTelefone(telefone),
+            this.Ddi = this.validarDdi(ddi),
+            this.Ddd = this.validarDDD(ddd),
+            this.Ramal = ramal, 
+            this.Telefonoprincipal = telefonoprincipal
+        }
 
 
     /**
@@ -54,5 +67,11 @@ export class Telefone {
         throw new Error("O DDD informado é invalido.")
     }
 
+    default() {
+        let telefone: Telefone  = new Telefone(null, "555-555",
+        "555",
+        "55", "5555", true)
+        return telefone
+    }
 
 }
