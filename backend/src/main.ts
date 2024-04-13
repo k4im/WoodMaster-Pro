@@ -5,6 +5,6 @@ async function bootstrap() {
   let logger = new CustomLogger();
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
-  logger.error("Listening on port: 3000")
+  logger.log("Listening on port: 3000")
 }
 bootstrap();
