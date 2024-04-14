@@ -13,8 +13,8 @@ export class PessoasController {
   }
 
   @Get("list")
-  findAll() {
-    return this.pessoasService.findAll();
+  findAll(@Param("page") pagina: number, @Param("limit") limit: number) {
+    return this.pessoasService.findAll(pagina, limit);
   }
 
   @Get(':id')
