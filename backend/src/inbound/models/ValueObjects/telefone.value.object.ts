@@ -66,7 +66,11 @@ export class Telefone {
         this.logger.error("O DDD informado é invalido.")
         throw new Error("O DDD informado é invalido.")
     }
-
+    /**
+     * Este metodo poderá estar sendo utilizado para criação de um telefone
+     * com configurações padrão, podendo ser utilizado para criação de testes.
+     * @returns Retorna um Telefone.
+     */
     default() {
         let telefone: Telefone  = new Telefone(null, "555-555",
         "555",

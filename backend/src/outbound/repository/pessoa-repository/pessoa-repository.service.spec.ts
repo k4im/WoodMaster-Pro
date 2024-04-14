@@ -3,6 +3,8 @@ import { PessoaRepositoryService } from './pessoa-repository.service';
 import { IResponse } from 'src/interfaces/IResponse';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { DatabaseService } from 'src/outbound/database/database.service';
+import { Pessoa } from 'src/inbound/models/PessoaCreate.model';
+import { IPessoa } from 'src/interfaces/IPessoa';
 
 describe('PessoaRepositoryService', () => {
   let service: PessoaRepositoryService;
@@ -35,14 +37,15 @@ describe('PessoaRepositoryService', () => {
       total_paginas: 10
     }
     
-    jest.spyOn(service, 'paginarPessoas').mockImplementation(async () => resultados);
+    jest.spyOn(service, 'paginarResultados').mockImplementation(async () => resultados);
     
-    expect(await service.paginarPessoas(1, 10)).toBe(resultados);
+    expect(await service.paginarResultados(1, 10)).toBe(resultados);
   });
 
   it('devera criar nova pessoa', async() =>  {
-    
-    jest.spyOn(service, 'criarNovaPessoa').mockImplementation(async () => true);
+    let teste: IPessoa = new Pessoa().default();
+
+    jest.spyOn(service, 'criarNovoRegistro').mockImplementation(async () => true);
     
   })
 });

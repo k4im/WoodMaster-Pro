@@ -3,9 +3,10 @@ import { Pessoa } from '@prisma/client';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { IResponse } from 'src/interfaces/IResponse';
 import { DatabaseService } from 'src/outbound/database/database.service';
+import { Repository } from '../Repository';
 
 @Injectable()
-export class PessoaRepositoryService {
+export class PessoaRepositoryService implements Repository{
 
     constructor(private readonly databaseService: DatabaseService,
         private readonly logger: CustomLogger) {}
@@ -16,7 +17,7 @@ export class PessoaRepositoryService {
      * @param limit recebe o limite de resultados por pagina.
      * @returns Pessoa[]
      */
-    async paginarPessoas(pagina: number, limit: number) { 
+    async paginarResultados(pagina: number, limit: number) { 
         try {
             let calculoPagina = (pagina - 1) * limit; 
             
@@ -43,7 +44,7 @@ export class PessoaRepositoryService {
      * Receberá um mapeamento de uma pessoa para que então seja criada uma nova pessoa no banco de dados
      * @param pessoa recebe uma pessoa que é uma mapeamento do schema presente no banco de dados.
      */
-    async criarNovaPessoa(pessoa: Pessoa) {
+    async criarNovoRegistro(pessoa: Pessoa) {
         try {
             if (await this.databaseService.pessoa.create({data: pessoa})) {
                 this.logger.log("Criado usuario com sucesso!")
@@ -60,7 +61,7 @@ export class PessoaRepositoryService {
      * @param uuid recebe o UUID para que seja possivel estar buscando a pessoa com base no mesmo. 
      * @returns pessoa | error
      */
-    async buscarPessoaPorId(uuid: string) {
+    async buscarPorUUID(uuid: string) {
         try {
             let pessoa: Pessoa = await this.databaseService.pessoa.findFirst({
                 where: {
@@ -77,7 +78,7 @@ export class PessoaRepositoryService {
      * @param pessoa Recebe uma pessoa que será um mapeamento identico da tabela no banco de dados.
      * @returns 
      */
-    async atualizarPessoa(pessoa: Pessoa, uuid: string) { 
+    async atualizarRegistro(pessoa: Pessoa, uuid: string) { 
         try {
             let result = await this.databaseService.pessoa.update({
                 where: {Uuid: uuid},
@@ -95,7 +96,7 @@ export class PessoaRepositoryService {
      * @param uuid recebe o uuid do cliente que será uma string.
      * @returns true | error 
      */
-    async deletarPessoa(uuid: string) {
+    async deletarRegistro(uuid: string) {
         try {
             let result = await this.databaseService.pessoa.delete({
                 where: {Uuid: uuid}

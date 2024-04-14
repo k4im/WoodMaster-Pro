@@ -36,7 +36,11 @@ export class Endereco {
         this.Observacoes = observacoes,
         this.TipoEndereco = tipoEndereco
     }
-
+    /**
+     * Retorna um novo endereço com as configurações padrões.
+     * Este metodo poderá ser utilizado para facilitação de criação de testes.
+     * @returns Endereco
+     */
     default() {
         let endereco: Endereco = new Endereco(
             "Caixa",
