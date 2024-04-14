@@ -1,6 +1,6 @@
-import { Email } from "src/inbound/models/ValueObjects/email.value.object";
-import { Endereco } from "src/inbound/models/ValueObjects/endereco.value.object";
-import { Telefone } from "src/inbound/models/ValueObjects/telefone.value.object";
+import { Email } from "src/inbound/http-controllers/pessoas/entities/ValueObjects/email.value.object";
+import { Endereco } from "src/inbound/http-controllers/pessoas/entities/ValueObjects/endereco.value.object";
+import { Telefone } from "src/inbound/http-controllers/pessoas/entities/ValueObjects/telefone.value.object";
 
 export interface IPessoa {
     Uuid: string;

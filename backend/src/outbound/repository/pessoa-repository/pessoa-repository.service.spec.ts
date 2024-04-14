@@ -3,8 +3,8 @@ import { PessoaRepositoryService } from './pessoa-repository.service';
 import { IResponse } from 'src/interfaces/IResponse';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { DatabaseService } from 'src/outbound/database/database.service';
-import { Pessoa } from 'src/inbound/models/PessoaCreate.model';
 import { IPessoa } from 'src/interfaces/IPessoa';
+import { Pessoa } from 'src/inbound/http-controllers/pessoas/entities/pessoa.entity';
 
 describe('PessoaRepositoryService', () => {
   let service: PessoaRepositoryService;
