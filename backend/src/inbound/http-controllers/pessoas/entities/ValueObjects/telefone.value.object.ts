@@ -16,7 +16,6 @@ export class Telefone {
     Telefonoprincipal: boolean
 
     constructor( 
-        private logger?: CustomLogger,
         telefone?: string,
         ddi? : string,       
         ddd? : string,     
@@ -36,9 +35,9 @@ export class Telefone {
      * @returns telefone valido | error.
      */
     validarTelefone(telefone: string) {
-        const regexTelefoneBrasileiro = /^\(?\d{2}\)?[-.\s]?\d{4,5}[-.\s]?\d{4}$/;
-        if(regexTelefoneBrasileiro.test(telefone)) return telefone
-        this.logger.error("O Telefone informado é invalido.")
+        // const regexTelefoneBrasileiro = /^\(?\d{2}\)?[-.\s]?\d{4,5}[-.\s]?\d{4}$/;
+        // if(regexTelefoneBrasileiro.test(telefone)) 
+        return telefone
         throw new Error("O telefone não é valido.")
     }
 
@@ -48,9 +47,9 @@ export class Telefone {
      * @returns DDI | error
      */
     validarDdi(ddi: string) {
-        const regexDDIBrasileiro = /^(?:\+|00)?(?:55)\d{2}$/;
-        if(regexDDIBrasileiro.test(ddi)) return ddi
-        this.logger.error("O DDI informado é invalido.")
+        // const regexDDIBrasileiro = /^(?:\+|00)?(?:55)\d{2}$/;
+        // if(regexDDIBrasileiro.test(ddi)) 
+        return ddi
         throw new Error("O DDI informado é invalido.")
         
     }
@@ -61,9 +60,9 @@ export class Telefone {
      * @returns DDD | error
      */
     validarDDD(ddd: string) {
-        const regexDDD = /^[1-9]{2}$/;
-        if(regexDDD.test(ddd)) return ddd
-        this.logger.error("O DDD informado é invalido.")
+        // const regexDDD = /^[1-9]{2}$/;
+        // if(regexDDD.test(ddd)) 
+        return ddd
         throw new Error("O DDD informado é invalido.")
     }
     /**
@@ -72,7 +71,7 @@ export class Telefone {
      * @returns Retorna um Telefone.
      */
     default() {
-        let telefone: Telefone  = new Telefone(null, "555-555",
+        let telefone: Telefone  = new Telefone("49 9954 4194",
         "555",
         "55", "5555", true)
         return telefone

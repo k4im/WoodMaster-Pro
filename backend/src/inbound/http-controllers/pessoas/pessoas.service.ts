@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { Repository } from 'src/outbound/repository/Repository';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
+import { CriarPessoaDto } from './dto/criar-pessoa.dto';
+import { Pessoa } from './entities/pessoa.entity';
 
 @Injectable()
 export class PessoasService {
@@ -11,7 +12,9 @@ export class PessoasService {
     private readonly Repository: Repository,
     private readonly Logger: CustomLogger) {}
   
-  create(createPessoaDto: CreatePessoaDto) {
+  create(createPessoaDto: CriarPessoaDto) {
+    let pessoaEntity = new Pessoa().criarPessoaPorDto(createPessoaDto);
+    
     this.Logger.log("Processando requisição no serviço de pessoas: [Metodo] - [create]");
     return 'This action adds a new pessoa';
   }

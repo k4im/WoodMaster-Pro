@@ -3,6 +3,7 @@ import { Email } from "./ValueObjects/email.value.object";
 import { Endereco } from "./ValueObjects/endereco.value.object";
 import { Telefone } from "./ValueObjects/telefone.value.object";
 import { IPessoa } from "src/interfaces/IPessoa";
+import { CriarPessoaDto } from "../dto/criar-pessoa.dto";
 
 
 export class Pessoa implements IPessoa {
@@ -181,5 +182,23 @@ export class Pessoa implements IPessoa {
             Ufemissor: null
         }
         return pessoa;
+    }
+
+    criarPessoaPorDto(data: CriarPessoaDto) {
+        return new Pessoa(
+            data.Nome, 
+            null, 
+            data.Codigo, 
+            new Date(),
+            data.Inativo,
+            null,
+            data.Email,
+            data.PessoaEndereco,
+            data.PessoaTelefone,
+            data.Cliente,
+            data.Colaborador,
+            data.Fornecedor,
+        );
+
     }
 }
