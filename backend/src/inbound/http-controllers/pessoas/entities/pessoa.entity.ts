@@ -6,7 +6,7 @@ import { CriarPessoaDto } from "../dto/criar-pessoa.dto";
 import { IPessoa } from "src/interfaces/IPessoa.interface";
 
 
-export class Pessoa implements IPessoa {
+export class PessoaEntity {
     Uuid: string = randomUUID();
     Nome: string;
     Matricula: string | null;
@@ -18,7 +18,7 @@ export class Pessoa implements IPessoa {
     Email: Email;
     PessoaEndereco: Endereco[]
 
-    PessoaTelefone: Telefone[]
+    PessoaTelefones: Telefone[]
 
     Cliente: boolean;
     Colaborador: boolean;
@@ -102,7 +102,7 @@ export class Pessoa implements IPessoa {
         this.Estrangeiro = Estrangeiro;
         this.Email = Email;
         this.PessoaEndereco = PessoaEndereco;
-        this.PessoaTelefone = PessoaTelefone;
+        this.PessoaTelefones = PessoaTelefone;
         this.Cliente = Cliente;
         this.Colaborador = Colaborador;
         this.Fornecedor = Fornecedor;
@@ -145,7 +145,7 @@ export class Pessoa implements IPessoa {
             Nome: "Jonas",
             Email: new Email("jonas@email.com.br"),
             PessoaEndereco: [new Endereco().default()],
-            PessoaTelefone: [new Telefone().default()],
+            PessoaTelefones: [new Telefone().default()],
             Cliente: false,
             Cnpj: null,
             Codigo: null,
@@ -185,7 +185,7 @@ export class Pessoa implements IPessoa {
     }
 
     criarPessoaPorDto(data: CriarPessoaDto) {
-        return new Pessoa(
+        return new PessoaEntity(
             data.Nome, 
             null, 
             data.Codigo, 

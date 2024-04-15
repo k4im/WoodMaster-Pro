@@ -20,19 +20,19 @@ datasource db {
 model Pessoa {
   Uuid              String   @unique()
   Handle            Int     @default(autoincrement()) @id
-  Nome              String
+  Nome              String?
   Apelido           String?
-  Matricula         String
+  Matricula         String?
   Codigo            Int? 
-  Datainclusao      DateTime
-  Inativo           Boolean
-  Estrangeiro       Boolean
-  Email             String
-  Cliente           Boolean
-  Colaborador       Boolean
-  Fornecedor        Boolean
-  Tipopj            Boolean
-  Datanascimento    DateTime
+  Datainclusao      DateTime? @default(now())
+  Inativo           Boolean?  @default(false)
+  Estrangeiro       Boolean? @default(false)
+  Email             String? 
+  Cliente           Boolean?
+  Colaborador       Boolean?
+  Fornecedor        Boolean?
+  Tipopj            Boolean?
+  Datanascimento    DateTime?
   
   PessoaEndereco    PessoaEnderecos[] 
   PessoaTelefones   PessoaTelefones[]
@@ -73,13 +73,13 @@ model PessoaEnderecos {
   Handle            Int      @default(autoincrement()) @id
   Pessoa            Pessoa   @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)    // Alterei para string pois a tabela PESSOA não está definida
   PessoaId          Int    // Alterei para string pois a tabela PESSOA não está definida
-  Logradouro        String
-  Complemento       String
-  Bairro            String
-  Caixapostal       String
-  Pais              String    // Alterei para string pois a tabela PAIS não está definida
-  Estado            String    // Alterei para string pois a tabela ESTADO não está definida
-  Municipio         String    // Alterei para string pois a tabela MUNICIPIO não está definida
+  Logradouro        String?
+  Complemento       String?
+  Bairro            String?
+  Caixapostal       String?
+  Pais              String?    // Alterei para string pois a tabela PAIS não está definida
+  Estado            String?    // Alterei para string pois a tabela ESTADO não está definida
+  Municipio         String?    // Alterei para string pois a tabela MUNICIPIO não está definida
   Cep               String?
   Enderecoprincipal Boolean
   Observacoes       String?
@@ -88,8 +88,8 @@ model PessoaEnderecos {
 }
 
 model TiposEnderecos {
-  Handle          Int @id
-  Descricao       String
+  Handle          Int @default(autoincrement()) @id
+  Descricao       String?
   PessoaEndereco  PessoaEnderecos @relation(fields: [PessoaEnderecoId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
   PessoaEnderecoId  Int
 }
@@ -97,22 +97,22 @@ model TiposEnderecos {
 
 // Begin region     ---- Telefone
 model PessoaTelefones {
-  Handle             Int      @id
+  Handle             Int    @default(autoincrement())  @id
   Pessoa             Pessoa @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
   PessoaId           Int    
-  Telefone           String
-  Ddi                String
-  Ddd                String
-  Ramal              String
-  Telefonoprincipal  Boolean
+  Telefone           String?
+  Ddi                String?
+  Ddd                String?
+  Ramal              String?
+  Telefonoprincipal  Boolean?
   TipoTelefone       TiposTelefone @relation(fields: [TipoTelefoneId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)    
   TipoTelefoneId     Int    
-  Observacoes        String
+  Observacoes        String?
 }
 
 model TiposTelefone {
-  Handle          Int @id
-  Descricao       String
+  Handle          Int @default(autoincrement()) @id
+  Descricao       String?
   PessoaTelefone  PessoaTelefones[]
 }
 // End region     ---- Telefone
@@ -122,12 +122,12 @@ model TiposTelefone {
 // Begin region     ---- Usuario
 model Usuario {
   Uuid      Int      
-  Handle    Int      @id
+  Handle    Int      @default(autoincrement()) @id
   Pessoa    Pessoa  @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
   PessoaId  Int @unique
-  Email     String @unique
-  Senha     String
-  Inativo   Boolean
+  Email     String? @unique
+  Senha     String?
+  Inativo   Boolean?
 
   @@index([Uuid, PessoaId, Email])
 }

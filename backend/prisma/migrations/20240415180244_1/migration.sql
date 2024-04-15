@@ -2,19 +2,19 @@
 CREATE TABLE `Pessoa` (
     `Uuid` VARCHAR(191) NOT NULL,
     `Handle` INTEGER NOT NULL AUTO_INCREMENT,
-    `Nome` VARCHAR(191) NOT NULL,
+    `Nome` VARCHAR(191) NULL,
     `Apelido` VARCHAR(191) NULL,
     `Matricula` VARCHAR(191) NOT NULL,
     `Codigo` INTEGER NULL,
-    `Datainclusao` DATETIME(3) NOT NULL,
-    `Inativo` BOOLEAN NOT NULL,
-    `Estrangeiro` BOOLEAN NOT NULL,
+    `Datainclusao` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `Inativo` BOOLEAN NOT NULL DEFAULT false,
+    `Estrangeiro` BOOLEAN NOT NULL DEFAULT false,
     `Email` VARCHAR(191) NOT NULL,
-    `Cliente` BOOLEAN NOT NULL,
-    `Colaborador` BOOLEAN NOT NULL,
-    `Fornecedor` BOOLEAN NOT NULL,
-    `Tipopj` BOOLEAN NOT NULL,
-    `Datanascimento` DATETIME(3) NOT NULL,
+    `Cliente` BOOLEAN NULL,
+    `Colaborador` BOOLEAN NULL,
+    `Fornecedor` BOOLEAN NULL,
+    `Tipopj` BOOLEAN NULL,
+    `Datanascimento` DATETIME(3) NULL,
     `Estadocivil` VARCHAR(191) NULL,
     `Pai` VARCHAR(191) NULL,
     `Mae` VARCHAR(191) NULL,
@@ -41,6 +41,7 @@ CREATE TABLE `Pessoa` (
     `Objetosocial` VARCHAR(191) NULL,
     `Observacoes` VARCHAR(191) NULL,
 
+    UNIQUE INDEX `Pessoa_Uuid_key`(`Uuid`),
     PRIMARY KEY (`Handle`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -48,13 +49,13 @@ CREATE TABLE `Pessoa` (
 CREATE TABLE `PessoaEnderecos` (
     `Handle` INTEGER NOT NULL AUTO_INCREMENT,
     `PessoaId` INTEGER NOT NULL,
-    `Logradouro` VARCHAR(191) NOT NULL,
-    `Complemento` VARCHAR(191) NOT NULL,
-    `Bairro` VARCHAR(191) NOT NULL,
-    `Caixapostal` VARCHAR(191) NOT NULL,
-    `Pais` VARCHAR(191) NOT NULL,
-    `Estado` VARCHAR(191) NOT NULL,
-    `Municipio` VARCHAR(191) NOT NULL,
+    `Logradouro` VARCHAR(191) NULL,
+    `Complemento` VARCHAR(191) NULL,
+    `Bairro` VARCHAR(191) NULL,
+    `Caixapostal` VARCHAR(191) NULL,
+    `Pais` VARCHAR(191) NULL,
+    `Estado` VARCHAR(191) NULL,
+    `Municipio` VARCHAR(191) NULL,
     `Cep` VARCHAR(191) NULL,
     `Enderecoprincipal` BOOLEAN NOT NULL,
     `Observacoes` VARCHAR(191) NULL,
@@ -65,7 +66,7 @@ CREATE TABLE `PessoaEnderecos` (
 -- CreateTable
 CREATE TABLE `TiposEnderecos` (
     `Handle` INTEGER NOT NULL,
-    `Descricao` VARCHAR(191) NOT NULL,
+    `Descricao` VARCHAR(191) NULL,
     `PessoaEnderecoId` INTEGER NOT NULL,
 
     PRIMARY KEY (`Handle`)
@@ -75,13 +76,13 @@ CREATE TABLE `TiposEnderecos` (
 CREATE TABLE `PessoaTelefones` (
     `Handle` INTEGER NOT NULL,
     `PessoaId` INTEGER NOT NULL,
-    `Telefone` VARCHAR(191) NOT NULL,
-    `Ddi` VARCHAR(191) NOT NULL,
-    `Ddd` VARCHAR(191) NOT NULL,
-    `Ramal` VARCHAR(191) NOT NULL,
-    `Telefonoprincipal` BOOLEAN NOT NULL,
+    `Telefone` VARCHAR(191) NULL,
+    `Ddi` VARCHAR(191) NULL,
+    `Ddd` VARCHAR(191) NULL,
+    `Ramal` VARCHAR(191) NULL,
+    `Telefonoprincipal` BOOLEAN NULL,
     `TipoTelefoneId` INTEGER NOT NULL,
-    `Observacoes` VARCHAR(191) NOT NULL,
+    `Observacoes` VARCHAR(191) NULL,
 
     PRIMARY KEY (`Handle`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -89,7 +90,7 @@ CREATE TABLE `PessoaTelefones` (
 -- CreateTable
 CREATE TABLE `TiposTelefone` (
     `Handle` INTEGER NOT NULL,
-    `Descricao` VARCHAR(191) NOT NULL,
+    `Descricao` VARCHAR(191) NULL,
 
     PRIMARY KEY (`Handle`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -99,9 +100,9 @@ CREATE TABLE `Usuario` (
     `Uuid` INTEGER NOT NULL,
     `Handle` INTEGER NOT NULL,
     `PessoaId` INTEGER NOT NULL,
-    `Email` VARCHAR(191) NOT NULL,
-    `Senha` VARCHAR(191) NOT NULL,
-    `Inativo` BOOLEAN NOT NULL,
+    `Email` VARCHAR(191) NULL,
+    `Senha` VARCHAR(191) NULL,
+    `Inativo` BOOLEAN NULL,
 
     UNIQUE INDEX `Usuario_PessoaId_key`(`PessoaId`),
     UNIQUE INDEX `Usuario_Email_key`(`Email`),

@@ -14,7 +14,7 @@ export interface IPessoa {
     Email: Email;
     PessoaEndereco: Endereco[]
 
-    PessoaTelefone: Telefone[]
+    PessoaTelefones: Telefone[]
 
     Cliente: boolean;
     Colaborador: boolean;

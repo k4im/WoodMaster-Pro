@@ -1,4 +1,4 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { Pessoa } from '../entities/pessoa.entity';
+import { PessoaEntity } from '../entities/pessoa.entity';
 
-export class UpdatePessoaDto extends PartialType(Pessoa) {}
+export class UpdatePessoaDto extends PartialType(PessoaEntity) {}

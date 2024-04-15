@@ -9,7 +9,9 @@ export class Endereco {
     Cep: string 
     Enderecoprincipal: boolean 
     Observacoes: string
-    TipoEndereco: string
+    TiposEnderecos: {
+        Descricao: string
+    }
 
     
     constructor(   
@@ -23,7 +25,7 @@ export class Endereco {
         cep?: string, 
         enderecoprincipal?: boolean, 
         observacoes?: string,
-        tipoEndereco?: string) {
+        tipoEndereco?: {Descricao: string}) {
         this.Logradouro = logradouro,
         this.Complemento = complemento,
         this.Bairro = bairro,
@@ -34,7 +36,7 @@ export class Endereco {
         this.Cep = cep,
         this.Enderecoprincipal = enderecoprincipal,
         this.Observacoes = observacoes,
-        this.TipoEndereco = tipoEndereco
+        this.TiposEnderecos = tipoEndereco
     }
     /**
      * Retorna um novo endereço com as configurações padrões.
@@ -53,7 +55,7 @@ export class Endereco {
             "88525820",
             true,
             "Teste",
-            "Casa"
+            {Descricao: "Casa"}
         );
         return endereco;
     }

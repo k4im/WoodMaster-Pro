@@ -4,6 +4,8 @@ import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { DatabaseService } from 'src/outbound/database/database.service';
 import { Repository } from '../Repository';
 import { IResponse } from 'src/interfaces/IResponse.interface';
+import { randomUUID } from 'crypto';
+import { PessoaEntity } from 'src/inbound/http-controllers/pessoas/entities/pessoa.entity';
 
 @Injectable()
 export class PessoaRepositoryService implements Repository{
@@ -44,12 +46,39 @@ export class PessoaRepositoryService implements Repository{
      * Receberá um mapeamento de uma pessoa para que então seja criada uma nova pessoa no banco de dados
      * @param pessoa recebe uma pessoa que é uma mapeamento do schema presente no banco de dados.
      */
-    async criarNovoRegistro(pessoa: Pessoa) {
+    async criarNovoRegistro() {
         try {
-            if (await this.databaseService.pessoa.create({data: pessoa})) {
-                this.logger.log("Criado usuario com sucesso!")
-                return true;
-            }
+            let teste = new PessoaEntity().default();
+            let result = await this.databaseService.pessoa.create({
+                data: {
+                    ...teste,
+                    Email: teste.Email.email,
+                    PessoaEndereco: {create: {
+                        Enderecoprincipal: true,
+                        Bairro: "Penha",
+                        Caixapostal: "88",
+                        Cep: "88",
+                        Complemento: "Casa",
+                        Estado: "SC",
+                        Logradouro: "asd",
+                        Municipio: "asdasd",
+                        Observacoes: "asdasd",
+                        Pais: "NR",
+                    }},
+                    Apelido: null,
+                    Estadocivil: null,
+                    PessoaTelefones: {create: [{
+                        Ddd: "",
+                        Ddi: "",
+                        Telefonoprincipal: true,
+                        Observacoes: "",
+                        Ramal: "",
+                        Telefone: "",
+                        TipoTelefoneId: 1,
+                    }]},                }
+            })
+            this.logger.log("Criado usuario com sucesso!")
+            return true;
         } catch (error) {
             this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
         }
