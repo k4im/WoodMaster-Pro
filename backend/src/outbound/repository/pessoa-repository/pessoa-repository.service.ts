@@ -51,6 +51,7 @@ export class PessoaRepositoryService implements Repository{
             let teste = new PessoaEntity().default();
             let result = await this.databaseService.pessoa.create({
                 data: {
+                    Uuid: randomUUID(),
                     ...teste,
                     Email: teste.Email.email,
                     PessoaEndereco: {create: {
@@ -65,8 +66,6 @@ export class PessoaRepositoryService implements Repository{
                         Observacoes: "asdasd",
                         Pais: "NR",
                     }},
-                    Apelido: null,
-                    Estadocivil: null,
                     PessoaTelefones: {create: [{
                         Ddd: "",
                         Ddi: "",
@@ -74,8 +73,9 @@ export class PessoaRepositoryService implements Repository{
                         Observacoes: "",
                         Ramal: "",
                         Telefone: "",
-                        TipoTelefoneId: 1,
-                    }]},                }
+                        TipoTelefoneId: 1
+                    }]}                
+                }
             })
             this.logger.log("Criado usuario com sucesso!")
             return true;

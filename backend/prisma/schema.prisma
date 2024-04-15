@@ -19,7 +19,7 @@ datasource db {
 // Begin region     ---- Pessoa
 model Pessoa {
   Uuid              String   @unique()
-  Handle            Int     @default(autoincrement()) @id
+  Id            Int     @default(autoincrement()) @id
   Nome              String?
   Apelido           String?
   Matricula         String?
@@ -34,7 +34,7 @@ model Pessoa {
   Tipopj            Boolean?
   Datanascimento    DateTime?
   
-  PessoaEndereco    PessoaEnderecos[] 
+  PessoaEndereco    PessoaEnderecos[]
   PessoaTelefones   PessoaTelefones[]
 
   Estadocivil       String?    // Alterei para string pois a tabela ESTADOCIVIL não está definida
@@ -70,8 +70,8 @@ model Pessoa {
 
 // Begin region     ---- Endereços
 model PessoaEnderecos {
-  Handle            Int      @default(autoincrement()) @id
-  Pessoa            Pessoa   @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)    // Alterei para string pois a tabela PESSOA não está definida
+  Id            Int      @default(autoincrement()) @id
+  Pessoa            Pessoa   @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)    // Alterei para string pois a tabela PESSOA não está definida
   PessoaId          Int    // Alterei para string pois a tabela PESSOA não está definida
   Logradouro        String?
   Complemento       String?
@@ -88,46 +88,45 @@ model PessoaEnderecos {
 }
 
 model TiposEnderecos {
-  Handle          Int @default(autoincrement()) @id
-  Descricao       String?
-  PessoaEndereco  PessoaEnderecos @relation(fields: [PessoaEnderecoId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
+  Id            Int @default(autoincrement()) @id
+  Descricao         String?
+  PessoaEndereco    PessoaEnderecos @relation(fields: [PessoaEnderecoId], references: [Id], onDelete: Cascade, onUpdate: Cascade)
   PessoaEnderecoId  Int
 }
 // Emd region     ---- Endereço
 
 // Begin region     ---- Telefone
 model PessoaTelefones {
-  Handle             Int    @default(autoincrement())  @id
-  Pessoa             Pessoa @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
+  Id             Int    @default(autoincrement())  @id
+  Pessoa             Pessoa @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)
   PessoaId           Int    
   Telefone           String?
   Ddi                String?
   Ddd                String?
   Ramal              String?
   Telefonoprincipal  Boolean?
-  TipoTelefone       TiposTelefone @relation(fields: [TipoTelefoneId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)    
+  TipoTelefone       TiposTelefone @relation(fields: [TipoTelefoneId], references: [Id], onDelete: Cascade, onUpdate: Cascade)    
   TipoTelefoneId     Int    
   Observacoes        String?
 }
 
 model TiposTelefone {
-  Handle          Int @default(autoincrement()) @id
-  Descricao       String?
-  PessoaTelefone  PessoaTelefones[]
+  Id            Int @default(autoincrement()) @id
+  Descricao         String?
+  PessoaTelefone    PessoaTelefones[]
 }
 // End region     ---- Telefone
 
 
 // Begin region     ---- Usuario
-// Begin region     ---- Usuario
 model Usuario {
-  Uuid      Int      
-  Handle    Int      @default(autoincrement()) @id
-  Pessoa    Pessoa  @relation(fields: [PessoaId], references: [Handle], onDelete: Cascade, onUpdate: Cascade)
-  PessoaId  Int @unique
-  Email     String? @unique
-  Senha     String?
-  Inativo   Boolean?
+  Uuid            String      @unique()    
+  Id              Int      @default(autoincrement()) @id
+  Pessoa          Pessoa  @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)
+  PessoaId        Int @unique
+  Email           String? @unique
+  Senha           String?
+  Inativo         Boolean?
 
   @@index([Uuid, PessoaId, Email])
 }
