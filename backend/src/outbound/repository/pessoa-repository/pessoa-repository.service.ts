@@ -54,18 +54,9 @@ export class PessoaRepositoryService implements Repository{
                     Uuid: randomUUID(),
                     ...teste,
                     Email: teste.Email.email,
-                    PessoaEndereco: {create: {
-                        Enderecoprincipal: true,
-                        Bairro: "Penha",
-                        Caixapostal: "88",
-                        Cep: "88",
-                        Complemento: "Casa",
-                        Estado: "SC",
-                        Logradouro: "asd",
-                        Municipio: "asdasd",
-                        Observacoes: "asdasd",
-                        Pais: "NR",
-                    }},
+                    PessoaEndereco: {create: [
+                        ...teste.PessoaEndereco
+                    ]},
                     PessoaTelefones: {create: [{
                         Ddd: "",
                         Ddi: "",

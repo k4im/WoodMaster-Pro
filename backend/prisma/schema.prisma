@@ -19,7 +19,7 @@ datasource db {
 // Begin region     ---- Pessoa
 model Pessoa {
   Uuid              String   @unique()
-  Id            Int     @default(autoincrement()) @id
+  Id                Int     @default(autoincrement()) @id
   Nome              String?
   Apelido           String?
   Matricula         String?
