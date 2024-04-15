@@ -2,8 +2,8 @@ import { UUID, randomUUID } from "crypto";
 import { Email } from "./ValueObjects/email.value.object";
 import { Endereco } from "./ValueObjects/endereco.value.object";
 import { Telefone } from "./ValueObjects/telefone.value.object";
-import { IPessoa } from "src/interfaces/IPessoa";
 import { CriarPessoaDto } from "../dto/criar-pessoa.dto";
+import { IPessoa } from "src/interfaces/IPessoa.interface";
 
 
 export class Pessoa implements IPessoa {

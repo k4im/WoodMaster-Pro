@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Pessoa } from '@prisma/client';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
-import { IResponse } from 'src/interfaces/IResponse';
 import { DatabaseService } from 'src/outbound/database/database.service';
 import { Repository } from '../Repository';
+import { IResponse } from 'src/interfaces/IResponse.interface';
 
 @Injectable()
 export class PessoaRepositoryService implements Repository{
