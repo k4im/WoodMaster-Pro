@@ -1,15 +1,15 @@
 -- CreateTable
 CREATE TABLE `Pessoa` (
     `Uuid` VARCHAR(191) NOT NULL,
-    `Handle` INTEGER NOT NULL AUTO_INCREMENT,
+    `Id` INTEGER NOT NULL AUTO_INCREMENT,
     `Nome` VARCHAR(191) NULL,
     `Apelido` VARCHAR(191) NULL,
-    `Matricula` VARCHAR(191) NOT NULL,
+    `Matricula` VARCHAR(191) NULL,
     `Codigo` INTEGER NULL,
     `Datainclusao` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `Inativo` BOOLEAN NOT NULL DEFAULT false,
-    `Estrangeiro` BOOLEAN NOT NULL DEFAULT false,
-    `Email` VARCHAR(191) NOT NULL,
+    `Inativo` BOOLEAN NULL DEFAULT false,
+    `Estrangeiro` BOOLEAN NULL DEFAULT false,
+    `Email` VARCHAR(191) NULL,
     `Cliente` BOOLEAN NULL,
     `Colaborador` BOOLEAN NULL,
     `Fornecedor` BOOLEAN NULL,
@@ -42,12 +42,12 @@ CREATE TABLE `Pessoa` (
     `Observacoes` VARCHAR(191) NULL,
 
     UNIQUE INDEX `Pessoa_Uuid_key`(`Uuid`),
-    PRIMARY KEY (`Handle`)
+    PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `PessoaEnderecos` (
-    `Handle` INTEGER NOT NULL AUTO_INCREMENT,
+    `Id` INTEGER NOT NULL AUTO_INCREMENT,
     `PessoaId` INTEGER NOT NULL,
     `Logradouro` VARCHAR(191) NULL,
     `Complemento` VARCHAR(191) NULL,
@@ -60,67 +60,44 @@ CREATE TABLE `PessoaEnderecos` (
     `Enderecoprincipal` BOOLEAN NOT NULL,
     `Observacoes` VARCHAR(191) NULL,
 
-    PRIMARY KEY (`Handle`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `TiposEnderecos` (
-    `Handle` INTEGER NOT NULL,
-    `Descricao` VARCHAR(191) NULL,
-    `PessoaEnderecoId` INTEGER NOT NULL,
-
-    PRIMARY KEY (`Handle`)
+    PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `PessoaTelefones` (
-    `Handle` INTEGER NOT NULL,
+    `Id` INTEGER NOT NULL AUTO_INCREMENT,
     `PessoaId` INTEGER NOT NULL,
     `Telefone` VARCHAR(191) NULL,
     `Ddi` VARCHAR(191) NULL,
     `Ddd` VARCHAR(191) NULL,
     `Ramal` VARCHAR(191) NULL,
     `Telefonoprincipal` BOOLEAN NULL,
-    `TipoTelefoneId` INTEGER NOT NULL,
     `Observacoes` VARCHAR(191) NULL,
 
-    PRIMARY KEY (`Handle`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `TiposTelefone` (
-    `Handle` INTEGER NOT NULL,
-    `Descricao` VARCHAR(191) NULL,
-
-    PRIMARY KEY (`Handle`)
+    PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Usuario` (
-    `Uuid` INTEGER NOT NULL,
-    `Handle` INTEGER NOT NULL,
+    `Uuid` VARCHAR(191) NOT NULL,
+    `Id` INTEGER NOT NULL AUTO_INCREMENT,
     `PessoaId` INTEGER NOT NULL,
     `Email` VARCHAR(191) NULL,
     `Senha` VARCHAR(191) NULL,
     `Inativo` BOOLEAN NULL,
 
+    UNIQUE INDEX `Usuario_Uuid_key`(`Uuid`),
     UNIQUE INDEX `Usuario_PessoaId_key`(`PessoaId`),
     UNIQUE INDEX `Usuario_Email_key`(`Email`),
     INDEX `Usuario_Uuid_PessoaId_Email_idx`(`Uuid`, `PessoaId`, `Email`),
-    PRIMARY KEY (`Handle`)
+    PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `PessoaEnderecos` ADD CONSTRAINT `PessoaEnderecos_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Handle`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `PessoaEnderecos` ADD CONSTRAINT `PessoaEnderecos_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `TiposEnderecos` ADD CONSTRAINT `TiposEnderecos_PessoaEnderecoId_fkey` FOREIGN KEY (`PessoaEnderecoId`) REFERENCES `PessoaEnderecos`(`Handle`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `PessoaTelefones` ADD CONSTRAINT `PessoaTelefones_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `PessoaTelefones` ADD CONSTRAINT `PessoaTelefones_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Handle`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `PessoaTelefones` ADD CONSTRAINT `PessoaTelefones_TipoTelefoneId_fkey` FOREIGN KEY (`TipoTelefoneId`) REFERENCES `TiposTelefone`(`Handle`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Handle`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE;

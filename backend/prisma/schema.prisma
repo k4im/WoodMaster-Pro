@@ -83,17 +83,8 @@ model PessoaEnderecos {
   Cep               String?
   Enderecoprincipal Boolean
   Observacoes       String?
-  TiposEnderecos    TiposEnderecos[]
-
 }
-
-model TiposEnderecos {
-  Id                Int @default(autoincrement()) @id
-  Descricao         String?
-  PessoaEndereco    PessoaEnderecos @relation(fields: [PessoaEnderecoId], references: [Id], onDelete: Cascade, onUpdate: Cascade)
-  PessoaEnderecoId  Int
-}
-// Emd region     ---- Endereço
+// Ed region     ---- Endereço
 
 // Begin region     ---- Telefone
 model PessoaTelefones {
@@ -105,15 +96,7 @@ model PessoaTelefones {
   Ddd                String?
   Ramal              String?
   Telefonoprincipal  Boolean?
-  TipoTelefone       TiposTelefone @relation(fields: [TipoTelefoneId], references: [Id], onDelete: Cascade, onUpdate: Cascade)    
-  TipoTelefoneId     Int    
   Observacoes        String?
-}
-
-model TiposTelefone {
-  Id                Int @default(autoincrement()) @id
-  Descricao         String?
-  PessoaTelefone    PessoaTelefones[]
 }
 // End region     ---- Telefone
 

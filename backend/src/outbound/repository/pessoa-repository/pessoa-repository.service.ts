@@ -54,18 +54,8 @@ export class PessoaRepositoryService implements Repository{
                     Uuid: randomUUID(),
                     ...teste,
                     Email: teste.Email.email,
-                    PessoaEndereco: {create: [
-                        ...teste.PessoaEndereco
-                    ]},
-                    PessoaTelefones: {create: [{
-                        Ddd: "",
-                        Ddi: "",
-                        Telefonoprincipal: true,
-                        Observacoes: "",
-                        Ramal: "",
-                        Telefone: "",
-                        TipoTelefoneId: 1
-                    }]}                
+                    PessoaEndereco: {create: [...teste.PessoaEndereco]},
+                    PessoaTelefones: {create: [...teste.PessoaTelefones]}                
                 }
             })
             this.logger.log("Criado usuario com sucesso!")
