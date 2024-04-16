@@ -9,10 +9,13 @@ export class PessoasController {
   constructor(private readonly pessoasService: PessoasService) {}
 
   @Post("create")
-  create(@Body() createPessoaDto: CriarPessoaDto,  @Res() res: Response) {
-    let result = this.pessoasService.create(createPessoaDto);
-    if(result) return res.status(HttpStatus.CREATED).send({message: "Pessoa criada com sucesso!"})
-    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: "Houve um erro ao tentar criar a pessoa!"});
+  async create(@Body() createPessoaDto: CriarPessoaDto,  @Res() res: Response) {
+    try {
+      await this.pessoasService.create(createPessoaDto);
+      return res.status(HttpStatus.CREATED).send({message: "Pessoa criada com sucesso!"})
+    } catch (error) {
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: "Houve um erro ao tentar criar a pessoa!"});
+    }
   }
 
   @Get("list")
