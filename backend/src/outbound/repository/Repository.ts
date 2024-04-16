@@ -1,3 +1,5 @@
+import { IResponse } from "src/interfaces/IResponse.interface";
+
 export abstract class Repository { 
         paginarResultados(pagina: number, limit: number) {};
         criarNovoRegistro(registro: any) {};

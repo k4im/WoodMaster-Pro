@@ -65,11 +65,11 @@ export class PessoaRepositoryService implements Repository{
                     PessoaTelefones: {create: [...pessoa.PessoaTelefones]}                
                 }
             });
-            this.logger.log("Criado usuario com sucesso!")
+            this.logger.log("Pessoa criada com sucesso! [Repository] - [Metodo] - [Criar novo registro]")
             return true;
 
         } catch (error) {
-            this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
+            this.logger.error(`Não foi possivel efetuar o processo de criação [Repository] - [Metodo] - [Criar novo registro]: [${error}]`);
         }
     }
 
@@ -91,10 +91,10 @@ export class PessoaRepositoryService implements Repository{
                     Usuario: true
                 }
             }) 
-            this.logger.log(`Efetuado busca de pessoa com UUID: [${uuid}]`)
+            this.logger.log(`Efetuado busca de pessoa com UUID [Repository] - [Metodo] - [Buscar por UUID]: [${uuid}]`)
             return result
         } catch (error) {
-            this.logger.error(`Não foi possivel encontrar a pessoa por UUID: [${error}]`);
+            this.logger.error(`Não foi possivel encontrar a pessoa por UUID [Repository] - [Metodo] - [Buscar por UUID]: [${error}]`);
         }
     }   
     /**
@@ -113,10 +113,10 @@ export class PessoaRepositoryService implements Repository{
                     PessoaTelefones: {create: [...pessoa.PessoaTelefones]}
                 }
             })
-            this.logger.log("Pessoa atualizada com sucesso!")
+            this.logger.log("Pessoa atualizada com sucesso! [Repository] - [Metodo] - [Atualizar Registro]")
             return result;
         } catch (error) {
-            this.logger.error(`Não foi possivel atualizar pessoa: [${error}]`);
+            this.logger.error(`Não foi possivel atualizar pessoa [Repository] - [Metodo] - [Atualizar Registro]: [${error}]`);
         }
     }
 
@@ -132,10 +132,10 @@ export class PessoaRepositoryService implements Repository{
                 where: {Uuid: uuid}
             });
             this.databaseService.$disconnect();
-            this.logger.log(`Pessoa removida com sucesso! UUID: [${uuid}]`)
+            this.logger.log(`Pessoa removida com sucesso! [Repository] - [Metodo] - [Deletar Registro] UUID: [${uuid}]`)
             return true;
         } catch (error) {
-            this.logger.error(`Não foi possivel deletar pessoa com base no UUID: [${error}]`);
+            this.logger.error(`Não foi possivel deletar pessoa com base no UUID [Repository] - [Metodo] - [Deletar registro]: [${error}]`);
         }  
     }
 }
