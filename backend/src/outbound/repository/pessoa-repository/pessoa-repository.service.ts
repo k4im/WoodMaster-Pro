@@ -24,18 +24,22 @@ export class PessoaRepositoryService implements Repository{
         try {
             let calculoPagina = (pagina - 1) * limit; 
             
-            let resultado: Pessoa[] =await this.databaseService.pessoa.findMany({
-                skip: limit,
-                take: calculoPagina
+            let resultado = await this.databaseService.pessoa.findMany({
+                include: {
+                    PessoaEndereco: true,
+                    PessoaTelefones: true
+                },
+                skip: calculoPagina,
+                take: limit
             })
 
             let totalDeRegistos: number = await this.databaseService.pessoa.count();
-            let totalDePaginas: number = totalDeRegistos / limit;
+            let totalDePaginas: number = Math.ceil(totalDeRegistos / limit);
             
             let resposta: IResponse = {
-                pagina_atual: calculoPagina,
+                pagina_atual: (calculoPagina === 0 ) ? 1 : calculoPagina++,
                 total_itens: totalDeRegistos,
-                total_paginas: Math.max(totalDePaginas),
+                total_paginas: totalDePaginas,
                 resultados: resultado
             }
             return resposta;
@@ -97,12 +101,18 @@ export class PessoaRepositoryService implements Repository{
      * @param pessoa Recebe uma pessoa que será um mapeamento identico da tabela no banco de dados.
      * @returns 
      */
-    async atualizarRegistro(pessoa: Pessoa, uuid: string) { 
+    async atualizarRegistro(pessoa: PessoaEntity, uuid: string) { 
         try {
             let result = await this.databaseService.pessoa.update({
                 where: {Uuid: uuid},
-                data: pessoa
+                data: {
+                    ...pessoa,
+                    Email: pessoa.Email.email,
+                    PessoaEndereco: {create: [...pessoa.PessoaEndereco]},
+                    PessoaTelefones: {create: [...pessoa.PessoaTelefones]}
+                }
             })
+            this.logger.log("Pessoa atualizada com sucesso!")
             return result;
         } catch (error) {
             this.logger.error(`Não foi possivel atualizar pessoa: [${error}]`);
@@ -120,6 +130,7 @@ export class PessoaRepositoryService implements Repository{
             let result = await this.databaseService.pessoa.delete({
                 where: {Uuid: uuid}
             })
+            this.logger.log(`Pessoa removida com sucesso! UUID: [${uuid}]`)
             return true;
         } catch (error) {
             this.logger.error(`Não foi possivel deletar pessoa com base no UUID: [${error}]`);
