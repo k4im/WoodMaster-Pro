@@ -1,7 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { PessoaEntity } from '../entities/pessoa.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { PartialType } from '@nestjs/swagger';
+import { CriarPessoaDto } from './criar-pessoa.dto';
 
 
-export class UpdatePessoaDto extends PartialType(PessoaEntity) {
+export class UpdatePessoaDto extends PartialType(CriarPessoaDto) {
 }

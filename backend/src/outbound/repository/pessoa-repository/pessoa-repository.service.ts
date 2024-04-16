@@ -37,7 +37,7 @@ export class PessoaRepositoryService implements Repository{
             let totalDePaginas: number = Math.ceil(totalDeRegistos / limit);
             
             let resposta: IResponse = {
-                pagina_atual: (calculoPagina === 0 ) ? 1 : calculoPagina++,
+                pagina_atual: pagina,
                 total_itens: totalDeRegistos,
                 total_paginas: totalDePaginas,
                 resultados: resultado

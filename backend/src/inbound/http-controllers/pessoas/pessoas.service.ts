@@ -4,6 +4,7 @@ import { Repository } from 'src/outbound/repository/Repository';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
 import { PessoaEntity } from './entities/pessoa.entity';
+import { IResponse } from 'src/interfaces/IResponse.interface';
 
 @Injectable()
 export class PessoasService {
@@ -26,9 +27,16 @@ export class PessoasService {
     }
   }
 
-  async findAll(pagina: number, limit: number) {
+  async findAll(pagina: number, limit: number) : Promise<IResponse> {
     this.Logger.log("Processando requisição no serviço de pessoas: [PessoasService] - [Metodo] - [FindAll]");
-    return `This action returns all pessoas`;
+    try {
+        let page = (pagina === undefined) ? 1: pagina;
+        let limitTreat = (limit === undefined) ? 5:  limit;
+        let result = await this.Repository.paginarResultados(page, limitTreat);
+        return result;
+    } catch (error) {
+      this.Logger.error(`Error ao tentar criar uma nova pessoa: [PessoasService] - [Metodo] - [findAll]`)      
+    }
   }
 
   async findOne(id: number) {
