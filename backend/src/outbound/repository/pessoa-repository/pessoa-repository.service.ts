@@ -31,7 +31,7 @@ export class PessoaRepositoryService implements Repository{
                 },
                 skip: calculoPagina,
                 take: limit
-            })
+            });
 
             let totalDeRegistos: number = await this.databaseService.pessoa.count();
             let totalDePaginas: number = Math.ceil(totalDeRegistos / limit);
@@ -41,7 +41,8 @@ export class PessoaRepositoryService implements Repository{
                 total_itens: totalDeRegistos,
                 total_paginas: totalDePaginas,
                 resultados: resultado
-            }
+            };
+            this.logger.log(`Efetuado operação de paginação de pessoas: pagina=${pagina}, limit=${limit}`);
             return resposta;
         } catch (error) {
             this.logger.error(`Não foi possivel realizar a paginação: [${error}]`);
@@ -63,10 +64,9 @@ export class PessoaRepositoryService implements Repository{
                     PessoaEndereco: {create: [...pessoa.PessoaEndereco]},
                     PessoaTelefones: {create: [...pessoa.PessoaTelefones]}                
                 }
-            }).then(() => {
-                this.logger.log("Criado usuario com sucesso!")
-                return true;
             });
+            this.logger.log("Criado usuario com sucesso!")
+            return true;
 
         } catch (error) {
             this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
@@ -81,7 +81,7 @@ export class PessoaRepositoryService implements Repository{
      */
     async buscarPorUUID(uuid: string) {
         try {
-            let pessoa: Pessoa = await this.databaseService.pessoa.findFirst({
+            let result = await this.databaseService.pessoa.findFirst({
                 where: {
                     Uuid : uuid
                 },
@@ -90,8 +90,9 @@ export class PessoaRepositoryService implements Repository{
                     PessoaEndereco: true,
                     Usuario: true
                 }
-            })
-            return pessoa;
+            }) 
+            this.logger.log(`Efetuado busca de pessoa com UUID: [${uuid}]`)
+            return result
         } catch (error) {
             this.logger.error(`Não foi possivel encontrar a pessoa por UUID: [${error}]`);
         }
@@ -127,9 +128,10 @@ export class PessoaRepositoryService implements Repository{
      */
     async deletarRegistro(uuid: string) {
         try {
-            let result = await this.databaseService.pessoa.delete({
+            await this.databaseService.pessoa.delete({
                 where: {Uuid: uuid}
-            })
+            });
+            this.databaseService.$disconnect();
             this.logger.log(`Pessoa removida com sucesso! UUID: [${uuid}]`)
             return true;
         } catch (error) {
