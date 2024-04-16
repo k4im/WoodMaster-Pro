@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, Res, HttpStatus } from '@nestjs/common';
+import { Response } from 'express';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { PessoasService } from './pessoas.service';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
@@ -8,12 +9,14 @@ export class PessoasController {
   constructor(private readonly pessoasService: PessoasService) {}
 
   @Post("create")
-  create(@Body() createPessoaDto: CriarPessoaDto) {
-    return this.pessoasService.create(createPessoaDto);
+  create(@Body() createPessoaDto: CriarPessoaDto,  @Res() res: Response) {
+    let result = this.pessoasService.create(createPessoaDto);
+    if(result) return res.status(HttpStatus.CREATED).send({message: "Pessoa criada com sucesso!"})
+    return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: "Houve um erro ao tentar criar a pessoa!"});
   }
 
   @Get("list")
-  findAll(@Param("page") pagina: number, @Param("limit") limit: number) {
+  findAll(@Param("page") pagina: number, @Param("limit") limit: number, @Res() res: Response) {
     return this.pessoasService.findAll(pagina, limit);
   }
 
@@ -23,12 +26,12 @@ export class PessoasController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updatePessoaDto: UpdatePessoaDto) {
+  update(@Param('id') id: string, @Body() updatePessoaDto: UpdatePessoaDto, @Res() res: Response) {
     return this.pessoasService.update(+id, updatePessoaDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string, @Res() res: Response) {
     return this.pessoasService.remove(+id);
   }
 }

@@ -15,15 +15,14 @@ export class PessoasService {
   async create(createPessoaDto: CriarPessoaDto) {
     this.Logger.log("Processando requisição no serviço de pessoas [PessoasService] - [Metodo] - [create]");
     try {
-      this.Logger.log(`Criando entidade de pessoa a partir do DTO informado.`)
+      this.Logger.log(`Criando entidade de pessoa a partir do DTO informado [PessoasService] - [Metodo] - [create].`)
       
       let pessoaEntity = new PessoaEntity().criarPessoaPorDto(createPessoaDto);
       
       this.Logger.log(`Tentando efetuar a criação de uma nova pessoa [PessoasService] - [Metodo] - [create].`)
       
       let result = await this.Repository.criarNovoRegistro(pessoaEntity);
-      return result;
-      
+        
     } catch (error) {
       
       this.Logger.error(`Error ao tentar criar uma nova pessoa: [PessoasService] - [Metodo] - [create]`)      

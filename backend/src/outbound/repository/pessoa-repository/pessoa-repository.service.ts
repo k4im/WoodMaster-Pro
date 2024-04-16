@@ -43,8 +43,10 @@ export class PessoaRepositoryService implements Repository{
                 resultados: resultado
             };
             this.logger.log(`Efetuado operação de paginação de pessoas: pagina=${pagina}, limit=${limit}`);
+            await this.databaseService.$disconnect();
             return resposta;
         } catch (error) {
+            await this.databaseService.$disconnect();
             this.logger.error(`Não foi possivel realizar a paginação: [${error}]`);
         }
     }
@@ -66,9 +68,11 @@ export class PessoaRepositoryService implements Repository{
                 }
             });
             this.logger.log("Pessoa criada com sucesso! [Repository] - [Metodo] - [Criar novo registro]")
+            await this.databaseService.$disconnect();
             return true;
 
         } catch (error) {
+            await this.databaseService.$disconnect();
             this.logger.error(`Não foi possivel efetuar o processo de criação [Repository] - [Metodo] - [Criar novo registro]: [${error}]`);
         }
     }
@@ -92,8 +96,10 @@ export class PessoaRepositoryService implements Repository{
                 }
             }) 
             this.logger.log(`Efetuado busca de pessoa com UUID [Repository] - [Metodo] - [Buscar por UUID]: [${uuid}]`)
+            await this.databaseService.$disconnect();
             return result
         } catch (error) {
+            await this.databaseService.$disconnect();
             this.logger.error(`Não foi possivel encontrar a pessoa por UUID [Repository] - [Metodo] - [Buscar por UUID]: [${error}]`);
         }
     }   
@@ -114,8 +120,10 @@ export class PessoaRepositoryService implements Repository{
                 }
             })
             this.logger.log("Pessoa atualizada com sucesso! [Repository] - [Metodo] - [Atualizar Registro]")
+            await this.databaseService.$disconnect();
             return result;
         } catch (error) {
+            await this.databaseService.$disconnect();
             this.logger.error(`Não foi possivel atualizar pessoa [Repository] - [Metodo] - [Atualizar Registro]: [${error}]`);
         }
     }
@@ -135,6 +143,7 @@ export class PessoaRepositoryService implements Repository{
             this.logger.log(`Pessoa removida com sucesso! [Repository] - [Metodo] - [Deletar Registro] UUID: [${uuid}]`)
             return true;
         } catch (error) {
+            await this.databaseService.$disconnect();
             this.logger.error(`Não foi possivel deletar pessoa com base no UUID [Repository] - [Metodo] - [Deletar registro]: [${error}]`);
         }  
     }
