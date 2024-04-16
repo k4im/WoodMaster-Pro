@@ -70,7 +70,7 @@ model Pessoa {
 
 // Begin region     ---- Endereços
 model PessoaEnderecos {
-  Id            Int      @default(autoincrement()) @id
+  Id                Int      @default(autoincrement()) @id
   Pessoa            Pessoa   @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)    // Alterei para string pois a tabela PESSOA não está definida
   PessoaId          Int    // Alterei para string pois a tabela PESSOA não está definida
   Logradouro        String?
