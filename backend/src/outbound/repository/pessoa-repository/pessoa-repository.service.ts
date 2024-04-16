@@ -6,6 +6,7 @@ import { Repository } from '../Repository';
 import { IResponse } from 'src/interfaces/IResponse.interface';
 import { randomUUID } from 'crypto';
 import { PessoaEntity } from 'src/inbound/http-controllers/pessoas/entities/pessoa.entity';
+import { CriarPessoaDto } from 'src/inbound/http-controllers/pessoas/dto/criar-pessoa.dto';
 
 @Injectable()
 export class PessoaRepositoryService implements Repository{
@@ -46,20 +47,23 @@ export class PessoaRepositoryService implements Repository{
      * Receberá um mapeamento de uma pessoa para que então seja criada uma nova pessoa no banco de dados
      * @param pessoa recebe uma pessoa que é uma mapeamento do schema presente no banco de dados.
      */
-    async criarNovoRegistro() {
+    async criarNovoRegistro(pessoa: PessoaEntity) {
         try {
-            let teste = new PessoaEntity().default();
-            let result = await this.databaseService.pessoa.create({
+            // Efetua a criação de uma nova pessoa utilizando os dados recebidos
+            // do parametro informado na função.
+            await this.databaseService.pessoa.create({
                 data: {
                     Uuid: randomUUID(),
-                    ...teste,
-                    Email: teste.Email.email,
-                    PessoaEndereco: {create: [...teste.PessoaEndereco]},
-                    PessoaTelefones: {create: [...teste.PessoaTelefones]}                
+                    ...pessoa,
+                    Email: pessoa.Email.email,
+                    PessoaEndereco: {create: [...pessoa.PessoaEndereco]},
+                    PessoaTelefones: {create: [...pessoa.PessoaTelefones]}                
                 }
-            })
-            this.logger.log("Criado usuario com sucesso!")
-            return true;
+            }).then(() => {
+                this.logger.log("Criado usuario com sucesso!")
+                return true;
+            });
+
         } catch (error) {
             this.logger.error(`Não foi possivel efetuar o processo de criação: [${error}]`);
         }
@@ -76,6 +80,11 @@ export class PessoaRepositoryService implements Repository{
             let pessoa: Pessoa = await this.databaseService.pessoa.findFirst({
                 where: {
                     Uuid : uuid
+                },
+                include: {
+                    PessoaTelefones: true,
+                    PessoaEndereco: true,
+                    Usuario: true
                 }
             })
             return pessoa;

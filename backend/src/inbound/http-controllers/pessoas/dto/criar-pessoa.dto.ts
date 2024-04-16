@@ -14,7 +14,7 @@ export class CriarPessoaDto {
     Email: Email;
     PessoaEndereco: Endereco[]
 
-    PessoaTelefone: Telefone[]
+    PessoaTelefones: Telefone[]
 
     Cliente: boolean;
     Colaborador: boolean;
@@ -71,7 +71,7 @@ export class CriarPessoaDto {
             this.Colaborador = colaborador,
             this.Fornecedor = fornecedor,
             this.PessoaEndereco = pessoaEndereco,
-            this.PessoaTelefone = pessoaTelefone,
+            this.PessoaTelefones = pessoaTelefone,
             this.Observacoes = observacoes
     }
     

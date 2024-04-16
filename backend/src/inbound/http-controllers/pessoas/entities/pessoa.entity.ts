@@ -194,7 +194,7 @@ export class PessoaEntity {
             null,
             data.Email,
             data.PessoaEndereco,
-            data.PessoaTelefone,
+            data.PessoaTelefones,
             data.Cliente,
             data.Colaborador,
             data.Fornecedor,
