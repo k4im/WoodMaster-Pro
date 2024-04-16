@@ -97,7 +97,7 @@ model TiposEnderecos {
 
 // Begin region     ---- Telefone
 model PessoaTelefones {
-  Id             Int    @default(autoincrement())  @id
+  Id                 Int    @default(autoincrement())  @id
   Pessoa             Pessoa @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)
   PessoaId           Int    
   Telefone           String?
@@ -111,7 +111,7 @@ model PessoaTelefones {
 }
 
 model TiposTelefone {
-  Id            Int @default(autoincrement()) @id
+  Id                Int @default(autoincrement()) @id
   Descricao         String?
   PessoaTelefone    PessoaTelefones[]
 }
