@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger"
 import { CustomLogger } from "src/helpers/logger/logger.service"
 
 interface ITelefone { 
@@ -9,10 +10,15 @@ interface ITelefone {
 }
 export class Telefone { 
     
+    @ApiProperty()
     Telefone : string
+    @ApiProperty()
     Ddi : string       
+    @ApiProperty()
     Ddd : string      
+    @ApiProperty()
     Ramal: string 
+    @ApiProperty()
     Telefonoprincipal: boolean
 
     constructor( 

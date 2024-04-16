@@ -1,13 +1,25 @@
+import { ApiProperty } from "@nestjs/swagger"
+
 export class Endereco { 
+    @ApiProperty()
     Logradouro : string        
+    @ApiProperty()
     Complemento : string       
+    @ApiProperty()
     Bairro: string            
+    @ApiProperty()
     Caixapostal: string    
+    @ApiProperty()
     Pais: string   
+    @ApiProperty()
     Estado: string          
+    @ApiProperty()
     Municipio: string        
+    @ApiProperty()
     Cep: string 
+    @ApiProperty()
     Enderecoprincipal: boolean 
+    @ApiProperty()
     Observacoes: string
 
     
