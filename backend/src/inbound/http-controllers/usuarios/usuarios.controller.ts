@@ -14,7 +14,10 @@ export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post("create")
-  @ApiOperation({summary: "Rota será utilizada para estar efetuando a criação de um novo usuario."})
+  @ApiOperation({
+    summary: "Rota será utilizada para estar efetuando a criação de um novo usuario.",
+    description: `Uma pessoa poderá ter **apenas um usuario.**`
+  })
   @ApiResponse({status: 201, description: "Caso seja criado o usuario corretamente estara encaminhando um retorno HTTP 201"})
   async create(@Body() createUsuarioDto: CriarUsuarioDto, @Res() res: Response) {
     try {
@@ -104,7 +107,7 @@ export class UsuariosController {
   async remove(@Query('uuid') uuid: string, @Res() res: Response) {
     try {
       let result = await this.usuariosService.remove(uuid);
-      (result) ? res.status(200).send({message: "Usuario atualizado com sucesso!"}) : res.status(500).send({message: "Não foi possivel atualizar o usuario."});
+      (result) ? res.status(200).send({message: "Usuario desativado!"}) : res.status(500).send({message: "Não foi possivel atualizar o usuario."});
     } catch (error) {
        return res.status(500).send({message: "Houve um erro ao efetuar o processo de atualização."})
     }  

@@ -8,7 +8,6 @@ export class CriarUsuarioDto {
     Email: Email
     @ApiProperty()
     Senha: string
-    @ApiProperty()
     Inativo: boolean
 
     constructor(pessoaId: number, email: Email, senha: string) {

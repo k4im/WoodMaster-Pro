@@ -39,7 +39,7 @@ export class UsuarioRepositoryService implements Repository {
                 total_paginas: totalDePaginas,
                 resultados: resultado
             };
-            this.logger.log(`Efetuado operação de paginação de pessoas: pagina=${pagina}, limit=${limit}`);
+            this.logger.log(`Efetuado operação de paginação de usuarios: pagina=${pagina}, limit=${limit}`);
             await this.databaseService.$disconnect();
             return resposta;
         } catch (error) {
