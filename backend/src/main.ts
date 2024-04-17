@@ -17,7 +17,6 @@ async function bootstrap() {
   
   const documento = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, documento)
-  // console.log(await repo.criarNovoRegistro())
   await app.listen(3000);
   logger.log("Listening on port: 3000")
 }
