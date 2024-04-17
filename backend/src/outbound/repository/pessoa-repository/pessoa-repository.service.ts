@@ -70,10 +70,10 @@ export class PessoaRepositoryService implements Repository{
             this.logger.log("Pessoa criada com sucesso! [Repository] - [Metodo] - [Criar novo registro]")
             await this.databaseService.$disconnect();
             return true;
-
         } catch (error) {
             await this.databaseService.$disconnect();
             this.logger.error(`Não foi possivel efetuar o processo de criação [Repository] - [Metodo] - [Criar novo registro]: [${error}]`);
+            return false;
         }
     }
 
