@@ -25,7 +25,12 @@ export class PessoasController {
   }
 
   @Get("list")
-  @ApiOperation({summary: "Rota será utilizada para efetuar a listagem de clientes de forma paginada."})
+  @ApiOperation({
+    summary: "Rota será utilizada para efetuar a listagem de clientes de forma paginada.",
+    description: `Estará sendo realizado a paginação de todos os dados presentes no banco de dados.
+    Atualmente ao utilizar esta rota será apresentado todos os campos contendo no banco de dados, assim como
+    relacionamento existentes em tabelas externas a tabelas de pessoas.`
+  })
   @ApiResponse({status: 200, description: "Estará encaminhando um status 200 caso a operação seja bem sucedida.", type: ResponseDoc})
   @ApiQuery({
     name: "pagina",
@@ -45,7 +50,11 @@ export class PessoasController {
   }
 
   @Get(':uuid')
-  @ApiOperation({summary: "Rota será utilizada para efetuar a busca de uma pessoa por um UUID."})
+  @ApiOperation({
+    summary: "Rota será utilizada para efetuar a busca de uma pessoa por um UUID.",
+    description: `Estará efetuando a busca de uma pessoa baseando-se em seu UUID, onde estará retornando todos os campos presentes
+    no banco de dados assim como relacionamentos existentes com este registro.`
+  })
   @ApiResponse({status: 200, description: "Estará encaminhando um status 200 caso a operação seja bem sucedida.", type: CriarPessoaDto})
   @ApiQuery({
     name: "uuid",
@@ -62,7 +71,11 @@ export class PessoasController {
   }
 
   @Put(':uuid')
-  @ApiOperation({summary: "Rota será utilizada para efetuar a atualizar uma pessoa baseando-se no UUID."})
+  @ApiOperation({
+    summary: "Rota será utilizada para efetuar a atualizar uma pessoa baseando-se no UUID.",
+    description: `Estará atualizando um registro no banco de dados, onde deverá ser repassado todos os campos presentes no modelo fornecido.
+    Todos os campos deverão ser fornecidos para atualização do registro.`
+})
   @ApiResponse({status: 204, description: "Estará encaminhando um status 204 caso a operação seja bem sucedida."})
   @ApiQuery({
     name: "uuid",
