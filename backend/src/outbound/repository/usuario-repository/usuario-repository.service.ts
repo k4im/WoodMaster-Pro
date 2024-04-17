@@ -5,6 +5,7 @@ import { DatabaseService } from 'src/outbound/database/database.service';
 import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { Usuario } from 'src/inbound/http-controllers/usuarios/entities/usuario.entity';
 import { UpdateUsuarioDto } from 'src/inbound/http-controllers/usuarios/dto/update-usuario.dto';
+import { Email } from 'src/inbound/http-controllers/pessoas/entities/ValueObjects/email.value.object';
 
 @Injectable()
 export class UsuarioRepositoryService implements Repository {
@@ -68,7 +69,7 @@ export class UsuarioRepositoryService implements Repository {
             await this.databaseService.$disconnect();
             return true;
         } catch (error) {
-            this.logger.log(`Houve um erro ao tentar criar usuario [Repository] - [Metodo] - [criar novo registro.]: ${error}`)
+            this.logger.error(`Houve um erro ao tentar criar usuario [Repository] - [Metodo] - [criar novo registro.]: ${error}`)
             await this.databaseService.$disconnect();
             return false;
         }
@@ -86,11 +87,15 @@ export class UsuarioRepositoryService implements Repository {
                     Uuid: uuid
                 }
             })
+            if (result === null) {
+                await this.databaseService.$disconnect();
+                return null
+            }
             this.logger.log(`Efetuado busca de usuario por UUID [Repository] - [Metodo] - [criar novo registro.]: UUID:${uuid}`)
             await this.databaseService.$disconnect();
             return result;
         } catch (error) {
-            this.logger.log(`Houve um erro ao tentar buscar usuario [Repository] - [Metodo] - [criar novo registro.]: ${error}`)
+            this.logger.error(`Houve um erro ao tentar buscar usuario [Repository] - [Metodo] - [criar novo registro.]: ${error}`)
             await this.databaseService.$disconnect();
         }
     }

@@ -9,12 +9,13 @@ export class CriarUsuarioDto {
     @ApiProperty()
     Senha: string
     @ApiProperty()
-    Inativo: boolean = false
+    Inativo: boolean
 
     constructor(pessoaId: number, email: Email, senha: string) {
         this.PessoaId = pessoaId,
         this.Email = email,
         this.Senha = senha
+        this.Inativo = false
     }
     
 }

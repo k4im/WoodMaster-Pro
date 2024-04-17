@@ -75,7 +75,7 @@ export class PessoasController {
     summary: "Rota será utilizada para efetuar a atualizar uma pessoa baseando-se no UUID.",
     description: `Estará atualizando um registro no banco de dados, onde deverá ser repassado todos os campos presentes no modelo fornecido.
     Todos os campos deverão ser fornecidos para atualização do registro.`
-})
+  })
   @ApiResponse({status: 204, description: "Estará encaminhando um status 204 caso a operação seja bem sucedida."})
   @ApiQuery({
     name: "uuid",

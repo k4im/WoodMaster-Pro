@@ -16,7 +16,7 @@ export class Usuario {
     @ApiProperty()
     Inativo: boolean = false
 
-    constructor(pessoaId: number, email: Email, senha: string) {
+    constructor(pessoaId?: number, email?: Email, senha?: string) {
         this.Uuid = randomUUID();
         this.PessoaId = pessoaId,
         this.Email = email,
@@ -32,15 +32,5 @@ export class Usuario {
     hashSenha(pwd: string) {
         const salt = bcrypt.genSaltSync(10);
         return bcrypt.hashSync(pwd, salt);
-    }
-    
-    /**
-     * O metodo sera utilizado para criação de um usuario
-     * a partir do dto de criação.
-     * @param data Recebe um data que sera do tipo CriarPessoaDTO
-     * @returns Usuario
-     */
-    criarUsuarioDTO(data: CriarUsuarioDto) {
-        return new Usuario(data.PessoaId, data.Email, data.Senha);
     }
 }

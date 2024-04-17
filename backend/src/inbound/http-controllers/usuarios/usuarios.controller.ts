@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, Res } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CriarUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -6,6 +6,7 @@ import { ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/s
 import { query } from 'express';
 import { ResponseDoc } from '../pessoas/doc/Reponse.doc';
 import { Usuario } from './entities/usuario.entity';
+import { Response } from 'express';
 
 @ApiTags("Usuários")
 @Controller('usuarios')
@@ -15,8 +16,13 @@ export class UsuariosController {
   @Post("create")
   @ApiOperation({summary: "Rota será utilizada para estar efetuando a criação de um novo usuario."})
   @ApiResponse({status: 201, description: "Caso seja criado o usuario corretamente estara encaminhando um retorno HTTP 201"})
-  create(@Body() createUsuarioDto: CriarUsuarioDto) {
-    return this.usuariosService.create(createUsuarioDto);
+  async create(@Body() createUsuarioDto: CriarUsuarioDto, @Res() res: Response) {
+    try {
+        let result = await this.usuariosService.create(createUsuarioDto);
+        (result) ? res.status(201).send({message: "Usuario criado com sucesso!"}): res.status(500).send({message: "Não foi possivel criar usuario!"});
+    } catch (error) {
+      return res.status(500).send({message: "Houve um erro ao tentar criar usuario!"})
+    }
   }
 
   @Get("list")
@@ -34,8 +40,13 @@ export class UsuariosController {
     name: "limit",
     description: "O limite estará limitando o resultado apresentado por pagina."
   })
-  findAll(@Query("pagina") pagina: number, @Query("limit") limit: number) {
-    return this.usuariosService.findAll();
+  async findAll(@Query("pagina") pagina: number, @Query("limit") limit: number, @Res() res: Response) {
+    try {
+      let result = await this.usuariosService.findAll(parseInt(`${pagina}`), parseInt(`${limit}`));
+      (result.resultados.length === 0) ? res.status(404).send({message: "Não existe resultados nesta pagina"}): res.status(200).send(result); 
+    } catch (error) {
+      return res.status(500).send({message: "Houve um erro ao efetuar o processo de busca."})
+    }
   }
 
   @Get(':uuid')
@@ -50,8 +61,13 @@ export class UsuariosController {
     name: "uuid",
     description: "O UUID será utilizado para buscar um registro em especifico."
   })
-  findOne(@Query('uuid') uuid: string) {
-    // return this.usuariosService.findOne(+id);
+  async findOne(@Query('uuid') uuid: string, @Res() res: Response) {
+    try {
+        let result = await this.usuariosService.findOne(uuid);
+        return res.status(200).send(result)
+    } catch (error) {
+      return res.status(500).send({message: "Houve um erro ao efetuar o processo de busca."})
+    }
   }
 
   @Put(':uuid')
@@ -65,8 +81,13 @@ export class UsuariosController {
     name: "uuid",
     description: "O UUID será utilizado para buscar um registro em especifico."
   })
-  update(@Query('uuid') uuid: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-    // return this.usuariosService.update(+id, updateUsuarioDto);
+  async update(@Query('uuid') uuid: string, @Body() updateUsuarioDto: UpdateUsuarioDto, @Res() res: Response) {
+    try {
+      let result = await this.usuariosService.update(uuid, updateUsuarioDto);
+      (result) ? res.status(200).send({message: "Usuario atualizado com sucesso!"}) : res.status(500).send({message: "Não foi possivel atualizar o usuario."});
+    } catch (error) {
+       return res.status(500).send({message: "Houve um erro ao efetuar o processo de atualização."})
+    }
   }
 
   @Post(':uuid')
@@ -79,7 +100,13 @@ export class UsuariosController {
   @ApiQuery({
     name: "uuid",
     description: "O UUID será utilizado para remover um registro em especifico."
-  })remove(@Query('uuid') uuid: string) {
-    // return this.usuariosService.remove(+id);
+  })
+  async remove(@Query('uuid') uuid: string, @Res() res: Response) {
+    try {
+      let result = await this.usuariosService.remove(uuid);
+      (result) ? res.status(200).send({message: "Usuario atualizado com sucesso!"}) : res.status(500).send({message: "Não foi possivel atualizar o usuario."});
+    } catch (error) {
+       return res.status(500).send({message: "Houve um erro ao efetuar o processo de atualização."})
+    }  
   }
 }
