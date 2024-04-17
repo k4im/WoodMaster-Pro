@@ -5,6 +5,8 @@ import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
 import { PessoaEntity } from './entities/pessoa.entity';
 import { IResponse } from 'src/interfaces/IResponse.interface';
+import { IPessoa } from 'src/interfaces/IPessoa.interface';
+import { Pessoa } from '@prisma/client';
 
 @Injectable()
 export class PessoasService {
@@ -39,9 +41,15 @@ export class PessoasService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(uuid: string): Promise<Pessoa> {
     this.Logger.log("Processando requisição no serviço de pessoas: [PessoasService] - [Metodo] - [FindOne]");
-    return `This action returns a #${id} pessoa`;
+    try {
+      this.Logger.log("Efetuando busca de registro: [PessoasService] - [Metodo] - [FindOne]");
+      let result = await this.Repository.buscarPorUUID(uuid);
+      return result;
+    } catch (error) {
+      this.Logger.log("Não foi possivel coletar o registro com o UUID: [PessoasService] - [Metodo] - [FindOne]");
+    }
   }
 
   async update(id: number, updatePessoaDto: UpdatePessoaDto) {

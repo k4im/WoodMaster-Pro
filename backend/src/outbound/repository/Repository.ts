@@ -5,7 +5,9 @@ export abstract class Repository {
                 return 
         };
         criarNovoRegistro(registro: any) {};
-        buscarPorUUID(uuid: string){};   
+        buscarPorUUID(uuid: string): Promise<any> {
+                return 
+        };   
         atualizarRegistro(registro: any, uuid: string){};
         deletarRegistro(uuid: string){};
 }

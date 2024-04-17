@@ -29,15 +29,16 @@ export class PessoasController {
   @ApiResponse({status: 200, description: "Estará encaminhando um status 200 caso a operação seja bem sucedida.", type: ResponseDoc})
   @ApiQuery({
     name: "pagina",
+    description: "Deverá ser repassado o numero da pagina a qual deseja estar visualizando os resultado."
   })
   @ApiQuery({
-    name: "limit"
+    name: "limit",
+    description: "O limit será utilizado para mostrar a quantidade de resultados desejado por pagina."
   })
   async findAll(@Query("pagina") pagina: number, @Query("limit") limit: number, @Res() res: Response) {
     try {
       let result = await this.pessoasService.findAll(parseInt(`${pagina}`), parseInt(`${limit}`));
-      if(result.resultados.length === 0) return res.status(404).send({message: "Não encontram-se registros disponivel nesta pagina."})
-      return res.status(200).send(result); 
+      (result.resultados.length === 0) ?  res.status(404).send({message: "Não encontram-se registros disponivel nesta pagina."}) : res.status(200).send(result); 
     } catch (error) {
       return res.status(500).send({message: "Houve um erro ao tentar realizar a operação de paginação"})
     }
@@ -46,21 +47,39 @@ export class PessoasController {
   @Get(':uuid')
   @ApiOperation({summary: "Rota será utilizada para efetuar a busca de uma pessoa por um UUID."})
   @ApiResponse({status: 200, description: "Estará encaminhando um status 200 caso a operação seja bem sucedida.", type: CriarPessoaDto})
-  async findOne(@Param('uuid') uuid: string) {
-    
+  @ApiQuery({
+    name: "uuid",
+    description: "O UUID será utilizado para efetuar a requisição de busca de uma pessoa."    
+  })
+  async findOne(@Query('uuid') uuid: string, @Res() res: Response) {
+    try {
+        let result = await this.pessoasService.findOne(uuid);
+        (result === null) ? res.status(404).send({message: "UUID invalido."}) : res.status(HttpStatus.OK).send(result);
+    } catch (error) {
+      return res.status(500).send({message: "Houve um erro ao efetuar a consulta."})
+      
+    }
   }
 
   @Put(':uuid')
   @ApiOperation({summary: "Rota será utilizada para efetuar a atualizar uma pessoa baseando-se no UUID."})
   @ApiResponse({status: 204, description: "Estará encaminhando um status 204 caso a operação seja bem sucedida."})
-  async update(@Param('uuid') uuid: string, @Body() updatePessoaDto: UpdatePessoaDto, @Res() res: Response) {
+  @ApiQuery({
+    name: "uuid",
+    description: "Deverá ser repassado o UUID para que então seja atualizado o registro que possui este UUID."
+  })
+  async update(@Query('uuid') uuid: string, @Body() updatePessoaDto: UpdatePessoaDto, @Res() res: Response) {
     // return this.pessoasService.update(+id, updatePessoaDto);
   }
 
   @Delete(':uuid')
   @ApiOperation({summary: "Rota será utilizada para efetuar a remoção de uma pessoa."})
   @ApiResponse({status: 200, description: "Estará encaminhando um status 200 caso a operação seja bem sucedida."})
-  async remove(@Param('uuid') uuid: string, @Res() res: Response) {
+  @ApiQuery({
+    name: "uuid",
+    description: "Deverá ser repassado o UUID para que então seja possivel efetuar a remoção do registro."
+  })
+  async remove(@Query('uuid') uuid: string, @Res() res: Response) {
 
   }
 }

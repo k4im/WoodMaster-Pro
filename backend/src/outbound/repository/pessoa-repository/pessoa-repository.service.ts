@@ -85,6 +85,7 @@ export class PessoaRepositoryService implements Repository{
      */
     async buscarPorUUID(uuid: string) {
         try {
+            
             let result = await this.databaseService.pessoa.findFirst({
                 where: {
                     Uuid : uuid
@@ -95,6 +96,7 @@ export class PessoaRepositoryService implements Repository{
                     Usuario: true
                 }
             }) 
+            if(result === null) return null;
             this.logger.log(`Efetuado busca de pessoa com UUID [Repository] - [Metodo] - [Buscar por UUID]: [${uuid}]`)
             await this.databaseService.$disconnect();
             return result
