@@ -56,6 +56,18 @@ export class UsuarioRepositoryService implements Repository {
      */
     async criarNovoRegistro(usuario: Usuario): Promise<boolean> {
         try {
+            // Checa se existe um usuario criado para a pessoa.
+            let checkUser = await this.databaseService.usuario.findUnique({
+                where: {
+                    PessoaId: usuario.PessoaId
+                }
+            });
+            // Caso um usuario já exista para uma pessoa será retornado nulo,
+            // pois uma pessoa só poderá possuir um login.
+            if(checkUser) {
+                this.logger.log(`Usuario já existente para esta pessoa. [Repository] - [Metodo] - [criar novo registro.]`)
+                return false
+            };
             let result = await this.databaseService.usuario.create({
                 data: {
                     PessoaId: usuario.PessoaId,
