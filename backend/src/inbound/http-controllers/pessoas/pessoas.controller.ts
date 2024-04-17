@@ -69,7 +69,12 @@ export class PessoasController {
     description: "Deverá ser repassado o UUID para que então seja atualizado o registro que possui este UUID."
   })
   async update(@Query('uuid') uuid: string, @Body() updatePessoaDto: UpdatePessoaDto, @Res() res: Response) {
-    // return this.pessoasService.update(+id, updatePessoaDto);
+    try {
+      let result = await this.pessoasService.update(uuid, updatePessoaDto);
+      (result) ? res.status(204).send({message: "Pessoa atualizada com sucesso!"}) :  res.status(500).send({message: "Não foi possivel atualizar o registro!"})
+    } catch (error) {
+      return res.status(500).send({message: "Houve um erro ao tentar atualizar o registro!"})
+    }
   }
 
   @Delete(':uuid')
@@ -80,6 +85,12 @@ export class PessoasController {
     description: "Deverá ser repassado o UUID para que então seja possivel efetuar a remoção do registro."
   })
   async remove(@Query('uuid') uuid: string, @Res() res: Response) {
+    try {
+      let result = await this.pessoasService.remove(uuid);
+      (result) ? res.status(200).send({message: "Registro removido com sucesso!"}) : res.status(500).send({message: "Não foi possivel remover o registro."})
+    } catch (error) {
+      return res.status(500).send({message: "Houve um erro ao tentar remover o registro!"})
 
+    }
   }
 }
