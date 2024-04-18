@@ -3,8 +3,6 @@ import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { DatabaseService } from 'src/outbound/database/database.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { env } from 'process';
-
 
 @Injectable()
 export class AuthRepositoryService {
@@ -45,7 +43,6 @@ export class AuthRepositoryService {
 
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar logar o usuario. [Repository] - [Metodo] - [Login]: ${error}`);
-            
         }
     }
 
