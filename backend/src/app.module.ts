@@ -6,10 +6,18 @@ import { PessoasModule } from './inbound/http-controllers/pessoas/pessoas.module
 import { UsuarioRepositoryService } from './outbound/repository/usuario-repository/usuario-repository.service';
 import { UsuariosModule } from './inbound/http-controllers/usuarios/usuarios.module';
 import { AuthRepositoryService } from './outbound/repository/auth-repository/auth-repository.service';
+import { JwtModule } from '@nestjs/jwt';
+import { env } from 'process';
 
 
 @Module({
-  imports: [PessoasModule, UsuariosModule],
+  imports: [PessoasModule, UsuariosModule,
+    JwtModule.register({
+      global: true,
+      secret: env.SECRET_KEY,
+      signOptions: {expiresIn: '60s'}
+    })
+  ],
   controllers: [],
   providers: [ CustomLogger, DatabaseService, UsuarioRepositoryService, AuthRepositoryService],
 })
