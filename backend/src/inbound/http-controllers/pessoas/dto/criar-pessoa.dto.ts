@@ -89,6 +89,8 @@ export class CriarPessoaDto {
     Objetosocial: string | null; 
     @ApiProperty()
     Observacoes: string | null;
+    @ApiProperty()
+    EmpresaId: number
     
     // Construturo atualmente encontra-se apenas com os campos minimos para serem criado
     // sendo necessário futuramente estar realizando refinamento deste DTO.
@@ -130,7 +132,8 @@ export class CriarPessoaDto {
         Inscricaoestadual?: string | null,
         Inscricaomunicipal?: string | null,
         Objetosocial?: string | null,
-        Observacoes?: string | null
+        Observacoes?: string | null,
+        empresaId?: number
     ) {
         this.Nome = Nome;
         this.Matricula = Matricula;
@@ -170,6 +173,7 @@ export class CriarPessoaDto {
         this.Inscricaomunicipal = Inscricaomunicipal;
         this.Objetosocial = Objetosocial;
         this.Observacoes = Observacoes;
+        this.EmpresaId = empresaId
     }
     
 }

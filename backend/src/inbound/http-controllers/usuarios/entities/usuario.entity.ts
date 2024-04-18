@@ -14,13 +14,19 @@ export class Usuario {
     @ApiProperty()
     Senha: string
     @ApiProperty()
-    Inativo: boolean = false
+    Inativo: boolean = false    
+    @ApiProperty()
+    EmpresaId: number
+    @ApiProperty()
+    Role: number
 
-    constructor(pessoaId?: number, email?: Email, senha?: string) {
+    constructor(pessoaId?: number, email?: Email, senha?: string, empresaId?: number, role?: number) {
         this.Uuid = randomUUID();
         this.PessoaId = pessoaId,
         this.Email = email,
         this.Senha = this.hashSenha(senha)
+        this.EmpresaId
+        this.Role = role
     }
     
     /**

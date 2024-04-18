@@ -75,6 +75,8 @@ export class UsuarioRepositoryService implements Repository {
                     Email: usuario.Email.email,
                     Inativo: false,
                     Senha: usuario.Senha,
+                    EmpresaId: usuario.EmpresaId,
+                    RoleId: usuario.Role
                 }
             })
             this.logger.log(`Efetuado criação de usuario [Repository] - [Metodo] - [criar novo registro.]`)

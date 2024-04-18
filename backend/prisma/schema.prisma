@@ -64,6 +64,9 @@ model Pessoa {
   Observacoes       String?
 
   Usuario           Usuario?
+  Empresa           Empresa @relation(fields: [EmpresaId], references: [Id])
+  EmpresaId         Int
+
 }
 // Begin region     ---- Pessoa
 
@@ -101,6 +104,7 @@ model PessoaTelefones {
 // End region     ---- Telefone
 
 
+
 // Begin region     ---- Usuario
 model Usuario {
   Uuid            String      @unique()    
@@ -110,7 +114,61 @@ model Usuario {
   Email           String? @unique
   Senha           String?
   Inativo         Boolean?
+  DataCriacao     DateTime  @default(now())
+  DataAtualizacao DateTime? @updatedAt()
+  DataInativacao  DateTime? @db.Timestamp()
 
-  @@index([Uuid, PessoaId, Email])
+  Role            Role @relation(fields: [RoleId], references: [Id])
+  RoleId          Int
+  Empresa         Empresa @relation(fields: [EmpresaId], references: [Id])
+  EmpresaId       Int @unique()
+
+  @@index([Uuid, PessoaId, Email, RoleId])
 }
+
+
+model Role { 
+  Uuid            String @unique()
+  Id              Int    @default(autoincrement()) @id
+  Nome            String
+  Permissoes      Permissoes[]
+  Usuario         Usuario[] 
+  
+  DataCriacao     DateTime  @default(now())
+  DataAtualizacao DateTime? @updatedAt()
+  DataDeRemocao   DateTime? @db.Timestamp()
+
+}
+
+model Permissoes {
+  Uuid            String @unique()
+  Id              Int    @default(autoincrement()) @id
+  Role            Role @relation(fields: [RoleId], references: [Id])
+  RoleId          Int
+  Acao            String
+  Subject         String
+  
+  DataCriacao     DateTime  @default(now())
+  DataAtualizacao DateTime? @updatedAt()
+  DataDeRemocao   DateTime? @db.Timestamp()
+}
+// End region     ---- Usuario
+
+
+// Begin region     ---- Empresa
+model Empresa {
+  Uuid            String @unique()
+  Id              Int    @default(autoincrement()) @id
+  Nome            String
+  Pessoas         Pessoa[]
+  Usuario         Usuario[]
+
+  DataCriacao     DateTime  @default(now())
+  DataAtualizacao DateTime? @updatedAt()
+  DataDeRemocao   DateTime? @db.Timestamp()
+}
+
+// End region     ---- Empresa
+
+
 // End Region     ---- Models

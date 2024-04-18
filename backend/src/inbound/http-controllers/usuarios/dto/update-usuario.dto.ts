@@ -8,10 +8,13 @@ export class UpdateUsuarioDto{
     Senha: string
     @ApiProperty()
     Inativo: boolean = false
+    @ApiProperty()
+    Role: number
 
-    constructor(email: Email, senha: string, inativo: boolean) {
+    constructor(email: Email, senha: string, inativo: boolean, role: number) {
         this.Email = email,
         this.Senha = senha
         this.Inativo = inativo
+        this.Role = role
     }
 }

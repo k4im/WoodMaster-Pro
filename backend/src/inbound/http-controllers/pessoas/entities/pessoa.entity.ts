@@ -20,6 +20,8 @@ export class PessoaEntity {
 
     PessoaTelefones: Telefone[]
 
+    EmpresaId: number
+    
     Cliente: boolean;
     Colaborador: boolean;
     Fornecedor: boolean;
@@ -92,7 +94,8 @@ export class PessoaEntity {
         Inscricaoestadual?: string | null,
         Inscricaomunicipal?: string | null,
         Objetosocial?: string | null,
-        Observacoes?: string | null
+        Observacoes?: string | null,
+        empresaId?: number
     ) {
         this.Nome = Nome;
         this.Matricula = Matricula;
@@ -132,6 +135,7 @@ export class PessoaEntity {
         this.Inscricaomunicipal = Inscricaomunicipal;
         this.Objetosocial = Objetosocial;
         this.Observacoes = Observacoes;
+        this.EmpresaId = empresaId
     }
     /**
      * O metodo poderá ser utilizado para criação de testes desta entidade
@@ -186,18 +190,45 @@ export class PessoaEntity {
 
     criarPessoaPorDto(data: CriarPessoaDto) {
         return new PessoaEntity(
-            data.Nome, 
-            null, 
-            data.Codigo, 
-            new Date(),
+            data.Nome,
+            data.Matricula,
+            data.Codigo,
+            data.Datainclusao,
             data.Inativo,
-            null,
+            data.Estrangeiro,
             data.Email,
             data.PessoaEndereco,
             data.PessoaTelefones,
             data.Cliente,
             data.Colaborador,
             data.Fornecedor,
+            data.Tipopj,
+            data.Datanascimento,
+            data.Pai,
+            data.Mae,
+            data.Sexo,
+            data.Rg,
+            data.Emissor,
+            data.Ufemissor,
+            data.Datarg,
+            data.Cpf,
+            data.Ctps,
+            data.Datactps,
+            data.Nrpis,
+            data.Datapis,
+            data.Regprofnumero,
+            data.Conselho,
+            data.Ufconselho,
+            data.Regprofserie,
+            data.Profissao,
+            data.Dependentes,
+            data.Razaosocial,
+            data.Cnpj,
+            data.Inscricaoestadual,
+            data.Inscricaomunicipal,
+            data.Objetosocial,
+            data.Observacoes,
+            data.EmpresaId
         );
 
     }

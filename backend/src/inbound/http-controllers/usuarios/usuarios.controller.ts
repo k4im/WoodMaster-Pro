@@ -7,6 +7,9 @@ import { query } from 'express';
 import { ResponseDoc } from '../pessoas/doc/Reponse.doc';
 import { Usuario } from './entities/usuario.entity';
 import { Response } from 'express';
+import { PermissionRequired } from 'src/decorators/permission.decorator';
+import { Permissoes } from 'src/enum/permissoes.enum';
+import { Role } from 'src/enum/roles.enum';
 
 @ApiTags("Usuários")
 @Controller('usuarios')
@@ -19,6 +22,7 @@ export class UsuariosController {
     description: `Uma pessoa poderá ter **apenas um usuario.**`
   })
   @ApiResponse({status: 201, description: "Caso seja criado o usuario corretamente estara encaminhando um retorno HTTP 201"})
+  @PermissionRequired(Permissoes.create)
   async create(@Body() createUsuarioDto: CriarUsuarioDto, @Res() res: Response) {
     try {
         let result = await this.usuariosService.create(createUsuarioDto);
@@ -43,6 +47,7 @@ export class UsuariosController {
     name: "limit",
     description: "O limite estará limitando o resultado apresentado por pagina."
   })
+  @PermissionRequired(Permissoes.read)
   async findAll(@Query("pagina") pagina: number, @Query("limit") limit: number, @Res() res: Response) {
     try {
       let result = await this.usuariosService.findAll(parseInt(`${pagina}`), parseInt(`${limit}`));
@@ -64,6 +69,7 @@ export class UsuariosController {
     name: "uuid",
     description: "O UUID será utilizado para buscar um registro em especifico."
   })
+  @PermissionRequired(Permissoes.read)
   async findOne(@Query('uuid') uuid: string, @Res() res: Response) {
     try {
         let result = await this.usuariosService.findOne(uuid);
@@ -84,6 +90,7 @@ export class UsuariosController {
     name: "uuid",
     description: "O UUID será utilizado para buscar um registro em especifico."
   })
+  @PermissionRequired(Permissoes.update)
   async update(@Query('uuid') uuid: string, @Body() updateUsuarioDto: UpdateUsuarioDto, @Res() res: Response) {
     try {
       let result = await this.usuariosService.update(uuid, updateUsuarioDto);
@@ -104,6 +111,7 @@ export class UsuariosController {
     name: "uuid",
     description: "O UUID será utilizado para remover um registro em especifico."
   })
+  @PermissionRequired(Permissoes.remove)
   async remove(@Query('uuid') uuid: string, @Res() res: Response) {
     try {
       let result = await this.usuariosService.remove(uuid);
