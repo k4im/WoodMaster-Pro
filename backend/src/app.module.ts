@@ -8,6 +8,7 @@ import { UsuariosModule } from './inbound/http-controllers/usuarios/usuarios.mod
 import { AuthRepositoryService } from './outbound/repository/auth-repository/auth-repository.service';
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'process';
+import { AuthModule } from './inbound/http-controllers/auth/auth.module';
 
 
 @Module({
@@ -16,7 +17,8 @@ import { env } from 'process';
       global: true,
       secret: env.SECRET_KEY,
       signOptions: {expiresIn: '60s'}
-    })
+    }),
+    AuthModule
   ],
   controllers: [],
   providers: [ CustomLogger, DatabaseService, UsuarioRepositoryService, AuthRepositoryService],
