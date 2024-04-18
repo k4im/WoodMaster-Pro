@@ -12,6 +12,7 @@ import { AuthModule } from './inbound/http-controllers/auth/auth.module';
 import { EmpresaModule } from './inbound/http-controllers/empresa/empresa.module';
 import { RolesModule } from './inbound/http-controllers/roles/roles.module';
 import { PermissionsModule } from './inbound/http-controllers/permissions/permissions.module';
+import { DatabaseModule } from './outbound/database/database.module';
 
 
 @Module({
@@ -24,7 +25,8 @@ import { PermissionsModule } from './inbound/http-controllers/permissions/permis
     AuthModule,
     EmpresaModule,
     RolesModule,
-    PermissionsModule
+    PermissionsModule,
+    DatabaseModule
   ],
   controllers: [],
   providers: [ CustomLogger, DatabaseService, UsuarioRepositoryService, AuthRepositoryService],
