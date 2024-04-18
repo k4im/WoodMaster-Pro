@@ -9,6 +9,9 @@ import { AuthRepositoryService } from './outbound/repository/auth-repository/aut
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'process';
 import { AuthModule } from './inbound/http-controllers/auth/auth.module';
+import { EmpresaModule } from './inbound/http-controllers/empresa/empresa.module';
+import { RolesModule } from './inbound/http-controllers/roles/roles.module';
+import { PermissionsModule } from './inbound/http-controllers/permissions/permissions.module';
 
 
 @Module({
@@ -18,7 +21,10 @@ import { AuthModule } from './inbound/http-controllers/auth/auth.module';
       secret: env.SECRET_KEY,
       signOptions: {expiresIn: '60s'}
     }),
-    AuthModule
+    AuthModule,
+    EmpresaModule,
+    RolesModule,
+    PermissionsModule
   ],
   controllers: [],
   providers: [ CustomLogger, DatabaseService, UsuarioRepositoryService, AuthRepositoryService],

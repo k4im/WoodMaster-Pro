@@ -20,7 +20,6 @@ export class PessoaEntity {
 
     PessoaTelefones: Telefone[]
 
-    EmpresaId: number
     
     Cliente: boolean;
     Colaborador: boolean;
@@ -95,7 +94,6 @@ export class PessoaEntity {
         Inscricaomunicipal?: string | null,
         Objetosocial?: string | null,
         Observacoes?: string | null,
-        empresaId?: number
     ) {
         this.Nome = Nome;
         this.Matricula = Matricula;
@@ -135,7 +133,6 @@ export class PessoaEntity {
         this.Inscricaomunicipal = Inscricaomunicipal;
         this.Objetosocial = Objetosocial;
         this.Observacoes = Observacoes;
-        this.EmpresaId = empresaId
     }
     /**
      * O metodo poderá ser utilizado para criação de testes desta entidade
@@ -228,7 +225,6 @@ export class PessoaEntity {
             data.Inscricaomunicipal,
             data.Objetosocial,
             data.Observacoes,
-            data.EmpresaId
         );
 
     }

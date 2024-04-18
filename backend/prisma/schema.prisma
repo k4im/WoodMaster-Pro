@@ -64,8 +64,6 @@ model Pessoa {
   Observacoes       String?
 
   Usuario           Usuario?
-  Empresa           Empresa @relation(fields: [EmpresaId], references: [Id])
-  EmpresaId         Int
 
 }
 // Begin region     ---- Pessoa
@@ -120,8 +118,6 @@ model Usuario {
 
   Role            Role @relation(fields: [RoleId], references: [Id])
   RoleId          Int
-  Empresa         Empresa @relation(fields: [EmpresaId], references: [Id])
-  EmpresaId       Int @unique()
 
   @@index([Uuid, PessoaId, Email, RoleId])
 }
@@ -143,7 +139,7 @@ model Role {
 model Permissoes {
   Uuid            String @unique()
   Id              Int    @default(autoincrement()) @id
-  Role            Role @relation(fields: [RoleId], references: [Id])
+  Role            Role @relation(fields: [RoleId], references: [Id], onDelete: NoAction, onUpdate: Cascade )
   RoleId          Int
   Acao            String
   Subject         String
@@ -155,20 +151,6 @@ model Permissoes {
 // End region     ---- Usuario
 
 
-// Begin region     ---- Empresa
-model Empresa {
-  Uuid            String @unique()
-  Id              Int    @default(autoincrement()) @id
-  Nome            String
-  Pessoas         Pessoa[]
-  Usuario         Usuario[]
-
-  DataCriacao     DateTime  @default(now())
-  DataAtualizacao DateTime? @updatedAt()
-  DataDeRemocao   DateTime? @db.Timestamp()
-}
-
-// End region     ---- Empresa
 
 
 // End Region     ---- Models
