@@ -21,7 +21,7 @@ export class PrismaClientManager implements OnModuleDestroy {
 
     // create and cache a new client when needed
     if (!client) {
-      const databaseUrl = process.env.DATABASE_URL!.replace('public', tenantId);
+      const databaseUrl = process.env.DATABASE_URL!.replace('WoodMaster_master', `WoodMaster_${tenantId}`);
 
       client = new PrismaClient({
         datasources: {
@@ -31,11 +31,8 @@ export class PrismaClientManager implements OnModuleDestroy {
         },
       });
 
-      // setup prisma middlewares if any
-
       this.clients[tenantId] = client;
     }
-
     return client;
   }
 

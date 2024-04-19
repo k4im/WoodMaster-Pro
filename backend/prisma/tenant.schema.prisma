@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+// Begin Region     ---- Models
+
+// Begin region     ---- Pessoa
+model Pessoa {
+  Uuid              String   @unique()
+  Id                Int     @default(autoincrement()) @id
+  Nome              String?
+  Apelido           String?
+  Matricula         String?
+  Codigo            Int? 
+  Datainclusao      DateTime? @default(now())
+  Inativo           Boolean?  @default(false)
+  Estrangeiro       Boolean? @default(false)
+  Email             String? 
+  Cliente           Boolean?
+  Colaborador       Boolean?
+  Fornecedor        Boolean?
+  Tipopj            Boolean?
+  Datanascimento    DateTime?
+  
+  PessoaEndereco    PessoaEnderecos[]
+  PessoaTelefones   PessoaTelefones[]
+
+  Estadocivil       String?    // Alterei para string pois a tabela ESTADOCIVIL não está definida
+  Pai               String?
+  Mae               String?
+  Sexo              String?    // Alterei para string pois a tabela SEXO não está definida
+  Rg                String?
+  Emissor           String?
+  Ufemissor         String?   // Alterei para string pois a tabela UFEMISSOR não está definida
+  Datarg            DateTime?
+  Cpf               String?
+  Ctps              String?
+  Datactps          DateTime?
+  Nrpis             String?
+  Datapis           DateTime?
+  Regprofnumero     String?
+  Conselho          String?    // Alterei para string pois a tabela CONSELHO não está definida
+  Ufconselho        String?    // Alterei para string pois a tabela UFCONSELHO não está definida
+  Regprofserie      String?
+  Profissao         String?    // Alterei para string pois a tabela PROFISSAO não está definida
+  Dependentes       Int?
+  Razaosocial       String?
+  Cnpj              String?
+  Inscricaoestadual String?
+  Inscricaomunicipal String?
+  Objetosocial      String?    // Alterei para string, removendo espaço e caracteres especiais
+  Observacoes       String?
+}
+// Begin region     ---- Pessoa
+
+
+// Begin region     ---- Endereços
+model PessoaEnderecos {
+  Id                Int      @default(autoincrement()) @id
+  Pessoa            Pessoa   @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)    // Alterei para string pois a tabela PESSOA não está definida
+  PessoaId          Int    // Alterei para string pois a tabela PESSOA não está definida
+  Logradouro        String?
+  Complemento       String?
+  Bairro            String?
+  Caixapostal       String?
+  Pais              String?    // Alterei para string pois a tabela PAIS não está definida
+  Estado            String?    // Alterei para string pois a tabela ESTADO não está definida
+  Municipio         String?    // Alterei para string pois a tabela MUNICIPIO não está definida
+  Cep               String?
+  Enderecoprincipal Boolean
+  Observacoes       String?
+}
+// Ed region     ---- Endereço
+
+// Begin region     ---- Telefone
+model PessoaTelefones {
+  Id                 Int    @default(autoincrement())  @id
+  Pessoa             Pessoa @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)
+  PessoaId           Int    
+  Telefone           String?
+  Ddi                String?
+  Ddd                String?
+  Ramal              String?
+  Telefonoprincipal  Boolean?
+  Observacoes        String?
+}
+// End region     ---- Telefone
