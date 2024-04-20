@@ -56,6 +56,7 @@ model Usuario {
   Nome            String? 
   Email           String @unique()  
   Inativo         Boolean @default(false)
+  Senha           String
   
   Tenant          Tenant @relation(fields: [TenantId], references: [Id])
   TenantId        Int
@@ -247,7 +248,7 @@ model Servicos {
   Descricao         String?
   Valor             Decimal
   Desconto          Decimal?
-  
+
   dataCriacao       DateTime? @default(now())
   dataUpdate        DateTime? @updatedAt()
   dataRemocao       DateTime? @db.Timestamp()
