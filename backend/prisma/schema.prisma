@@ -16,6 +16,20 @@ datasource db {
 
 // Begin Region     ---- Models
 
+// Begin Region     ---- Administradores
+model Administradores {
+  Uuid              String?  @unique() @default(uuid())
+  Id                Int     @default(autoincrement()) @id
+  Nome              String
+  Email             String @unique()
+  Inativo           Boolean @default(false)
+
+  dataCriacao       DateTime? @default(now())
+  dataUpdate        DateTime? @updatedAt()
+  dataRemocao       DateTime? @db.Timestamp()
+}
+// End Region     ---- Administradores
+
 // Begin region     ---- Tenant
 model Tenant {
   Uuid              String?  @unique() @default(uuid())
