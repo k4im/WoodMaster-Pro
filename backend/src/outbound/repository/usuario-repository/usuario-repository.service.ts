@@ -59,15 +59,19 @@ export class UsuarioRepositoryService implements Repository {
             // Checa se existe um usuario criado para a pessoa.
             let checkUser = await this.databaseService.usuario.findUnique({
                 where: {
-                    PessoaId: usuario.PessoaId
+                    PessoaId: usuario.PessoaId,
+                    Email: usuario.Email.email,
+                    TenantId: usuario.EmpresaId
                 }
             });
+
             // Caso um usuario já exista para uma pessoa será retornado nulo,
             // pois uma pessoa só poderá possuir um login.
             if(checkUser) {
                 this.logger.log(`Usuario já existente para esta pessoa. [Repository] - [Metodo] - [criar novo registro.]`)
                 return false
             };
+            
             let result = await this.databaseService.usuario.create({
                 data: {
                     PessoaId: usuario.PessoaId,
@@ -75,7 +79,8 @@ export class UsuarioRepositoryService implements Repository {
                     Email: usuario.Email.email,
                     Inativo: false,
                     Senha: usuario.Senha,
-                    RoleId: usuario.Role
+                    RoleId: usuario.Role,
+                    TenantId: 0
                 }
             })
             this.logger.log(`Efetuado criação de usuario [Repository] - [Metodo] - [criar novo registro.]`)

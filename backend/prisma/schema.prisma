@@ -27,6 +27,8 @@ model Administradores {
   dataCriacao       DateTime? @default(now())
   dataUpdate        DateTime? @updatedAt()
   dataRemocao       DateTime? @db.Timestamp()
+
+  @@index([Uuid, Email, Inativo, Nome])
 }
 // End Region     ---- Administradores
 
@@ -45,6 +47,8 @@ model Tenant {
   Pessoas           Pessoa[]
   Estoque           Estoque?
   Servicos          Servicos[]
+
+  @@index([Uuid, Inativo])
 }
 // End region     ---- Tenant
 
@@ -57,17 +61,19 @@ model Usuario {
   Email           String @unique()  
   Inativo         Boolean @default(false)
   Senha           String
-  
-  Tenant          Tenant @relation(fields: [TenantId], references: [Id])
-  TenantId        Int
-  Role            Role  @relation(fields: [RoleId], references: [Id])
-  RoleId          Int
+
+  Tenant          Tenant @relation(fields: [TenantId], references: [Uuid])
+  TenantId        String
+  Role            Role  @relation(fields: [RoleId], references: [Uuid])
+  RoleId          String
   Pessoa          Pessoa @relation(fields: [PessoaId], references: [Id])
   PessoaId        Int @unique()
 
   dataCriacao     DateTime? @default(now())
   dataUpdate      DateTime? @updatedAt()
   dataRemocao     DateTime? @db.Timestamp()
+
+  @@index([Uuid, Email, Inativo, TenantId, PessoaId, RoleId])
 
 }
 
@@ -82,6 +88,8 @@ model Role {
   DataAtualizacao DateTime? @updatedAt()
   DataDeRemocao   DateTime? @db.Timestamp()
 
+
+  @@index([Uuid])
 }
 
 model Permissoes {
@@ -94,6 +102,8 @@ model Permissoes {
   DataCriacao     DateTime  @default(now())
   DataAtualizacao DateTime? @updatedAt()
   DataDeRemocao   DateTime? @db.Timestamp()
+
+  @@index([Uuid, Acao])
 }
 // End region     ----  Usuario
 
@@ -144,8 +154,8 @@ model Pessoa {
   Objetosocial      String?    // Alterei para string, removendo espaço e caracteres especiais
   Observacoes       String?
   
-  Tenant            Tenant @relation(fields: [TenantId], references: [Id]) 
-  TenantId          Int 
+  Tenant            Tenant @relation(fields: [TenantId], references: [Uuid]) 
+  TenantId          String 
 
   Usuario           Usuario?
   Servicos          Servicos[]
@@ -154,6 +164,7 @@ model Pessoa {
   dataUpdate        DateTime? @updatedAt()
   dataRemocao       DateTime? @db.Timestamp()
   
+  @@index([Uuid, TenantId, Cliente, Fornecedor, Colaborador, Inativo, Matricula, Codigo, Tipopj, Email])
 }
 // Begin region     ---- Pessoa
 
@@ -177,6 +188,8 @@ model PessoaEnderecos {
   dataCriacao         DateTime? @default(now())
   dataUpdate          DateTime? @updatedAt()
   dataRemocao         DateTime? @db.Timestamp()
+
+  @@index([PessoaId])
 }
 // Ed region     ---- Endereço
 
@@ -195,6 +208,8 @@ model PessoaTelefones {
   dataCriacao         DateTime? @default(now())
   dataUpdate          DateTime? @updatedAt()
   dataRemocao         DateTime? @db.Timestamp()
+
+  @@index([PessoaId])
 }
 // End region     ---- Telefone
 
@@ -202,13 +217,15 @@ model PessoaTelefones {
 model Estoque {
   Uuid              String? @unique() @default(uuid())
   Id                Int    @default(autoincrement()) @id
-  Tenant            Tenant @relation(fields: [TenantId], references: [Id])
-  TenantId          Int   @unique()
+  Tenant            Tenant @relation(fields: [TenantId], references: [Uuid])
+  TenantId          String   @unique()
   Produtos          Produtos[]
 
   dataCriacao       DateTime? @default(now())
   dataUpdate        DateTime? @updatedAt()
   dataRemocao       DateTime? @db.Timestamp()
+
+  @@index([TenantId, Uuid])
 }
 
 model Produtos {
@@ -230,6 +247,8 @@ model Produtos {
   dataCriacao       DateTime? @default(now())
   dataUpdate        DateTime? @updatedAt()
   dataRemocao       DateTime? @db.Timestamp()
+
+  @@index([EstoqueId, Uuid])
 }
 // End region     ---- Estoque
 
@@ -237,8 +256,8 @@ model Produtos {
 model Servicos {
   Uuid              String? @unique() @default(uuid())
   Id                Int    @default(autoincrement()) @id
-  Tenant            Tenant @relation(fields: [TenantId], references: [Id])
-  TenantId          Int    @unique()
+  Tenant            Tenant @relation(fields: [TenantId], references: [Uuid])
+  TenantId          String @unique()
   Pessoa            Pessoa @relation(fields: [PessoaId], references: [Id])
   PessoaId          Int
   ProdutosUtilizados Produtos[]
@@ -252,6 +271,8 @@ model Servicos {
   dataCriacao       DateTime? @default(now())
   dataUpdate        DateTime? @updatedAt()
   dataRemocao       DateTime? @db.Timestamp()
+
+  @@index([Uuid, TenantId, PessoaId])
 }
 // End region   ---- Serviço
 

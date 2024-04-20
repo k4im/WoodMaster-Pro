@@ -1,4 +1,21 @@
 -- CreateTable
+CREATE TABLE `Administradores` (
+    `Uuid` VARCHAR(191) NULL,
+    `Id` INTEGER NOT NULL AUTO_INCREMENT,
+    `Nome` VARCHAR(191) NOT NULL,
+    `Email` VARCHAR(191) NOT NULL,
+    `Inativo` BOOLEAN NOT NULL DEFAULT false,
+    `dataCriacao` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `dataUpdate` DATETIME(3) NULL,
+    `dataRemocao` TIMESTAMP NULL,
+
+    UNIQUE INDEX `Administradores_Uuid_key`(`Uuid`),
+    UNIQUE INDEX `Administradores_Email_key`(`Email`),
+    INDEX `Administradores_Uuid_Email_Inativo_Nome_idx`(`Uuid`, `Email`, `Inativo`, `Nome`),
+    PRIMARY KEY (`Id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Tenant` (
     `Uuid` VARCHAR(191) NULL,
     `Id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -9,6 +26,7 @@ CREATE TABLE `Tenant` (
     `dataRemocao` TIMESTAMP NULL,
 
     UNIQUE INDEX `Tenant_Uuid_key`(`Uuid`),
+    INDEX `Tenant_Uuid_Inativo_idx`(`Uuid`, `Inativo`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -19,8 +37,9 @@ CREATE TABLE `Usuario` (
     `Nome` VARCHAR(191) NULL,
     `Email` VARCHAR(191) NOT NULL,
     `Inativo` BOOLEAN NOT NULL DEFAULT false,
-    `TenantId` INTEGER NOT NULL,
-    `RoleId` INTEGER NOT NULL,
+    `Senha` VARCHAR(191) NOT NULL,
+    `TenantId` VARCHAR(191) NOT NULL,
+    `RoleId` VARCHAR(191) NOT NULL,
     `PessoaId` INTEGER NOT NULL,
     `dataCriacao` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
     `dataUpdate` DATETIME(3) NULL,
@@ -29,6 +48,7 @@ CREATE TABLE `Usuario` (
     UNIQUE INDEX `Usuario_Uuid_key`(`Uuid`),
     UNIQUE INDEX `Usuario_Email_key`(`Email`),
     UNIQUE INDEX `Usuario_PessoaId_key`(`PessoaId`),
+    INDEX `Usuario_Uuid_Email_Inativo_TenantId_PessoaId_RoleId_idx`(`Uuid`, `Email`, `Inativo`, `TenantId`, `PessoaId`, `RoleId`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -42,6 +62,7 @@ CREATE TABLE `Role` (
     `DataDeRemocao` TIMESTAMP NULL,
 
     UNIQUE INDEX `Role_Uuid_key`(`Uuid`),
+    INDEX `Role_Uuid_idx`(`Uuid`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -56,6 +77,7 @@ CREATE TABLE `Permissoes` (
     `DataDeRemocao` TIMESTAMP NULL,
 
     UNIQUE INDEX `Permissoes_Uuid_key`(`Uuid`),
+    INDEX `Permissoes_Uuid_Acao_idx`(`Uuid`, `Acao`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -100,12 +122,13 @@ CREATE TABLE `Pessoa` (
     `Inscricaomunicipal` VARCHAR(191) NULL,
     `Objetosocial` VARCHAR(191) NULL,
     `Observacoes` VARCHAR(191) NULL,
-    `TenantId` INTEGER NOT NULL,
+    `TenantId` VARCHAR(191) NOT NULL,
     `dataCriacao` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
     `dataUpdate` DATETIME(3) NULL,
     `dataRemocao` TIMESTAMP NULL,
 
     UNIQUE INDEX `Pessoa_Uuid_key`(`Uuid`),
+    INDEX `Pessoa_Uuid_TenantId_Cliente_Fornecedor_Colaborador_Inativo__idx`(`Uuid`, `TenantId`, `Cliente`, `Fornecedor`, `Colaborador`, `Inativo`, `Matricula`, `Codigo`, `Tipopj`, `Email`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -127,6 +150,7 @@ CREATE TABLE `PessoaEnderecos` (
     `dataUpdate` DATETIME(3) NULL,
     `dataRemocao` TIMESTAMP NULL,
 
+    INDEX `PessoaEnderecos_PessoaId_idx`(`PessoaId`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -144,6 +168,7 @@ CREATE TABLE `PessoaTelefones` (
     `dataUpdate` DATETIME(3) NULL,
     `dataRemocao` TIMESTAMP NULL,
 
+    INDEX `PessoaTelefones_PessoaId_idx`(`PessoaId`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -151,13 +176,14 @@ CREATE TABLE `PessoaTelefones` (
 CREATE TABLE `Estoque` (
     `Uuid` VARCHAR(191) NULL,
     `Id` INTEGER NOT NULL AUTO_INCREMENT,
-    `TenantId` INTEGER NOT NULL,
+    `TenantId` VARCHAR(191) NOT NULL,
     `dataCriacao` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
     `dataUpdate` DATETIME(3) NULL,
     `dataRemocao` TIMESTAMP NULL,
 
     UNIQUE INDEX `Estoque_Uuid_key`(`Uuid`),
     UNIQUE INDEX `Estoque_TenantId_key`(`TenantId`),
+    INDEX `Estoque_TenantId_Uuid_idx`(`TenantId`, `Uuid`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -171,11 +197,13 @@ CREATE TABLE `Produtos` (
     `Descricao` VARCHAR(191) NULL,
     `Parteleira` VARCHAR(191) NULL,
     `Coluna` VARCHAR(191) NULL,
+    `Valor` DECIMAL(65, 30) NOT NULL,
     `dataCriacao` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
     `dataUpdate` DATETIME(3) NULL,
     `dataRemocao` TIMESTAMP NULL,
 
     UNIQUE INDEX `Produtos_Uuid_key`(`Uuid`),
+    INDEX `Produtos_EstoqueId_Uuid_idx`(`EstoqueId`, `Uuid`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -183,17 +211,20 @@ CREATE TABLE `Produtos` (
 CREATE TABLE `Servicos` (
     `Uuid` VARCHAR(191) NULL,
     `Id` INTEGER NOT NULL AUTO_INCREMENT,
-    `TenantId` INTEGER NOT NULL,
+    `TenantId` VARCHAR(191) NOT NULL,
     `PessoaId` INTEGER NOT NULL,
     `TipoServico` VARCHAR(191) NULL,
     `DataDeEntrega` DATETIME(3) NULL,
     `Descricao` VARCHAR(191) NULL,
+    `Valor` DECIMAL(65, 30) NOT NULL,
+    `Desconto` DECIMAL(65, 30) NULL,
     `dataCriacao` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
     `dataUpdate` DATETIME(3) NULL,
     `dataRemocao` TIMESTAMP NULL,
 
     UNIQUE INDEX `Servicos_Uuid_key`(`Uuid`),
     UNIQUE INDEX `Servicos_TenantId_key`(`TenantId`),
+    INDEX `Servicos_Uuid_TenantId_PessoaId_idx`(`Uuid`, `TenantId`, `PessoaId`),
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -216,16 +247,16 @@ CREATE TABLE `_ProdutosToServicos` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_TenantId_fkey` FOREIGN KEY (`TenantId`) REFERENCES `Tenant`(`Id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_TenantId_fkey` FOREIGN KEY (`TenantId`) REFERENCES `Tenant`(`Uuid`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_RoleId_fkey` FOREIGN KEY (`RoleId`) REFERENCES `Role`(`Id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_RoleId_fkey` FOREIGN KEY (`RoleId`) REFERENCES `Role`(`Uuid`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Usuario` ADD CONSTRAINT `Usuario_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Pessoa` ADD CONSTRAINT `Pessoa_TenantId_fkey` FOREIGN KEY (`TenantId`) REFERENCES `Tenant`(`Id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Pessoa` ADD CONSTRAINT `Pessoa_TenantId_fkey` FOREIGN KEY (`TenantId`) REFERENCES `Tenant`(`Uuid`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `PessoaEnderecos` ADD CONSTRAINT `PessoaEnderecos_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -234,13 +265,13 @@ ALTER TABLE `PessoaEnderecos` ADD CONSTRAINT `PessoaEnderecos_PessoaId_fkey` FOR
 ALTER TABLE `PessoaTelefones` ADD CONSTRAINT `PessoaTelefones_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Estoque` ADD CONSTRAINT `Estoque_TenantId_fkey` FOREIGN KEY (`TenantId`) REFERENCES `Tenant`(`Id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Estoque` ADD CONSTRAINT `Estoque_TenantId_fkey` FOREIGN KEY (`TenantId`) REFERENCES `Tenant`(`Uuid`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Produtos` ADD CONSTRAINT `Produtos_EstoqueId_fkey` FOREIGN KEY (`EstoqueId`) REFERENCES `Estoque`(`Id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Servicos` ADD CONSTRAINT `Servicos_TenantId_fkey` FOREIGN KEY (`TenantId`) REFERENCES `Tenant`(`Id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Servicos` ADD CONSTRAINT `Servicos_TenantId_fkey` FOREIGN KEY (`TenantId`) REFERENCES `Tenant`(`Uuid`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Servicos` ADD CONSTRAINT `Servicos_PessoaId_fkey` FOREIGN KEY (`PessoaId`) REFERENCES `Pessoa`(`Id`) ON DELETE RESTRICT ON UPDATE CASCADE;
