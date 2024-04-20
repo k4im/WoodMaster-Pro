@@ -18,10 +18,9 @@ datasource db {
 
 // Begin region     ---- Tenant
 model Tenant {
-  Uuid              String   @unique()
+  Uuid              String?  @unique() @default(uuid())
   Id                Int     @default(autoincrement()) @id
   Nome              String?
-  ConnectionString  String
   Inativo           Boolean @default(false)
 
   dataCriacao       DateTime? @default(now())
@@ -29,23 +28,36 @@ model Tenant {
   dataRemocao       DateTime? @db.Timestamp()
 
   Usuarios          Usuario[]
+  Pessoas           Pessoa[]
+  Estoque           Estoque?
+  Servicos          Servicos[]
 }
 // End region     ---- Tenant
 
 
 // Begin region     ---- Usuario
 model Usuario {
-  Uuid            String @unique()
+  Uuid            String? @unique() @default(uuid())
   Id              Int    @default(autoincrement()) @id
   Nome            String? 
+  Email           String @unique()  
+  Inativo         Boolean @default(false)
+  
   Tenant          Tenant @relation(fields: [TenantId], references: [Id])
   TenantId        Int
   Role            Role  @relation(fields: [RoleId], references: [Id])
   RoleId          Int
+  Pessoa          Pessoa @relation(fields: [PessoaId], references: [Id])
+  PessoaId        Int @unique()
+
+  dataCriacao     DateTime? @default(now())
+  dataUpdate      DateTime? @updatedAt()
+  dataRemocao     DateTime? @db.Timestamp()
+
 }
 
 model Role { 
-  Uuid            String @unique()
+  Uuid            String? @unique() @default(uuid())
   Id              Int    @default(autoincrement()) @id
   Nome            String
   Permissoes      Permissoes[]
@@ -58,7 +70,7 @@ model Role {
 }
 
 model Permissoes {
-  Uuid            String @unique()
+  Uuid            String? @unique() @default(uuid())
   Id              Int    @default(autoincrement()) @id
   Role            Role []
   Acao            String
@@ -68,4 +80,160 @@ model Permissoes {
   DataAtualizacao DateTime? @updatedAt()
   DataDeRemocao   DateTime? @db.Timestamp()
 }
-// End region     ---- Usuario
+// End region     ----  Usuario
+
+
+// Begin region     ---- Pessoa
+model Pessoa {
+  Uuid              String?   @unique() @default(uuid())
+  Id                Int     @default(autoincrement()) @id
+  Nome              String?
+  Apelido           String?
+  Matricula         String?
+  Codigo            Int? 
+  Inativo           Boolean?  @default(false)
+  Estrangeiro       Boolean? @default(false)
+  Email             String? 
+  Cliente           Boolean?
+  Colaborador       Boolean?
+  Fornecedor        Boolean?
+  Tipopj            Boolean?
+  Datanascimento    DateTime?
+  
+  PessoaEndereco    PessoaEnderecos[]
+  PessoaTelefones   PessoaTelefones[]
+
+  Estadocivil       String?    // Alterei para string pois a tabela ESTADOCIVIL não está definida
+  Pai               String?
+  Mae               String?
+  Sexo              String?    // Alterei para string pois a tabela SEXO não está definida
+  Rg                String?
+  Emissor           String?
+  Ufemissor         String?   // Alterei para string pois a tabela UFEMISSOR não está definida
+  Datarg            DateTime?
+  Cpf               String?
+  Ctps              String?
+  Datactps          DateTime?
+  Nrpis             String?
+  Datapis           DateTime?
+  Regprofnumero     String?
+  Conselho          String?    // Alterei para string pois a tabela CONSELHO não está definida
+  Ufconselho        String?    // Alterei para string pois a tabela UFCONSELHO não está definida
+  Regprofserie      String?
+  Profissao         String?    // Alterei para string pois a tabela PROFISSAO não está definida
+  Dependentes       Int?
+  Razaosocial       String?
+  Cnpj              String?
+  Inscricaoestadual String?
+  Inscricaomunicipal String?
+  Objetosocial      String?    // Alterei para string, removendo espaço e caracteres especiais
+  Observacoes       String?
+  
+  Tenant            Tenant @relation(fields: [TenantId], references: [Id]) 
+  TenantId          Int 
+
+  Usuario           Usuario?
+  Servicos          Servicos[]
+
+  dataCriacao       DateTime? @default(now())
+  dataUpdate        DateTime? @updatedAt()
+  dataRemocao       DateTime? @db.Timestamp()
+  
+}
+// Begin region     ---- Pessoa
+
+
+// Begin region     ---- Endereços
+model PessoaEnderecos {
+  Id                  Int      @default(autoincrement()) @id
+  Pessoa              Pessoa   @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)    // Alterei para string pois a tabela PESSOA não está definida
+  PessoaId            Int    // Alterei para string pois a tabela PESSOA não está definida
+  Logradouro          String?
+  Complemento         String?
+  Bairro              String?
+  Caixapostal         String?
+  Pais                String?    // Alterei para string pois a tabela PAIS não está definida
+  Estado              String?    // Alterei para string pois a tabela ESTADO não está definida
+  Municipio           String?    // Alterei para string pois a tabela MUNICIPIO não está definida
+  Cep                 String?
+  Enderecoprincipal   Boolean
+  Observacoes         String?
+
+  dataCriacao         DateTime? @default(now())
+  dataUpdate          DateTime? @updatedAt()
+  dataRemocao         DateTime? @db.Timestamp()
+}
+// Ed region     ---- Endereço
+
+// Begin region     ---- Telefone
+model PessoaTelefones {
+  Id                  Int    @default(autoincrement())  @id
+  Pessoa              Pessoa @relation(fields: [PessoaId], references: [Id], onDelete: Cascade, onUpdate: Cascade)
+  PessoaId            Int    
+  Telefone            String?
+  Ddi                 String?
+  Ddd                 String?
+  Ramal               String?
+  Telefonoprincipal   Boolean?
+  Observacoes         String?
+
+  dataCriacao         DateTime? @default(now())
+  dataUpdate          DateTime? @updatedAt()
+  dataRemocao         DateTime? @db.Timestamp()
+}
+// End region     ---- Telefone
+
+// Begin region     ---- Estoque
+model Estoque {
+  Uuid              String? @unique() @default(uuid())
+  Id                Int    @default(autoincrement()) @id
+  Tenant            Tenant @relation(fields: [TenantId], references: [Id])
+  TenantId          Int   @unique()
+  Produtos          Produtos[]
+
+  dataCriacao       DateTime? @default(now())
+  dataUpdate        DateTime? @updatedAt()
+  dataRemocao       DateTime? @db.Timestamp()
+}
+
+model Produtos {
+  Uuid              String? @unique() @default(uuid())
+  Id                Int    @default(autoincrement()) @id
+  Estoque           Estoque @relation(fields: [EstoqueId], references: [Id])
+  EstoqueId         Int
+  Servico           Servicos[]
+  
+
+  Nome              String?
+  Quantidade        Int
+  Descricao         String?
+  Parteleira        String?
+  Coluna            String?
+  
+
+  dataCriacao       DateTime? @default(now())
+  dataUpdate        DateTime? @updatedAt()
+  dataRemocao       DateTime? @db.Timestamp()
+}
+// End region     ---- Estoque
+
+// Begin region   ---- Serviço
+model Servicos {
+  Uuid              String? @unique() @default(uuid())
+  Id                Int    @default(autoincrement()) @id
+  Tenant            Tenant @relation(fields: [TenantId], references: [Id])
+  TenantId          Int    @unique()
+  Pessoa            Pessoa @relation(fields: [PessoaId], references: [Id])
+  PessoaId          Int
+  ProdutosUtilizados Produtos[]
+
+  TipoServico       String?
+  DataDeEntrega     DateTime?
+  Descricao         String?
+
+  dataCriacao       DateTime? @default(now())
+  dataUpdate        DateTime? @updatedAt()
+  dataRemocao       DateTime? @db.Timestamp()
+}
+// End region   ---- Serviço
+
