@@ -80,7 +80,7 @@ export class UsuarioRepositoryService implements Repository {
                     Inativo: false,
                     Senha: usuario.Senha,
                     RoleId: usuario.Role,
-                    TenantId: 0
+                    TenantId: ''
                 }
             })
             this.logger.log(`Efetuado criação de usuario [Repository] - [Metodo] - [criar novo registro.]`)

@@ -16,11 +16,11 @@ export class Usuario {
     @ApiProperty()
     Inativo: boolean = false    
     @ApiProperty()
-    EmpresaId: number
+    EmpresaId: string
     @ApiProperty()
-    Role: number
+    Role: string
 
-    constructor(pessoaId?: number, email?: Email, senha?: string, empresaId?: number, role?: number) {
+    constructor(pessoaId?: number, email?: Email, senha?: string, empresaId?: string, role?: string) {
         this.Uuid = randomUUID();
         this.PessoaId = pessoaId,
         this.Email = email,
