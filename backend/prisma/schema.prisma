@@ -223,6 +223,7 @@ model Produtos {
   Descricao         String?
   Parteleira        String?
   Coluna            String?
+  Valor             Decimal
   
 
   dataCriacao       DateTime? @default(now())
@@ -244,7 +245,9 @@ model Servicos {
   TipoServico       String?
   DataDeEntrega     DateTime?
   Descricao         String?
-
+  Valor             Decimal
+  Desconto          Decimal?
+  
   dataCriacao       DateTime? @default(now())
   dataUpdate        DateTime? @updatedAt()
   dataRemocao       DateTime? @db.Timestamp()
