@@ -11,12 +11,12 @@ import { PermissionRequired } from 'src/decorators/permission.decorator';
 import { Permissoes } from 'src/enum/permissoes.enum';
 import { Role } from 'src/enum/roles.enum';
 
-@ApiTags("Usuários")
+@ApiTags("usuarios")
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
-  @Post("create")
+  @Post("novo/registro")
   @ApiOperation({
     summary: "Rota será utilizada para estar efetuando a criação de um novo usuario.",
     description: `Uma pessoa poderá ter **apenas um usuario.**`
@@ -32,7 +32,7 @@ export class UsuariosController {
     }
   }
 
-  @Get("list")
+  @Get()
   @ApiOperation({
     summary: "Rota será utilizada para buscar usuarios de forma paginada.",
     description: `Estará sendo realizado a paginação de todos os dados presentes no banco de dados.

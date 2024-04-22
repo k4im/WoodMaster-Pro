@@ -7,12 +7,12 @@ import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/
 import { PessoaEntity } from './entities/pessoa.entity';
 import { ResponseDoc } from './doc/Reponse.doc';
 
-@Controller('person')
+@Controller('pessoas')
 @ApiTags("Pessoas")
 export class PessoasController {
   constructor(private readonly pessoasService: PessoasService) {}
 
-  @Post("create")
+  @Post("novo/registro")
   @ApiOperation({summary: "Rota utilizada para criação de novas pessoas."})
   @ApiResponse({status: 201, description: "Estará encaminhando um status 201 caso a operação seja bem sucedida."})
   async create(@Body() createPessoaDto: CriarPessoaDto,  @Res() res: Response) {
@@ -24,7 +24,7 @@ export class PessoasController {
     }
   }
 
-  @Get("list")
+  @Get()
   @ApiOperation({
     summary: "Rota será utilizada para efetuar a listagem de clientes de forma paginada.",
     description: `Estará sendo realizado a paginação de todos os dados presentes no banco de dados.
