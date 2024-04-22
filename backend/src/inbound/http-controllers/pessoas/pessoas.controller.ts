@@ -49,7 +49,7 @@ export class PessoasController {
     }
   }
 
-  @Get(':uuid')
+  @Get("buscar")
   @ApiOperation({
     summary: "Rota será utilizada para efetuar a busca de uma pessoa por um UUID.",
     description: `Estará efetuando a busca de uma pessoa baseando-se em seu UUID, onde estará retornando todos os campos presentes
@@ -70,7 +70,7 @@ export class PessoasController {
     }
   }
 
-  @Put(':uuid')
+  @Put()
   @ApiOperation({
     summary: "Rota será utilizada para efetuar a atualizar uma pessoa baseando-se no UUID.",
     description: `Estará atualizando um registro no banco de dados, onde deverá ser repassado todos os campos presentes no modelo fornecido.
@@ -90,7 +90,7 @@ export class PessoasController {
     }
   }
 
-  @Delete(':uuid')
+  @Delete()
   @ApiOperation({summary: "Rota será utilizada para efetuar a remoção de uma pessoa."})
   @ApiResponse({status: 200, description: "Estará encaminhando um status 200 caso a operação seja bem sucedida."})
   @ApiQuery({

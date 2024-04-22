@@ -57,7 +57,7 @@ export class UsuariosController {
     }
   }
 
-  @Get(':uuid')
+  @Get('buscar')
   @ApiOperation({
     summary: "Rota será utilizada para buscar um usuario em especifico.",
     description: `Estará sendo efetuada a busca de um usuario que possui o **UUID** fornecido
@@ -79,7 +79,7 @@ export class UsuariosController {
     }
   }
 
-  @Put(':uuid')
+  @Put()
   @ApiOperation({
     summary: "A rota estará atualizando um usuario em especifico.",
     description: `Esta rota sera utilizada para efetuar a atualização de um registro no banco de dados,
@@ -100,7 +100,7 @@ export class UsuariosController {
     }
   }
 
-  @Post(':uuid')
+  @Post()
   @ApiOperation({
     summary: "Rota será utilizada para desativar um usuario em especifico.",
     description: `O software estará realizando a operação de inativação de um usuario, portanto o atributo(campo) **Inativo** no banco de dados será setado para **true**
