@@ -42,6 +42,8 @@ export class PessoasController {
   })
   async findAll(@Query("pagina") pagina: number, @Query("limit") limit: number, @Res() res: Response) {
     try {
+      (pagina === undefined) ? pagina = 1:  pagina;
+      (limit === undefined) ? limit = 5:  limit;
       let result = await this.pessoasService.findAll(parseInt(`${pagina}`), parseInt(`${limit}`));
       (result.resultados.length === 0) ?  res.status(404).send({message: "Não encontram-se registros disponivel nesta pagina."}) : res.status(200).send(result); 
     } catch (error) {

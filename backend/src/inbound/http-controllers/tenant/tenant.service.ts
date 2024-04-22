@@ -36,7 +36,9 @@ export class TenantService {
   async findAll(pagina: number, limit: number) {
     this.logger.log(`Processando operação.... [Tenant Service] - [Metodo] - [find all]`)
     try {
-      let result = await this.repo.paginarResultados(pagina, limit);
+      (pagina === undefined) ? pagina = 1:  pagina;
+      (limit === undefined) ? limit = 5:  limit;
+      let result = await this.repo.paginarResultados(parseInt(`${pagina}`), parseInt(`${limit}`));
       this.logger.log(`Efetuado busca paginada [Tenant Service] - [Metodo] - [find all]`)
       return result;
     } catch (error) {
