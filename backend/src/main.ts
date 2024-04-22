@@ -15,6 +15,7 @@ async function bootstrap() {
   .setTitle("WoodMaster-Pro API")
   .setDescription("Api para processos de CRUD do sistema.")
   .setVersion("1.0")
+  .addBearerAuth()
   .build();
   
   const documento = SwaggerModule.createDocument(app, config);

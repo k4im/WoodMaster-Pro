@@ -2,12 +2,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, Res } fr
 import { TenantService } from './tenant.service';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Tenant } from './entities/tenant.entity';
 import { TenantDoc } from './docs/tentant.doc';
 import { ResponseDoc } from '../pessoas/doc/Reponse.doc';
 import { Response } from 'express';
 
+@ApiBearerAuth()
 @Controller('tenant')
 @ApiTags("Tenants")
 export class TenantController {
@@ -78,7 +79,7 @@ export class TenantController {
 
   // Begin Region       ----- atualizar tenant
   @Put()
-  @ApiOperation({summary: "A rota poderá ser utilizada para atualizar um usuario a partir do UUId fornecido."
+  @ApiOperation({summary: "A rota poderá ser utilizada para atualizar um tenant a partir do UUID fornecido."
   })
   @ApiResponse({status: 204, description: `Caso a operação seja realizada corretamente será encaminhado o status 204.`})
   @ApiQuery({
@@ -100,7 +101,7 @@ export class TenantController {
   
   // Begin Region       ----- Remover tenant
   @Delete()
-  @ApiOperation({summary: "A rota poderá ser utilizada para remoção um usuario a partir do UUId fornecido."
+  @ApiOperation({summary: "A rota poderá ser utilizada para remoção um tenant a partir do UUID fornecido."
   })
   @ApiResponse({status: 204, description: `Caso a operação seja realizada corretamente será encaminhado o status 204.`})  
   @ApiQuery({

@@ -3,11 +3,12 @@ import { Response } from 'express';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { PessoasService } from './pessoas.service';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseDoc } from './doc/Reponse.doc';
 
 @Controller('pessoas')
 @ApiTags("Pessoas")
+@ApiBearerAuth()
 export class PessoasController {
   constructor(private readonly pessoasService: PessoasService) {}
 

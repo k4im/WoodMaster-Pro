@@ -13,8 +13,6 @@ export class CriarPessoaDto {
     @ApiProperty()
     Codigo: number | null;
     @ApiProperty()
-    Datainclusao: Date;
-    @ApiProperty()
     Inativo: boolean;
     @ApiProperty()
     Estrangeiro: boolean;
@@ -98,7 +96,6 @@ export class CriarPessoaDto {
         Nome?: string,
         Matricula?: string | null,
         Codigo?: number | null,
-        Datainclusao?: Date,
         Inativo?: boolean,
         Estrangeiro?: boolean,
         Email?: Email,
@@ -138,7 +135,6 @@ export class CriarPessoaDto {
         this.Nome = Nome;
         this.Matricula = Matricula;
         this.Codigo = Codigo;
-        this.Datainclusao = Datainclusao;
         this.Inativo = Inativo;
         this.Estrangeiro = Estrangeiro;
         this.Email = Email;

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, Res } fr
 import { UsuariosService } from './usuarios.service';
 import { CriarUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { query } from 'express';
 import { ResponseDoc } from '../pessoas/doc/Reponse.doc';
 import { Usuario } from './entities/usuario.entity';
@@ -12,6 +12,7 @@ import { Permissoes } from 'src/enum/permissoes.enum';
 import { Role } from 'src/enum/roles.enum';
 
 @ApiTags("usuarios")
+@ApiBearerAuth()
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
@@ -50,6 +51,8 @@ export class UsuariosController {
   @PermissionRequired(Permissoes.read)
   async findAll(@Query("pagina") pagina: number, @Query("limit") limit: number, @Res() res: Response) {
     try {
+      (pagina === undefined) ? pagina = 1:  pagina;
+      (limit === undefined) ? limit = 5:  limit;
       let result = await this.usuariosService.findAll(parseInt(`${pagina}`), parseInt(`${limit}`));
       (result.resultados.length === 0) ? res.status(404).send({message: "Não existe resultados nesta pagina"}): res.status(200).send(result); 
     } catch (error) {

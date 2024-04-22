@@ -64,7 +64,7 @@ export class PessoaRepositoryService implements Repository{
                     Email: pessoa.Email.email,
                     PessoaEndereco: {create: [...pessoa.PessoaEndereco]},
                     PessoaTelefones: {create: [...pessoa.PessoaTelefones]},
-                    TenantId: ''               
+                    TenantId: pessoa.TenantId,        
                 }
             });
             this.logger.log("Pessoa criada com sucesso! [Pessoa Repository] - [Metodo] - [Criar novo registro]")

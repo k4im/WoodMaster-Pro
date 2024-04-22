@@ -67,6 +67,14 @@ export class TenantRepositoryService implements Repository {
     async buscarPorUUID(uuid: string): Promise<any> {
         try {
             let result = await this.database.tenant.findUnique({
+                select: {
+                    Uuid: true, 
+                    Id: false, 
+                    Nome: true,
+                    Inativo: true,
+                    dataCriacao: true,
+                    dataUpdate: true
+                },
                 where: {
                     Uuid: uuid
                 }

@@ -11,7 +11,6 @@ export class PessoaEntity {
     Nome: string;
     Matricula: string | null;
     Codigo: number | null;
-    Datainclusao: Date;
     Inativo: boolean;
     Estrangeiro: boolean;
     
@@ -59,7 +58,6 @@ export class PessoaEntity {
         Nome?: string,
         Matricula?: string | null,
         Codigo?: number | null,
-        Datainclusao?: Date,
         Inativo?: boolean,
         Estrangeiro?: boolean,
         Email?: Email,
@@ -99,7 +97,6 @@ export class PessoaEntity {
         this.Nome = Nome;
         this.Matricula = Matricula;
         this.Codigo = Codigo;
-        this.Datainclusao = Datainclusao;
         this.Inativo = Inativo;
         this.Estrangeiro = Estrangeiro;
         this.Email = Email;
@@ -192,7 +189,6 @@ export class PessoaEntity {
             data.Nome,
             data.Matricula,
             data.Codigo,
-            data.Datainclusao,
             data.Inativo,
             data.Estrangeiro,
             data.Email,

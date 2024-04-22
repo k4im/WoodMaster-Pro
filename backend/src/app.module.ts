@@ -21,7 +21,7 @@ import { TenantRepositoryService } from './outbound/repository/tenant-repository
     JwtModule.register({
       global: true,
       secret: env.SECRET_KEY,
-      signOptions: {expiresIn: '60s'}
+      signOptions: {expiresIn: '1h'}
     }),
     AuthModule,
     TenantModule,
