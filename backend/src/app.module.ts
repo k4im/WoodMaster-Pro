@@ -14,6 +14,7 @@ import { AdminModule } from './inbound/http-controllers/admin/admin.module';
 import { EstoqueModule } from './inbound/http-controllers/estoque/estoque.module';
 import { ProdutosModule } from './inbound/http-controllers/produtos/produtos.module';
 import { ServicosModule } from './inbound/http-controllers/servicos/servicos.module';
+import { TenantRepositoryService } from './outbound/repository/tenant-repository/tenant-repository.service';
 
 @Module({
   imports: [PessoasModule, UsuariosModule,
@@ -28,6 +29,6 @@ import { ServicosModule } from './inbound/http-controllers/servicos/servicos.mod
     EstoqueModule,
     ProdutosModule,
     ServicosModule],
-  providers: [ CustomLogger, DatabaseService, UsuarioRepositoryService, AuthRepositoryService],
+  providers: [ CustomLogger, DatabaseService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService],
 })
 export class AppModule {}
