@@ -3,5 +3,7 @@ export enum Permissoes {
     read = 'read',
     create = 'create',
     update = 'update',
-    remove = 'remove'
+    remove = 'remove',
+    manageTenants = 'manage:tenants',
+    manageAdmins = 'manage:tenants:admin',
 }

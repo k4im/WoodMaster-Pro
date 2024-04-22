@@ -22,7 +22,11 @@ model Administradores {
   Id                Int     @default(autoincrement()) @id
   Nome              String
   Email             String @unique()
+  Senha             String
   Inativo           Boolean @default(false)
+  
+  Role              Role @relation(fields: [RoleId], references: [Id])
+  RoleId            Int 
 
   dataCriacao       DateTime? @default(now())
   dataUpdate        DateTime? @updatedAt()
@@ -83,7 +87,9 @@ model Role {
   Nome            String
   Permissoes      Permissoes[]
   Usuario         Usuario[] 
-  
+  Administrador   Administradores[]
+
+
   DataCriacao     DateTime  @default(now())
   DataAtualizacao DateTime? @updatedAt()
   DataDeRemocao   DateTime? @db.Timestamp()
