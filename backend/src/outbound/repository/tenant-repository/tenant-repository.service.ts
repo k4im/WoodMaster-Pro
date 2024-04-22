@@ -12,9 +12,31 @@ export class TenantRepositoryService implements Repository {
         private readonly database: DatabaseService, 
         private readonly logger: CustomLogger) {}
 
-    paginarResultados(pagina: number, limit: number): Promise<IResponse> {
-        throw new Error('Method not implemented.');
-    }
+    async paginarResultados(pagina: number, limit: number): Promise<IResponse> {
+        try {
+            let calculoPagina = (pagina - 1) * limit; 
+            
+            let resultado = await this.database.tenant.findMany({
+                skip: calculoPagina,
+                take: limit
+            });
+
+            let totalDeRegistos: number = await this.database.tenant.count();
+            let totalDePaginas: number = Math.ceil(totalDeRegistos / limit);
+            
+            let resposta: IResponse = {
+                pagina_atual: pagina,
+                total_itens: totalDeRegistos,
+                total_paginas: totalDePaginas,
+                resultados: resultado
+            };
+            this.logger.log(`Efetuado operação de paginação de usuarios [Pessoa Repository] - [Metodo] - [paginar.]: pagina=${pagina}, limit=${limit}`);
+            await this.database.$disconnect();
+            return resposta;
+        } catch (error) {
+            await this.database.$disconnect();
+            this.logger.error(`Não foi possivel realizar a paginação [Pessoa Repository] - [Metodo] - [paginar]: [${error}]`);
+        }    }
     
     /**
      * O metodo será utilizado para a criação de um novo tenant dentro do banco de dados.
@@ -28,10 +50,12 @@ export class TenantRepositoryService implements Repository {
                     Nome: registro.Nome
                 }
             })
-            this.logger.log(`Efetuado a criação do tenant: [Repository] - [Metodo] - [Novo Registro].`)
+            this.logger.log(`Efetuado a criação do tenant: [Tenant Repository] - [Metodo] - [Novo Registro].`)
+            await this.database.$disconnect();
             return true;
         } catch (error) {
-            this.logger.error(`Não foi possivel estar realizando a criação do tenant: [Repository] - [Metodo] - [Novo Registro] ${error}`)
+            this.logger.error(`Não foi possivel estar realizando a criação do tenant: [Tenant Repository] - [Metodo] - [Novo Registro] ${error}`)
+            await this.database.$disconnect();
         }
     }
 
@@ -47,10 +71,12 @@ export class TenantRepositoryService implements Repository {
                     Uuid: uuid
                 }
             });
-            this.logger.log(`Efetuado busca do tenant a partir do UUID: [Repository] - [Metodo] - [Buscar por UUID].`)
+            this.logger.log(`Efetuado busca do tenant a partir do UUID: [Tenant Repository] - [Metodo] - [Buscar por UUID].`)
+            await this.database.$disconnect();
             return result;
         } catch (error) {
-            this.logger.error(`Não foi possivel estar realizando a busca do tenant: [Repository] - [Metodo] - [Buscar por UUID] ${error}`)
+            await this.database.$disconnect();
+            this.logger.error(`Não foi possivel estar realizando a busca do tenant: [Tenant Repository] - [Metodo] - [Buscar por UUID] ${error}`)
             
         }
     }
@@ -68,11 +94,13 @@ export class TenantRepositoryService implements Repository {
                 },
                 data: {...registro}
             });
-            this.logger.log(`Efetuado update do registro: [Repository] - [Metodo] - [Atualizar por UUID].`)
-
+            this.logger.log(`Efetuado update do registro: [Tenant Repository] - [Metodo] - [Atualizar por UUID].`)
+            await this.database.$disconnect();
+            return true
         } catch (error) {
-            this.logger.error(`Efetuado update do registro: [Repository] - [Metodo] - [Atualizar por UUID].`)
-            
+            this.logger.error(`Não foi possivel efetuar atualização: [Tenant Repository] - [Metodo] - [Atualizar por UUID]. ${error}`)
+            await this.database.$disconnect();
+            return false
         }
     }
     

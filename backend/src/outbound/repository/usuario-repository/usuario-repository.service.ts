@@ -39,12 +39,12 @@ export class UsuarioRepositoryService implements Repository {
                 total_paginas: totalDePaginas,
                 resultados: resultado
             };
-            this.logger.log(`Efetuado operação de paginação de usuarios: pagina=${pagina}, limit=${limit}`);
+            this.logger.log(`Efetuado operação de paginação de usuarios [Usuario Repository] - [Metodo] - [paginar.]: pagina=${pagina}, limit=${limit}`);
             await this.databaseService.$disconnect();
             return resposta;
         } catch (error) {
             await this.databaseService.$disconnect();
-            this.logger.error(`Não foi possivel realizar a paginação: [${error}]`);
+            this.logger.error(`Não foi possivel realizar a paginação [Usuario Repository] - [Metodo] - [paginar]: [${error}]`);
         }
     }
 
@@ -68,7 +68,7 @@ export class UsuarioRepositoryService implements Repository {
             // Caso um usuario já exista para uma pessoa será retornado nulo,
             // pois uma pessoa só poderá possuir um login.
             if(checkUser) {
-                this.logger.log(`Usuario já existente para esta pessoa. [Repository] - [Metodo] - [criar novo registro.]`)
+                this.logger.log(`Usuario já existente para esta pessoa. [Usuario Repository] - [Metodo] - [criar novo registro.]`)
                 return false
             };
             
@@ -82,11 +82,11 @@ export class UsuarioRepositoryService implements Repository {
                     TenantId: ''
                 }
             })
-            this.logger.log(`Efetuado criação de usuario [Repository] - [Metodo] - [criar novo registro.]`)
+            this.logger.log(`Efetuado criação de usuario [Usuario Repository] - [Metodo] - [criar novo registro.]`)
             await this.databaseService.$disconnect();
             return true;
         } catch (error) {
-            this.logger.error(`Houve um erro ao tentar criar usuario [Repository] - [Metodo] - [criar novo registro.]: ${error}`)
+            this.logger.error(`Houve um erro ao tentar criar usuario [Usuario Repository] - [Metodo] - [criar novo registro.]: ${error}`)
             await this.databaseService.$disconnect();
             return false;
         }
@@ -108,11 +108,11 @@ export class UsuarioRepositoryService implements Repository {
                 await this.databaseService.$disconnect();
                 return null
             }
-            this.logger.log(`Efetuado busca de usuario por UUID [Repository] - [Metodo] - [criar novo registro.]: UUID:${uuid}`)
+            this.logger.log(`Efetuado busca de usuario por UUID [Usuario Repository] - [Metodo] - [criar novo registro.]: UUID:${uuid}`)
             await this.databaseService.$disconnect();
             return result;
         } catch (error) {
-            this.logger.error(`Houve um erro ao tentar buscar usuario [Repository] - [Metodo] - [criar novo registro.]: ${error}`)
+            this.logger.error(`Houve um erro ao tentar buscar usuario [Usuario Repository] - [Metodo] - [criar novo registro.]: ${error}`)
             await this.databaseService.$disconnect();
         }
     }
@@ -135,12 +135,12 @@ export class UsuarioRepositoryService implements Repository {
                     Inativo: usuario.Inativo,
                 }
             })
-            this.logger.log("Usuario atualizado com sucesso! [Repository] - [Metodo] - [Atualizar Registro]")
+            this.logger.log("Usuario atualizado com sucesso! [Usuario Repository] - [Metodo] - [Atualizar Registro]")
             await this.databaseService.$disconnect();
             return result;
         } catch (error) {
             await this.databaseService.$disconnect();
-            this.logger.error(`Não foi possivel atualizar usuario [Repository] - [Metodo] - [Atualizar Registro]: [${error}]`);
+            this.logger.error(`Não foi possivel atualizar usuario [Usuario Repository] - [Metodo] - [Atualizar Registro]: [${error}]`);
             return false;
         }    
     }
@@ -157,11 +157,11 @@ export class UsuarioRepositoryService implements Repository {
                 data: {Inativo: true}
             });
             this.databaseService.$disconnect();
-            this.logger.log(`Usuario desativado com sucesso! [Repository] - [Metodo] - [Deletar Registro] UUID: [${uuid}]`)
+            this.logger.log(`Usuario desativado com sucesso! [Usuario Repository] - [Metodo] - [Deletar Registro] UUID: [${uuid}]`)
             return true;
         } catch (error) {
             await this.databaseService.$disconnect();
-            this.logger.error(`Não foi possivel desativar usuario com base no UUID [Repository] - [Metodo] - [Deletar registro]: [${error}]`);
+            this.logger.error(`Não foi possivel desativar usuario com base no UUID [Usuario Repository] - [Metodo] - [Deletar registro]: [${error}]`);
             return false;
         }      
     }

@@ -22,7 +22,7 @@ export class TenantController {
   create(@Body() createTenantDto: CreateTenantDto, @Res() res: Response) {
     try {
        let result = this.tenantService.create(createTenantDto);
-       (result) ? res.status(200).send(result) : res.status(500).send({message: "Não foi possivel efetuar a operação."}) ; 
+       (result) ? res.status(200).send({message: "Tenant criado com sucesso"}) : res.status(500).send({message: "Não foi possivel efetuar a operação."}) ; 
     } catch (error) {
       res.status(500).send({message: "Houve um erro ao tentar realizar a operação."})
     }
@@ -66,7 +66,7 @@ export class TenantController {
     name: 'uuid',
     description: "Deverá ser encaminhado o UUID valido de um tenant existente."
   })
-  async findOne(@Query('id') uuid: string, @Res() res: Response) {
+  async findOne(@Query('uuid') uuid: string, @Res() res: Response) {
     try {
       let result = await this.tenantService.findOne(uuid);
       (result) ? res.status(200).send(result): res.status(500).send({message: "Não foi possivel efetuar a operação."}) ;
@@ -85,8 +85,16 @@ export class TenantController {
     name: 'uuid',
     description: "Deverá ser encaminhado um UUID valido de um tenant existente."
   })
-  update(@Query('uuid') uuid: string, @Body() updateTenantDto: UpdateTenantDto) {
-    // return this.tenantService.update(+id, updateTenantDto);
+  async update(
+    @Query('uuid') uuid: string, 
+    @Body() updateTenantDto: UpdateTenantDto,
+    @Res() res: Response) {
+    try {
+      let result = await this.tenantService.update(uuid, updateTenantDto);
+      (result) ? res.status(204).send({message: "Tenant atualizado com sucesso!"}) : res.status(500).send({message: "Tenant não pode ser atualizado."}) ;
+    } catch (error) {
+      res.status(500).send({message: "Houve um erro ao tentar realizar a operação."})
+    }
   }
   // End Region       ----- atualizar tenant
   

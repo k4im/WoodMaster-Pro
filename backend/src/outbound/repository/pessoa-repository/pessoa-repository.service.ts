@@ -42,12 +42,12 @@ export class PessoaRepositoryService implements Repository{
                 total_paginas: totalDePaginas,
                 resultados: resultado
             };
-            this.logger.log(`Efetuado operação de paginação de pessoas: pagina=${pagina}, limit=${limit}`);
+            this.logger.log(`Efetuado operação de paginação de pessoas [Pessoa Repository] - [Metodo] - [Paginar]: pagina=${pagina}, limit=${limit}`);
             await this.databaseService.$disconnect();
             return resposta;
         } catch (error) {
             await this.databaseService.$disconnect();
-            this.logger.error(`Não foi possivel realizar a paginação: [${error}]`);
+            this.logger.error(`Não foi possivel realizar a paginação [Pessoa Repository] - [Metodo] - [Paginar]: [${error}]`);
         }
     }
     /**
@@ -67,12 +67,12 @@ export class PessoaRepositoryService implements Repository{
                     TenantId: ''               
                 }
             });
-            this.logger.log("Pessoa criada com sucesso! [Repository] - [Metodo] - [Criar novo registro]")
+            this.logger.log("Pessoa criada com sucesso! [Pessoa Repository] - [Metodo] - [Criar novo registro]")
             await this.databaseService.$disconnect();
             return true;
         } catch (error) {
             await this.databaseService.$disconnect();
-            this.logger.error(`Não foi possivel efetuar o processo de criação [Repository] - [Metodo] - [Criar novo registro]: [${error}]`);
+            this.logger.error(`Não foi possivel efetuar o processo de criação [Pessoa Repository] - [Metodo] - [Criar novo registro]: [${error}]`);
             return false;
         }
     }
@@ -100,12 +100,12 @@ export class PessoaRepositoryService implements Repository{
                 await this.databaseService.$disconnect();
                 return null;
             }
-            this.logger.log(`Efetuado busca de pessoa com UUID [Repository] - [Metodo] - [Buscar por UUID]: [${uuid}]`)
+            this.logger.log(`Efetuado busca de pessoa com UUID [Pessoa Repository] - [Metodo] - [Buscar por UUID]: [${uuid}]`)
             await this.databaseService.$disconnect();
             return result
         } catch (error) {
             await this.databaseService.$disconnect();
-            this.logger.error(`Não foi possivel encontrar a pessoa por UUID [Repository] - [Metodo] - [Buscar por UUID]: [${error}]`);
+            this.logger.error(`Não foi possivel encontrar a pessoa por UUID [Pessoa Repository] - [Metodo] - [Buscar por UUID]: [${error}]`);
         }
     }   
     /**
@@ -124,12 +124,12 @@ export class PessoaRepositoryService implements Repository{
                     PessoaTelefones: {create: [...pessoa.PessoaTelefones]}
                 }
             })
-            this.logger.log("Pessoa atualizada com sucesso! [Repository] - [Metodo] - [Atualizar Registro]")
+            this.logger.log("Pessoa atualizada com sucesso! [Pessoa Repository] - [Metodo] - [Atualizar Registro]")
             await this.databaseService.$disconnect();
             return result;
         } catch (error) {
             await this.databaseService.$disconnect();
-            this.logger.error(`Não foi possivel atualizar pessoa [Repository] - [Metodo] - [Atualizar Registro]: [${error}]`);
+            this.logger.error(`Não foi possivel atualizar pessoa [Pessoa Repository] - [Metodo] - [Atualizar Registro]: [${error}]`);
         }
     }
 
@@ -145,11 +145,11 @@ export class PessoaRepositoryService implements Repository{
                 where: {Uuid: uuid}
             });
             this.databaseService.$disconnect();
-            this.logger.log(`Pessoa removida com sucesso! [Repository] - [Metodo] - [Deletar Registro] UUID: [${uuid}]`)
+            this.logger.log(`Pessoa removida com sucesso! [Pessoa Repository] - [Metodo] - [Deletar Registro] UUID: [${uuid}]`)
             return true;
         } catch (error) {
             await this.databaseService.$disconnect();
-            this.logger.error(`Não foi possivel deletar pessoa com base no UUID [Repository] - [Metodo] - [Deletar registro]: [${error}]`);
+            this.logger.error(`Não foi possivel deletar pessoa com base no UUID [Pessoa Repository] - [Metodo] - [Deletar registro]: [${error}]`);
         }  
     }
 }
