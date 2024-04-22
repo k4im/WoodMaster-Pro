@@ -5,8 +5,6 @@ import * as bcrypt from 'bcrypt';
 import { CriarUsuarioDto } from "../dto/create-usuario.dto";
 
 export class Usuario {
-    Uuid: string
-    
     @ApiProperty()
     PessoaId: number
     @ApiProperty()
@@ -16,17 +14,21 @@ export class Usuario {
     @ApiProperty()
     Inativo: boolean = false    
     @ApiProperty()
-    EmpresaId: string
-    @ApiProperty()
     Role: string
-
-    constructor(pessoaId?: number, email?: Email, senha?: string, empresaId?: string, role?: string) {
-        this.Uuid = randomUUID();
+    @ApiProperty()
+    TenantId: string
+    
+    constructor(
+        pessoaId?: number, 
+        email?: Email, 
+        senha?: string,
+        role?: string, 
+        tenant? : string) {
         this.PessoaId = pessoaId,
         this.Email = email,
         this.Senha = this.hashSenha(senha)
-        this.EmpresaId
-        this.Role = role
+        this.Role = role,
+        this.TenantId = tenant
     }
     
     /**

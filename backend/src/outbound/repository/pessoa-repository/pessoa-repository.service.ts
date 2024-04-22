@@ -60,11 +60,11 @@ export class PessoaRepositoryService implements Repository{
             // do parametro informado na função.
             await this.databaseService.pessoa.create({
                 data: {
-                    Uuid: randomUUID(),
                     ...pessoa,
                     Email: pessoa.Email.email,
                     PessoaEndereco: {create: [...pessoa.PessoaEndereco]},
-                    PessoaTelefones: {create: [...pessoa.PessoaTelefones]}                
+                    PessoaTelefones: {create: [...pessoa.PessoaTelefones]},
+                    TenantId: ''               
                 }
             });
             this.logger.log("Pessoa criada com sucesso! [Repository] - [Metodo] - [Criar novo registro]")

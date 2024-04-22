@@ -9,11 +9,11 @@ import { AuthRepositoryService } from './outbound/repository/auth-repository/aut
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'process';
 import { AuthModule } from './inbound/http-controllers/auth/auth.module';
-import { EmpresaModule } from './inbound/http-controllers/empresa/empresa.module';
-import { RolesModule } from './inbound/http-controllers/roles/roles.module';
-import { PermissionsModule } from './inbound/http-controllers/permissions/permissions.module';
-import { DatabaseModule } from './outbound/database/database.module';
-
+import { TenantModule } from './inbound/http-controllers/tenant/tenant.module';
+import { AdminModule } from './inbound/http-controllers/admin/admin.module';
+import { EstoqueModule } from './inbound/http-controllers/estoque/estoque.module';
+import { ProdutosModule } from './inbound/http-controllers/produtos/produtos.module';
+import { ServicosModule } from './inbound/http-controllers/servicos/servicos.module';
 
 @Module({
   imports: [PessoasModule, UsuariosModule,
@@ -23,12 +23,11 @@ import { DatabaseModule } from './outbound/database/database.module';
       signOptions: {expiresIn: '60s'}
     }),
     AuthModule,
-    EmpresaModule,
-    RolesModule,
-    PermissionsModule,
-    DatabaseModule
-  ],
-  controllers: [],
+    TenantModule,
+    AdminModule,
+    EstoqueModule,
+    ProdutosModule,
+    ServicosModule],
   providers: [ CustomLogger, DatabaseService, UsuarioRepositoryService, AuthRepositoryService],
 })
 export class AppModule {}

@@ -54,7 +54,7 @@ export class PessoaEntity {
     Inscricaomunicipal: string | null;
     Objetosocial: string | null; 
     Observacoes: string | null;
-  
+    TenantId:   string
     constructor(
         Nome?: string,
         Matricula?: string | null,
@@ -94,6 +94,7 @@ export class PessoaEntity {
         Inscricaomunicipal?: string | null,
         Objetosocial?: string | null,
         Observacoes?: string | null,
+        tenant?: string
     ) {
         this.Nome = Nome;
         this.Matricula = Matricula;
@@ -133,6 +134,7 @@ export class PessoaEntity {
         this.Inscricaomunicipal = Inscricaomunicipal;
         this.Objetosocial = Objetosocial;
         this.Observacoes = Observacoes;
+        this.TenantId = tenant
     }
     /**
      * O metodo poderá ser utilizado para criação de testes desta entidade
@@ -225,6 +227,7 @@ export class PessoaEntity {
             data.Inscricaomunicipal,
             data.Objetosocial,
             data.Observacoes,
+            data.TenantId
         );
 
     }
