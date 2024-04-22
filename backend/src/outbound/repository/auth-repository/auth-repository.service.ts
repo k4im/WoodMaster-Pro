@@ -22,6 +22,7 @@ export class AuthRepositoryService {
                     Uuid: true,
                     Email: true,
                     Senha: true,
+                    Nome: true,
                     Role: {select: {Nome: true, Permissoes: {select: {Acao: true}}}}
                 },
             });
@@ -31,6 +32,7 @@ export class AuthRepositoryService {
                 this.logger.log("Senha de acesso valida, emitindo JWT.... [Auth Repository] - [Metodo] - [Login]");
                 const payload = {
                     user: result.Uuid, 
+                    username: result.Nome,
                     role: result.Role, 
                     permissions: [...result.Role.Permissoes]
                 };
