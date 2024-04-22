@@ -61,7 +61,7 @@ export class UsuarioRepositoryService implements Repository {
                 where: {
                     PessoaId: usuario.PessoaId,
                     Email: usuario.Email.email,
-                    TenantId: usuario.EmpresaId
+                    TenantId: ''
                 }
             });
 
@@ -75,7 +75,6 @@ export class UsuarioRepositoryService implements Repository {
             let result = await this.databaseService.usuario.create({
                 data: {
                     PessoaId: usuario.PessoaId,
-                    Uuid: usuario.Uuid,
                     Email: usuario.Email.email,
                     Inativo: false,
                     Senha: usuario.Senha,
