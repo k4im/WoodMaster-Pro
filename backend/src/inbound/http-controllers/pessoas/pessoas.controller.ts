@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, Res, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Put, Res, HttpStatus, Query } from '@nestjs/common';
 import { Response } from 'express';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { PessoasService } from './pessoas.service';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
-import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PessoaEntity } from './entities/pessoa.entity';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseDoc } from './doc/Reponse.doc';
 
 @Controller('pessoas')
