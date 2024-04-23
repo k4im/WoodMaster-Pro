@@ -17,10 +17,10 @@ export class PessoasController {
   @ApiResponse({status: 201, description: "Estará encaminhando um status 201 caso a operação seja bem sucedida."})
   async create(@Body() createPessoaDto: CriarPessoaDto,  @Res() res: Response) {
     try {
-      await this.pessoasService.create(createPessoaDto);
-      return res.status(HttpStatus.CREATED).send({message: "Pessoa criada com sucesso!"})
+      let result = await this.pessoasService.create(createPessoaDto);
+      (result) ? res.status(HttpStatus.CREATED).send({message: "Pessoa criada com sucesso!"}) : res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: "Houve um erro ao tentar criar a pessoa!"});
     } catch (error) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: "Houve um erro ao tentar criar a pessoa!"});
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: `Houve um erro ao tentar criar a pessoa!: ${error.message}`});
     }
   }
 

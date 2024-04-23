@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
+import { ExceptionMsgs } from "src/core/enum/exceptions.enum"
 
 interface ITelefone { 
     Telefone : string
@@ -43,7 +44,7 @@ export class Telefone {
         // const regexTelefoneBrasileiro = /^\(?\d{2}\)?[-.\s]?\d{4,5}[-.\s]?\d{4}$/;
         // if(regexTelefoneBrasileiro.test(telefone)) 
         return telefone
-        throw new Error("O telefone não é valido.")
+        throw new Error(ExceptionMsgs.telefone)
     }
 
     /**
@@ -55,7 +56,7 @@ export class Telefone {
         // const regexDDIBrasileiro = /^(?:\+|00)?(?:55)\d{2}$/;
         // if(regexDDIBrasileiro.test(ddi)) 
         return ddi
-        throw new Error("O DDI informado é invalido.")
+        throw new Error(ExceptionMsgs.ddi)
         
     }
     
@@ -68,7 +69,7 @@ export class Telefone {
         // const regexDDD = /^[1-9]{2}$/;
         // if(regexDDD.test(ddd)) 
         return ddd
-        throw new Error("O DDD informado é invalido.")
+        throw new Error(ExceptionMsgs.ddd)
     }
     /**
      * Este metodo poderá estar sendo utilizado para criação de um telefone

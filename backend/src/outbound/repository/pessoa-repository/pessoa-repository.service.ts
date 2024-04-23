@@ -23,9 +23,13 @@ export class PessoaRepositoryService implements Repository{
             let calculoPagina = (pagina - 1) * limit; 
             
             let resultado = await this.databaseService.pessoa.findMany({
-                include: {
-                    PessoaEndereco: true,
-                    PessoaTelefones: true
+                select: {
+                    Uuid: true,
+                    Nome: true,
+                    Matricula: true,
+                    Codigo: true,
+                    Email: true,
+                    dataCriacao: true
                 },
                 skip: calculoPagina,
                 take: limit

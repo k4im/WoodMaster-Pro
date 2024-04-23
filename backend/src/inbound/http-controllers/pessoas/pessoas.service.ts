@@ -6,6 +6,7 @@ import { PessoaEntity } from '../../../core/models/entities/pessoa.entity';
 import { Pessoa } from '@prisma/client';
 import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 import { IResponse } from 'src/core/interfaces/IResponse.interface';
+import { PessoaExceptionValidate } from 'src/core/helpers/exception.helper';
 
 @Injectable()
 export class PessoasService {
@@ -32,7 +33,9 @@ export class PessoasService {
         let result = await this.Repository.criarNovoRegistro(pessoaEntity);
         return result
     } catch (error) {
-       this.Logger.error(`Error ao tentar criar uma nova pessoa: [PessoasService] - [Metodo] - [create]`)      
+       this.Logger.error(`Error ao tentar criar uma nova pessoa: [PessoasService] - [Metodo] - [create]: ${error}`);
+       PessoaExceptionValidate(error);
+       return false;
     }
   }
   
@@ -51,7 +54,8 @@ export class PessoasService {
         let result = await this.Repository.paginarResultados(page, validatedLimit);
         return result;
     } catch (error) {
-      this.Logger.error(`Error ao tentar criar uma nova pessoa: [PessoasService] - [Metodo] - [findAll]`)      
+      this.Logger.error(`Error ao tentar criar uma nova pessoa: [PessoasService] - [Metodo] - [findAll]: ${error}`)
+      throw new Error("Houve um erro ao realizar a operação de paginação.")     
     }
   }
 
@@ -68,7 +72,7 @@ export class PessoasService {
         let result = await this.Repository.buscarPorUUID(uuid);
         return result;
     } catch (error) {
-        this.Logger.log("Não foi possivel coletar o registro com o UUID: [PessoasService] - [Metodo] - [FindOne]");
+        this.Logger.error(`Não foi possivel coletar o registro com o UUID: [PessoasService] - [Metodo] - [FindOne]: ${error}`);
     }
   }
   /**
@@ -85,7 +89,7 @@ export class PessoasService {
       let result = await this.Repository.atualizarRegistro(updatePessoaDto, uuid);
       return result
     } catch (error) {
-      this.Logger.log("Não foi possivel atualizar o registro: [PessoasService] - [Metodo] - [Update]")
+      this.Logger.error(`Não foi possivel atualizar o registro: [PessoasService] - [Metodo] - [Update]: ${error}`)
       
     }
 

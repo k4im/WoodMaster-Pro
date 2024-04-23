@@ -192,7 +192,7 @@ export class PessoaEntity {
             data.Nome,
             data.Inativo,
             data.Estrangeiro,
-            data.Email,
+            new Email(data.Email.email),
             data.PessoaEndereco,
             data.PessoaTelefones,
             data.Cliente,
