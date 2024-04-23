@@ -1,5 +1,5 @@
-import { IPessoa } from "src/interfaces/IPessoa.interface";
-import { IResponse } from "src/interfaces/IResponse.interface";
+import { IPessoa } from "src/core/interfaces/IPessoa.interface";
+import { IResponse } from "src/core/interfaces/IResponse.interface";
 
 export abstract class Repository { 
         paginarResultados(pagina: number, limit: number): Promise<IResponse> {return};

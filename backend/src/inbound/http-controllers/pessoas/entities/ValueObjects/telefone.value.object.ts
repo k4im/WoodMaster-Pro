@@ -1,5 +1,4 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { CustomLogger } from "src/helpers/logger/logger.service"
 
 interface ITelefone { 
     Telefone : string

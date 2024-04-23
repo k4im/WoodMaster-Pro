@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { CustomLogger } from './helpers/logger/logger.service';
+import { CustomLogger } from './outbound/logger/logger.service';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { DatabaseService } from './outbound/database/database.service';
 import { UsuarioRepositoryService } from './outbound/repository/usuario-repository/usuario-repository.service';

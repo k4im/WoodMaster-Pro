@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { CustomLogger } from 'src/helpers/logger/logger.service';
+import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/outbound/database/database.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 
 @Injectable()
 export class AuthRepositoryService {
 
     constructor(
         private readonly database: DatabaseService,
-        private readonly logger: CustomLogger,
+        @Inject("LoggerGateway")
+        private readonly logger: LoggerGateway,
         private readonly jwt: JwtService){}
 
     async login(email: string, senha: string) {

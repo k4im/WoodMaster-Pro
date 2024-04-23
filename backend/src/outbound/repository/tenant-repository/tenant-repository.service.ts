@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from '../Repository';
-import { IResponse } from 'src/interfaces/IResponse.interface';
 import { DatabaseService } from 'src/outbound/database/database.service';
-import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { Tenant } from 'src/inbound/http-controllers/tenant/entities/tenant.entity';
+import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
+import { IResponse } from 'src/core/interfaces/IResponse.interface';
 
 @Injectable()
 export class TenantRepositoryService implements Repository {
     
     constructor(
-        private readonly database: DatabaseService, 
-        private readonly logger: CustomLogger) {}
+        private readonly database: DatabaseService,
+        @Inject("LoggerGateway") 
+        private readonly logger: LoggerGateway) {}
 
     async paginarResultados(pagina: number, limit: number): Promise<IResponse> {
         try {

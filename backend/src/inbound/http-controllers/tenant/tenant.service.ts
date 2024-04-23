@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
 import { Repository } from 'src/outbound/repository/Repository';
-import { CustomLogger } from 'src/helpers/logger/logger.service';
+import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 
 @Injectable()
 export class TenantService {
 
   constructor(
     private readonly repo: Repository,
-    private readonly logger: CustomLogger) {}
+    @Inject("LoggerGateway")
+    private readonly logger: LoggerGateway) {}
 
   /**
    * Abstração de processo de criação de um tenant

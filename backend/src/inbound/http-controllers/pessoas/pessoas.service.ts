@@ -1,19 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { Repository } from 'src/outbound/repository/Repository';
-import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
 import { PessoaEntity } from './entities/pessoa.entity';
-import { IResponse } from 'src/interfaces/IResponse.interface';
-import { IPessoa } from 'src/interfaces/IPessoa.interface';
 import { Pessoa } from '@prisma/client';
+import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
+import { IResponse } from 'src/core/interfaces/IResponse.interface';
 
 @Injectable()
 export class PessoasService {
   
   constructor(
     private readonly Repository: Repository,
-    private readonly Logger: CustomLogger) {}
+    @Inject("LoggerGateway")
+    private readonly Logger: LoggerGateway) {}
   
   /**
    * Abstração de processo de criação de um novo registro.

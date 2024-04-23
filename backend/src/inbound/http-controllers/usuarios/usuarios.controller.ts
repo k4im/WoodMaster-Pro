@@ -7,9 +7,9 @@ import { query } from 'express';
 import { ResponseDoc } from '../pessoas/doc/Reponse.doc';
 import { Usuario } from './entities/usuario.entity';
 import { Response } from 'express';
-import { PermissionRequired } from 'src/decorators/permission.decorator';
-import { Permissoes } from 'src/enum/permissoes.enum';
-import { Role } from 'src/enum/roles.enum';
+import { PermissionRequired } from 'src/core/decorators/permission.decorator';
+import { Permissoes } from 'src/core/enum/permissoes.enum';
+import { Role } from 'src/core/enum/roles.enum';
 
 @ApiTags("usuarios")
 @ApiBearerAuth()

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CustomLogger } from './helpers/logger/logger.service';
+import { CustomLogger } from './outbound/logger/logger.service';
 import { DatabaseService } from './outbound/database/database.service';
 import { PessoaRepositoryService } from './outbound/repository/pessoa-repository/pessoa-repository.service';
 import { PessoasModule } from './inbound/http-controllers/pessoas/pessoas.module';
@@ -29,6 +29,6 @@ import { TenantRepositoryService } from './outbound/repository/tenant-repository
     EstoqueModule,
     ProdutosModule,
     ServicosModule],
-  providers: [ CustomLogger, DatabaseService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService],
+  providers: [ {provide: 'LoggerGateway', useClass: CustomLogger}, DatabaseService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService],
 })
 export class AppModule {}

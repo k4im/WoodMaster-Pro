@@ -1,16 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { AuthRepositoryService } from 'src/outbound/repository/auth-repository/auth-repository.service';
-import { log } from 'console';
+import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly auth: AuthRepositoryService, 
-    private readonly logger:  CustomLogger) {}
+    private readonly auth: AuthRepositoryService,
+    @Inject("LoggerGateway") 
+    private readonly logger:  LoggerGateway) {}
   
   /**
    * O metodo sera utilizado para realizar o login de um usuario existente no sistema.

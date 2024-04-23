@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IResponse } from "src/interfaces/IResponse.interface";
 import { PessoaEntity } from "../entities/pessoa.entity";
-import { IPessoa } from "src/interfaces/IPessoa.interface";
+import { IPessoa } from "src/core/interfaces/IPessoa.interface";
+import { IResponse } from "src/core/interfaces/IResponse.interface";
 export class ResponseDoc implements IResponse {
     @ApiProperty()
     total_itens: number;

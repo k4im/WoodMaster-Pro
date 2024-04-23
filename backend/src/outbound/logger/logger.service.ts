@@ -1,9 +1,11 @@
 import { ConsoleLogger, Injectable, LoggerService } from '@nestjs/common';
 import { LogLevel } from './logger.enum';
 import { createLogger, format, transports } from 'winston';
+import { LoggerGateway } from './logger.gateway';
 
 @Injectable()
-export class CustomLogger  implements LoggerService{
+export class CustomLogger  implements LoggerService, LoggerGateway{
+    
     private logger = createLogger({
         transports: [
           new transports.Console(),
@@ -14,7 +16,8 @@ export class CustomLogger  implements LoggerService{
           format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`),
         ),
       });
-    log(message: any, ...optionalParams: any[]) {
+    
+      log(message: any, ...optionalParams: any[]) {
         this.logger.info(`${LogLevel.INFO}INFO: ${LogLevel.RESET}${message}`)
     }
 

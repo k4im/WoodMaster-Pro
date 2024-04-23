@@ -1,18 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { Pessoa } from '@prisma/client';
-import { CustomLogger } from 'src/helpers/logger/logger.service';
+import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/outbound/database/database.service';
 import { Repository } from '../Repository';
-import { IResponse } from 'src/interfaces/IResponse.interface';
-import { randomUUID } from 'crypto';
 import { PessoaEntity } from 'src/inbound/http-controllers/pessoas/entities/pessoa.entity';
-import { CriarPessoaDto } from 'src/inbound/http-controllers/pessoas/dto/criar-pessoa.dto';
+import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
+import { IResponse } from 'src/core/interfaces/IResponse.interface';
 
 @Injectable()
 export class PessoaRepositoryService implements Repository{
 
     constructor(private readonly databaseService: DatabaseService,
-        private readonly logger: CustomLogger) {}
+        @Inject("LoggerGateway")
+        private readonly logger: LoggerGateway) {}
     
     /**
      * Realiza a operação de paginação no banco de dados na tabela de pessoa.

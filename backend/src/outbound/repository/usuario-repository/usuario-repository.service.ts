@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from '../Repository';
-import { IResponse } from 'src/interfaces/IResponse.interface';
 import { DatabaseService } from 'src/outbound/database/database.service';
-import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { Usuario } from 'src/inbound/http-controllers/usuarios/entities/usuario.entity';
 import { UpdateUsuarioDto } from 'src/inbound/http-controllers/usuarios/dto/update-usuario.dto';
-import { Email } from 'src/inbound/http-controllers/pessoas/entities/ValueObjects/email.value.object';
+import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
+import { IResponse } from 'src/core/interfaces/IResponse.interface';
 
 @Injectable()
 export class UsuarioRepositoryService implements Repository {
@@ -13,7 +12,8 @@ export class UsuarioRepositoryService implements Repository {
 
 
     constructor(private readonly databaseService: DatabaseService,
-        private readonly logger: CustomLogger) {}
+        @Inject("LoggerGateway")
+        private readonly logger: LoggerGateway) {}
         
     /**
      * Realiza a operação de paginação no banco de dados na tabela de pessoa.
