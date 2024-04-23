@@ -9,8 +9,6 @@ export class CriarPessoaDto {
     @ApiProperty()
     Nome: string;
     @ApiProperty()
-    Matricula: string | null;
-    @ApiProperty()
     Codigo: number | null;
     @ApiProperty()
     Inativo: boolean;
@@ -94,8 +92,6 @@ export class CriarPessoaDto {
     // sendo necessário futuramente estar realizando refinamento deste DTO.
     constructor(
         Nome?: string,
-        Matricula?: string | null,
-        Codigo?: number | null,
         Inativo?: boolean,
         Estrangeiro?: boolean,
         Email?: Email,
@@ -133,8 +129,6 @@ export class CriarPessoaDto {
         tenant?: string
     ) {
         this.Nome = Nome;
-        this.Matricula = Matricula;
-        this.Codigo = Codigo;
         this.Inativo = Inativo;
         this.Estrangeiro = Estrangeiro;
         this.Email = Email;

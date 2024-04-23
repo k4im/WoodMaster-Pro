@@ -55,8 +55,6 @@ export class PessoaEntity {
     TenantId:   string
     constructor(
         Nome?: string,
-        Matricula?: string | null,
-        Codigo?: number | null,
         Inativo?: boolean,
         Estrangeiro?: boolean,
         Email?: Email,
@@ -94,8 +92,8 @@ export class PessoaEntity {
         tenant?: string
     ) {
         this.Nome = Nome;
-        this.Matricula = Matricula;
-        this.Codigo = Codigo;
+        this.Matricula = this.gerarMatricula();
+        this.Codigo = this.gerarCodigo();
         this.Inativo = Inativo;
         this.Estrangeiro = Estrangeiro;
         this.Email = Email;
@@ -183,11 +181,15 @@ export class PessoaEntity {
         return pessoa;
     }
 
+    /**
+     * O metodo poderá estar sendo utilizado para a criação de uma nova entidade
+     * partindo dos dados presentes em um DTO.
+     * @param data Recebe um dto para criação de um novo registro
+     * @returns 
+     */
     criarPessoaPorDto(data: CriarPessoaDto) {
         return new PessoaEntity(
             data.Nome,
-            data.Matricula,
-            data.Codigo,
             data.Inativo,
             data.Estrangeiro,
             data.Email,
@@ -225,5 +227,33 @@ export class PessoaEntity {
             data.TenantId
         );
 
+    }
+
+    /**
+     * O metodo podera ser utilizado para a emissão de uma nova matricula
+     * portanto neste cenário estara gerando matriculas de forma automática para cada pessoa.
+     * @returns retorna uma matricula nova para a pessoa.
+     */
+    gerarMatricula(): string { 
+        const caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let matricula = '';
+
+        for (let i = 0; i < 4; i++) {
+            const randomIndex = Math.floor(Math.random() * caracteres.length);
+            matricula += caracteres.charAt(randomIndex);
+          }
+      
+        return matricula
+    }
+
+    /**
+     * O metodo podera ser utilizado para a emissão de um novo codigo
+     * portanto neste cenário estara gerando codigos de forma automática para cada pessoa.
+     * @returns retorna um codigo da pessoa.
+     */
+    gerarCodigo(): number { 
+        const min = 100000; // Menor número com 6 dígitos
+        const max = 999999; // Maior número com 6 dígitos
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 }
