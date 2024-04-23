@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/outbound/database/database.service';
 import { Repository } from '../Repository';
-import { PessoaEntity } from 'src/inbound/http-controllers/pessoas/entities/pessoa.entity';
 import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 import { IResponse } from 'src/core/interfaces/IResponse.interface';
+import { PessoaEntity } from 'src/core/models/entities/pessoa.entity';
 
 @Injectable()
 export class PessoaRepositoryService implements Repository{

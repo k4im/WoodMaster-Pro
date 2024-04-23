@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { Repository } from 'src/outbound/repository/Repository';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
-import { PessoaEntity } from './entities/pessoa.entity';
+import { PessoaEntity } from '../../../core/models/entities/pessoa.entity';
 import { Pessoa } from '@prisma/client';
 import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 import { IResponse } from 'src/core/interfaces/IResponse.interface';

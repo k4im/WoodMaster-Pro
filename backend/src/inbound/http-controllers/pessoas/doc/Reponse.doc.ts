@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { PessoaEntity } from "../entities/pessoa.entity";
+import { PessoaEntity } from "../../../../core/models/entities/pessoa.entity";
 import { IPessoa } from "src/core/interfaces/IPessoa.interface";
 import { IResponse } from "src/core/interfaces/IResponse.interface";
 export class ResponseDoc implements IResponse {

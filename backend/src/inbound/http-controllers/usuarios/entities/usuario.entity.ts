@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Email } from "../../pessoas/entities/ValueObjects/email.value.object";
+import { Email } from "../../../../core/models/valueObjects/email.value.object";
 import { randomUUID } from "crypto";
 import * as bcrypt from 'bcrypt';
 import { CriarUsuarioDto } from "../dto/create-usuario.dto";

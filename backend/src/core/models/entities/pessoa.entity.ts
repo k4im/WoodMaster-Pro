@@ -1,13 +1,12 @@
-import { UUID, randomUUID } from "crypto";
-import { Email } from "./ValueObjects/email.value.object";
-import { Endereco } from "./ValueObjects/endereco.value.object";
-import { Telefone } from "./ValueObjects/telefone.value.object";
-import { CriarPessoaDto } from "../dto/criar-pessoa.dto";
+import { randomUUID } from "crypto";
+import { Email } from "../valueObjects/email.value.object";
+import { Endereco } from "../valueObjects/endereco.value.object";
+import { Telefone } from "../valueObjects/telefone.value.object";
+import { CriarPessoaDto } from "../../../inbound/http-controllers/pessoas/dto/criar-pessoa.dto";
 import { IPessoa } from "src/core/interfaces/IPessoa.interface";
 
 
 export class PessoaEntity {
-    Uuid: string = randomUUID();
     Nome: string;
     Matricula: string | null;
     Codigo: number | null;
