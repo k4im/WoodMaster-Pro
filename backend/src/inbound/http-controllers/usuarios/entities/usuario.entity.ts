@@ -1,12 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Email } from "../../pessoas/entities/ValueObjects/email.value.object";
+import { Email } from "../../../../core/models/valueObjects/email.value.object";
 import { randomUUID } from "crypto";
 import * as bcrypt from 'bcrypt';
 import { CriarUsuarioDto } from "../dto/create-usuario.dto";
 
 export class Usuario {
-    Uuid: string
-    
     @ApiProperty()
     PessoaId: number
     @ApiProperty()
@@ -16,17 +14,21 @@ export class Usuario {
     @ApiProperty()
     Inativo: boolean = false    
     @ApiProperty()
-    EmpresaId: number
+    Role: string
     @ApiProperty()
-    Role: number
-
-    constructor(pessoaId?: number, email?: Email, senha?: string, empresaId?: number, role?: number) {
-        this.Uuid = randomUUID();
+    TenantId: string
+    
+    constructor(
+        pessoaId?: number, 
+        email?: Email, 
+        senha?: string,
+        role?: string, 
+        tenant? : string) {
         this.PessoaId = pessoaId,
         this.Email = email,
         this.Senha = this.hashSenha(senha)
-        this.EmpresaId
-        this.Role = role
+        this.Role = role,
+        this.TenantId = tenant
     }
     
     /**

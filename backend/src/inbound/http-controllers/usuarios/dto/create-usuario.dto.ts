@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Email } from "../../pessoas/entities/ValueObjects/email.value.object";
+import { Email } from "../../../../core/models/valueObjects/email.value.object";
 
 export class CriarUsuarioDto {
     @ApiProperty()
@@ -8,18 +8,24 @@ export class CriarUsuarioDto {
     Email: Email
     @ApiProperty()
     Senha: string
-    Inativo: boolean
     @ApiProperty()
-    EmpresaId: number
+    Inativo: boolean = false    
     @ApiProperty()
-    Role: number
-    constructor(pessoaId: number, email: Email, senha: string, empresaId: number, role: number) {
+    Role: string
+    @ApiProperty()
+    TenantId: string
+    
+    constructor(
+        pessoaId?: number, 
+        email?: Email, 
+        senha?: string, 
+        role?: string, 
+        tenant? : string) {
         this.PessoaId = pessoaId,
         this.Email = email,
         this.Senha = senha
-        this.Inativo = false
-        this.EmpresaId = empresaId
-        this.Role = role
+        this.Role = role,
+        this.TenantId = tenant
     }
     
 }

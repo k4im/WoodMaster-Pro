@@ -1,10 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { CustomLogger } from './helpers/logger/logger.service';
+import { CustomLogger } from './outbound/adapters/logger/logger.service';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { DatabaseService } from './outbound/database/database.service';
-import { UsuarioRepositoryService } from './outbound/repository/usuario-repository/usuario-repository.service';
 import * as dotenv from 'dotenv';
+
 async function bootstrap() {
   dotenv.config();
   
@@ -15,6 +14,7 @@ async function bootstrap() {
   .setTitle("WoodMaster-Pro API")
   .setDescription("Api para processos de CRUD do sistema.")
   .setVersion("1.0")
+  .addBearerAuth()
   .build();
   
   const documento = SwaggerModule.createDocument(app, config);

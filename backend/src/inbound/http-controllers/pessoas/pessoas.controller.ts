@@ -1,30 +1,30 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, Res, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Put, Res, HttpStatus, Query } from '@nestjs/common';
 import { Response } from 'express';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { PessoasService } from './pessoas.service';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
-import { ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { PessoaEntity } from './entities/pessoa.entity';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseDoc } from './doc/Reponse.doc';
 
-@Controller('person')
+@Controller('pessoas')
 @ApiTags("Pessoas")
+@ApiBearerAuth()
 export class PessoasController {
   constructor(private readonly pessoasService: PessoasService) {}
 
-  @Post("create")
+  @Post("novo/registro")
   @ApiOperation({summary: "Rota utilizada para criação de novas pessoas."})
   @ApiResponse({status: 201, description: "Estará encaminhando um status 201 caso a operação seja bem sucedida."})
   async create(@Body() createPessoaDto: CriarPessoaDto,  @Res() res: Response) {
     try {
-      await this.pessoasService.create(createPessoaDto);
-      return res.status(HttpStatus.CREATED).send({message: "Pessoa criada com sucesso!"})
+      let result = await this.pessoasService.create(createPessoaDto);
+      (result) ? res.status(HttpStatus.CREATED).send({message: "Pessoa criada com sucesso!"}) : res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: "Houve um erro ao tentar criar a pessoa!"});
     } catch (error) {
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: "Houve um erro ao tentar criar a pessoa!"});
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({message: `Houve um erro ao tentar criar a pessoa!: ${error.message}`});
     }
   }
 
-  @Get("list")
+  @Get()
   @ApiOperation({
     summary: "Rota será utilizada para efetuar a listagem de clientes de forma paginada.",
     description: `Estará sendo realizado a paginação de todos os dados presentes no banco de dados.
@@ -42,6 +42,8 @@ export class PessoasController {
   })
   async findAll(@Query("pagina") pagina: number, @Query("limit") limit: number, @Res() res: Response) {
     try {
+      (pagina === undefined) ? pagina = 1:  pagina;
+      (limit === undefined) ? limit = 5:  limit;
       let result = await this.pessoasService.findAll(parseInt(`${pagina}`), parseInt(`${limit}`));
       (result.resultados.length === 0) ?  res.status(404).send({message: "Não encontram-se registros disponivel nesta pagina."}) : res.status(200).send(result); 
     } catch (error) {
@@ -49,7 +51,7 @@ export class PessoasController {
     }
   }
 
-  @Get(':uuid')
+  @Get("buscar")
   @ApiOperation({
     summary: "Rota será utilizada para efetuar a busca de uma pessoa por um UUID.",
     description: `Estará efetuando a busca de uma pessoa baseando-se em seu UUID, onde estará retornando todos os campos presentes
@@ -70,7 +72,7 @@ export class PessoasController {
     }
   }
 
-  @Put(':uuid')
+  @Put()
   @ApiOperation({
     summary: "Rota será utilizada para efetuar a atualizar uma pessoa baseando-se no UUID.",
     description: `Estará atualizando um registro no banco de dados, onde deverá ser repassado todos os campos presentes no modelo fornecido.
@@ -90,7 +92,7 @@ export class PessoasController {
     }
   }
 
-  @Delete(':uuid')
+  @Delete()
   @ApiOperation({summary: "Rota será utilizada para efetuar a remoção de uma pessoa."})
   @ApiResponse({status: 200, description: "Estará encaminhando um status 200 caso a operação seja bem sucedida."})
   @ApiQuery({

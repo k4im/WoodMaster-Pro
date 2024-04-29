@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
-import { Email } from "../entities/ValueObjects/email.value.object";
-import { Endereco } from "../entities/ValueObjects/endereco.value.object";
-import { Telefone } from "../entities/ValueObjects/telefone.value.object";
+import { Email } from "../../../../core/models/valueObjects/email.value.object";
+import { Endereco } from "../../../../core/models/valueObjects/endereco.value.object";
+import { Telefone } from "../../../../core/models/valueObjects/telefone.value.object";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CriarPessoaDto {
@@ -9,11 +9,7 @@ export class CriarPessoaDto {
     @ApiProperty()
     Nome: string;
     @ApiProperty()
-    Matricula: string | null;
-    @ApiProperty()
     Codigo: number | null;
-    @ApiProperty()
-    Datainclusao: Date;
     @ApiProperty()
     Inativo: boolean;
     @ApiProperty()
@@ -89,15 +85,13 @@ export class CriarPessoaDto {
     Objetosocial: string | null; 
     @ApiProperty()
     Observacoes: string | null;
-
+    @ApiProperty()
+    TenantId: string
     
     // Construturo atualmente encontra-se apenas com os campos minimos para serem criado
     // sendo necessário futuramente estar realizando refinamento deste DTO.
     constructor(
         Nome?: string,
-        Matricula?: string | null,
-        Codigo?: number | null,
-        Datainclusao?: Date,
         Inativo?: boolean,
         Estrangeiro?: boolean,
         Email?: Email,
@@ -132,11 +126,9 @@ export class CriarPessoaDto {
         Inscricaomunicipal?: string | null,
         Objetosocial?: string | null,
         Observacoes?: string | null,
+        tenant?: string
     ) {
         this.Nome = Nome;
-        this.Matricula = Matricula;
-        this.Codigo = Codigo;
-        this.Datainclusao = Datainclusao;
         this.Inativo = Inativo;
         this.Estrangeiro = Estrangeiro;
         this.Email = Email;
@@ -171,6 +163,7 @@ export class CriarPessoaDto {
         this.Inscricaomunicipal = Inscricaomunicipal;
         this.Objetosocial = Objetosocial;
         this.Observacoes = Observacoes;
+        this.TenantId = tenant
     }
     
 }

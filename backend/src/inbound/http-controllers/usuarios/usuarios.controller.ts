@@ -2,21 +2,22 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Put, Res } fr
 import { UsuariosService } from './usuarios.service';
 import { CriarUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { query } from 'express';
 import { ResponseDoc } from '../pessoas/doc/Reponse.doc';
 import { Usuario } from './entities/usuario.entity';
 import { Response } from 'express';
-import { PermissionRequired } from 'src/decorators/permission.decorator';
-import { Permissoes } from 'src/enum/permissoes.enum';
-import { Role } from 'src/enum/roles.enum';
+import { PermissionRequired } from 'src/core/decorators/permission.decorator';
+import { Permissoes } from 'src/core/enum/permissoes.enum';
+import { Role } from 'src/core/enum/roles.enum';
 
-@ApiTags("Usuários")
+@ApiTags("usuarios")
+@ApiBearerAuth()
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
-  @Post("create")
+  @Post("novo/registro")
   @ApiOperation({
     summary: "Rota será utilizada para estar efetuando a criação de um novo usuario.",
     description: `Uma pessoa poderá ter **apenas um usuario.**`
@@ -32,7 +33,7 @@ export class UsuariosController {
     }
   }
 
-  @Get("list")
+  @Get()
   @ApiOperation({
     summary: "Rota será utilizada para buscar usuarios de forma paginada.",
     description: `Estará sendo realizado a paginação de todos os dados presentes no banco de dados.
@@ -50,6 +51,8 @@ export class UsuariosController {
   @PermissionRequired(Permissoes.read)
   async findAll(@Query("pagina") pagina: number, @Query("limit") limit: number, @Res() res: Response) {
     try {
+      (pagina === undefined) ? pagina = 1:  pagina;
+      (limit === undefined) ? limit = 5:  limit;
       let result = await this.usuariosService.findAll(parseInt(`${pagina}`), parseInt(`${limit}`));
       (result.resultados.length === 0) ? res.status(404).send({message: "Não existe resultados nesta pagina"}): res.status(200).send(result); 
     } catch (error) {
@@ -57,7 +60,7 @@ export class UsuariosController {
     }
   }
 
-  @Get(':uuid')
+  @Get('buscar')
   @ApiOperation({
     summary: "Rota será utilizada para buscar um usuario em especifico.",
     description: `Estará sendo efetuada a busca de um usuario que possui o **UUID** fornecido
@@ -79,7 +82,7 @@ export class UsuariosController {
     }
   }
 
-  @Put(':uuid')
+  @Put()
   @ApiOperation({
     summary: "A rota estará atualizando um usuario em especifico.",
     description: `Esta rota sera utilizada para efetuar a atualização de um registro no banco de dados,
@@ -100,7 +103,7 @@ export class UsuariosController {
     }
   }
 
-  @Post(':uuid')
+  @Post()
   @ApiOperation({
     summary: "Rota será utilizada para desativar um usuario em especifico.",
     description: `O software estará realizando a operação de inativação de um usuario, portanto o atributo(campo) **Inativo** no banco de dados será setado para **true**

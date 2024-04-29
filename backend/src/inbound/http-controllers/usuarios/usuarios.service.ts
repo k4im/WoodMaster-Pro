@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { CriarUsuarioDto } from './dto/create-usuario.dto';
 import { Repository } from 'src/outbound/repository/Repository';
-import { CustomLogger } from 'src/helpers/logger/logger.service';
 import { Usuario } from './entities/usuario.entity';
+import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 
 @Injectable()
 export class UsuariosService {
@@ -11,7 +11,8 @@ export class UsuariosService {
   
   constructor(
     private readonly repo: Repository, 
-    private readonly logger: CustomLogger) {}
+    @Inject("LoggerGateway")
+    private readonly logger: LoggerGateway) {}
   
   /**
    * Abstração de criação de um novo usuario. 
