@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/outbound/database/database.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
+import { LoggerGateway } from 'src/outbound/ports/logger.gateway';
+import { DatabaseService } from '../../database/database.service';
 
 @Injectable()
 export class AuthRepositoryService {
@@ -43,7 +43,6 @@ export class AuthRepositoryService {
             }
             this.logger.error(`Senha informada é invalida. [Auth Repository] - [Metodo] - [Login]`);
             await this.database.$disconnect();
-
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar logar o usuario. [Auth Repository] - [Metodo] - [Login]: ${error}`);
             await this.database.$disconnect();

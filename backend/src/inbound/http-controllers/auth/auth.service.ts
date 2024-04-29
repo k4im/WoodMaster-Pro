@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
-import { AuthRepositoryService } from 'src/outbound/repository/auth-repository/auth-repository.service';
-import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
+import { AuthRepositoryService } from 'src/outbound/adapters/repository/auth-repository/auth-repository.service';
+import { LoggerGateway } from 'src/outbound/ports/logger.gateway';
 
 
 @Injectable()

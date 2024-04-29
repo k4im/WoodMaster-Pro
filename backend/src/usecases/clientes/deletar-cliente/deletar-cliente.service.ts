@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
-import { PessoaRepositoryService } from 'src/outbound/repository/pessoa-repository/pessoa-repository.service';
+import { PessoaRepositoryService } from 'src/outbound/adapters/repository/pessoa-repository/pessoa-repository.service';
+import { LoggerGateway } from 'src/outbound/ports/logger.gateway';
 
 @Injectable()
 export class DeletarClienteService {

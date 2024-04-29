@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Repository } from '../Repository';
-import { DatabaseService } from 'src/outbound/database/database.service';
 import { Tenant } from 'src/inbound/http-controllers/tenant/entities/tenant.entity';
-import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 import { IResponse } from 'src/core/interfaces/IResponse.interface';
+import { Repository } from 'src/outbound/ports/Repository.gateway';
+import { DatabaseService } from '../../database/database.service';
+import { LoggerGateway } from 'src/outbound/ports/logger.gateway';
 
 @Injectable()
 export class TenantRepositoryService implements Repository {

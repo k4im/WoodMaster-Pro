@@ -1,7 +1,7 @@
 import { ConsoleLogger, Injectable, LoggerService } from '@nestjs/common';
 import { LogLevel } from './logger.enum';
 import { createLogger, format, transports } from 'winston';
-import { LoggerGateway } from './logger.gateway';
+import { LoggerGateway } from '../../ports/logger.gateway';
 
 @Injectable()
 export class CustomLogger  implements LoggerService, LoggerGateway{

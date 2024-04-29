@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { PessoasController } from './pessoas.controller';
 import { PessoasService } from './pessoas.service';
-import { Repository } from 'src/outbound/repository/Repository';
-import { PessoaRepositoryService } from 'src/outbound/repository/pessoa-repository/pessoa-repository.service';
-import { DatabaseService } from 'src/outbound/database/database.service';
-import { CustomLogger } from 'src/outbound/logger/logger.service';
+import { CustomLogger } from 'src/outbound/adapters/logger/logger.service';
+import { PessoaRepositoryService } from 'src/outbound/adapters/repository/pessoa-repository/pessoa-repository.service';
+import { DatabaseService } from 'src/outbound/adapters/database/database.service';
+import { Repository } from 'src/outbound/ports/Repository.gateway';
 
 @Module({
   controllers: [PessoasController],

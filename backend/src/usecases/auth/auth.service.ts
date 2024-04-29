@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
-import { AuthRepositoryService } from 'src/outbound/repository/auth-repository/auth-repository.service';
+import { AuthRepositoryService } from 'src/outbound/adapters/repository/auth-repository/auth-repository.service';
+import { LoggerGateway } from 'src/outbound/ports/logger.gateway';
 
 @Injectable()
 export class AuthService {

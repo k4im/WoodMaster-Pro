@@ -1,15 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/outbound/database/database.service';
-import { Repository } from '../Repository';
-import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 import { IResponse } from 'src/core/interfaces/IResponse.interface';
 import { PessoaEntity } from 'src/core/models/entities/pessoa.entity';
 import { filtro } from 'src/core/enum/filtroPaginacao.enum';
+import { DatabaseService } from '../../database/database.service';
+import { LoggerGateway } from 'src/outbound/ports/logger.gateway';
+import { Repository } from 'src/outbound/ports/Repository.gateway';
 
 @Injectable()
 export class PessoaRepositoryService implements Repository{
 
-    constructor(private readonly databaseService: DatabaseService,
+    constructor(
+        private readonly databaseService: DatabaseService,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway) {}
     
@@ -53,7 +54,6 @@ export class PessoaRepositoryService implements Repository{
                     whereClausula = {TenantId: tenantId}
                     break;
             };
-            
             let resultado = await this.databaseService.pessoa.findMany({
                 select: {
                     Uuid: true,

@@ -5,25 +5,25 @@ import { PessoaRepositoryService } from 'src/outbound/adapters/repository/pessoa
 import { LoggerGateway } from 'src/outbound/ports/logger.gateway';
 
 @Injectable()
-export class CriarNovoClienteService {
+export class CriarFornecedorService {
 
     constructor(
         private readonly pessoaRepo: PessoaRepositoryService,
         @Inject("LoggerGateway") private readonly logger: LoggerGateway) {}
     
     /**
-     * Caso de uso poderá ser utilizado para criação de um novo cliente.
+     * Caso de uso poderá ser utilizado para criação de um novo fornecedor.
      * @param pessoaDto recebe um dto para efetuar a criação de um novo cliente.
      * @returns true | false
      */
     async execute(pessoaDto: CriarPessoaDto) {
         try {
-            this.logger.log(`Executando caso de uso [Use Case] - [CriarCliente] - [Execute]`);
+            this.logger.log(`Executando caso de uso [Use Case] - [CriarFornecedor] - [Execute]`);
             let pessoa = new PessoaEntity().criarPessoaPorDto(pessoaDto)
-            pessoa.Cliente = true;
+            pessoa.Fornecedor = true;
             return await this.pessoaRepo.criarNovoRegistro(pessoa);
         } catch (error) {
-            this.logger.error(`Não foi possivel efetuar a execução do use case de criar cliente [Use Case] - [CriarCliente] - [Execute]: ${error}`);
+            this.logger.error(`Não foi possivel efetuar a execução do use case de criar cliente [Use Case] - [CriarFornecedor] - [Execute]: ${error}`);
         }
     }
 
