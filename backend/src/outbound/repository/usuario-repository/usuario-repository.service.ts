@@ -61,7 +61,7 @@ export class UsuarioRepositoryService implements Repository {
                 where: {
                     PessoaId: usuario.PessoaId,
                     Email: usuario.Email.email,
-                    TenantId: ''
+                    TenantId: usuario.TenantId
                 }
             });
 

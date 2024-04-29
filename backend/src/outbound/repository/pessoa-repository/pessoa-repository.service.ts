@@ -4,6 +4,7 @@ import { Repository } from '../Repository';
 import { LoggerGateway } from 'src/outbound/logger/logger.gateway';
 import { IResponse } from 'src/core/interfaces/IResponse.interface';
 import { PessoaEntity } from 'src/core/models/entities/pessoa.entity';
+import { filtro } from 'src/core/enum/filtroPaginacao.enum';
 
 @Injectable()
 export class PessoaRepositoryService implements Repository{
@@ -18,9 +19,40 @@ export class PessoaRepositoryService implements Repository{
      * @param limit recebe o limite de resultados por pagina.
      * @returns Pessoa[]
      */
-    async paginarResultados(pagina: number, limit: number) { 
+    async paginarResultados(pagina: number, limit: number, tenantId: string, filterType: filtro) { 
         try {
             let calculoPagina = (pagina - 1) * limit; 
+            let whereClausula : any;
+            
+            switch (filterType) {
+                case filtro.cliente:
+                    whereClausula = {
+                        TenantId: tenantId,
+                        AND: [{Cliente: true}]
+                    }
+                    break;
+                case filtro.fornecedor: 
+                    whereClausula ={
+                        TenantId: tenantId,
+                        AND: [{Fornecedor: true}]
+                    }
+                    break
+                case filtro.colaborador: 
+                    whereClausula = {
+                        TenantId: tenantId,
+                        AND: [{Colaborador: true}]
+                    }
+                    break;
+                case filtro.juridico: 
+                    whereClausula = {
+                        TenantId: tenantId,
+                        AND: [{Tipopj: true}]
+                    }
+                    break;
+                default:
+                    whereClausula = {TenantId: tenantId}
+                    break;
+            };
             
             let resultado = await this.databaseService.pessoa.findMany({
                 select: {
@@ -31,6 +63,7 @@ export class PessoaRepositoryService implements Repository{
                     Email: true,
                     dataCriacao: true
                 },
+                where: whereClausula,
                 skip: calculoPagina,
                 take: limit
             });
@@ -115,7 +148,7 @@ export class PessoaRepositoryService implements Repository{
      * @param pessoa Recebe uma pessoa que será um mapeamento identico da tabela no banco de dados.
      * @returns 
      */
-    async atualizarRegistro(pessoa: PessoaEntity, uuid: string) { 
+    async atualizarRegistro(pessoa: any, uuid: string) { 
         try {
             let result = await this.databaseService.pessoa.update({
                 where: {Uuid: uuid},

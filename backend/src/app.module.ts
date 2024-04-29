@@ -15,6 +15,11 @@ import { EstoqueModule } from './inbound/http-controllers/estoque/estoque.module
 import { ProdutosModule } from './inbound/http-controllers/produtos/produtos.module';
 import { ServicosModule } from './inbound/http-controllers/servicos/servicos.module';
 import { TenantRepositoryService } from './outbound/repository/tenant-repository/tenant-repository.service';
+import { AuthService } from './usecases/auth/auth.service';
+import { CriarNovoClienteService } from './usecases/clientes/criar-novo-cliente/criar-novo-cliente.service';
+import { DeletarClienteService } from './usecases/clientes/deletar-cliente/deletar-cliente.service';
+import { AtualizarClienteService } from './usecases/clientes/atualizar-cliente/atualizar-cliente.service';
+import { ListarClientesService } from './usecases/clientes/listar-clientes/listar-clientes.service';
 
 @Module({
   imports: [PessoasModule, UsuariosModule,
@@ -29,6 +34,6 @@ import { TenantRepositoryService } from './outbound/repository/tenant-repository
     EstoqueModule,
     ProdutosModule,
     ServicosModule],
-  providers: [ {provide: 'LoggerGateway', useClass: CustomLogger}, DatabaseService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService],
+  providers: [ {provide: 'LoggerGateway', useClass: CustomLogger}, DatabaseService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService, AuthService, CriarNovoClienteService, DeletarClienteService, AtualizarClienteService, ListarClientesService],
 })
 export class AppModule {}
