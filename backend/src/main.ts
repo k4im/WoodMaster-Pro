@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { CustomLogger } from './outbound/adapters/logger/logger.service';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
+import { CustomLogger } from './application/out-adapters/logger/logger.service';
 
 async function bootstrap() {
   dotenv.config();
