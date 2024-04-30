@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UpdatePessoaDto } from 'src/application/http-controllers/pessoas/dto/update-pessoa.dto';
 import { PessoaRepositoryService } from 'src/infraestrutura/repository/pessoa-repository/pessoa-repository.service';
 import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
+import { UpdatePessoaDto } from 'src/application/in-adapters/http-controllers/pessoas/dto/update-pessoa.dto';
 
 @Injectable()
 export class AtualizarClienteService {

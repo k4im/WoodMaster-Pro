@@ -3,7 +3,7 @@ import { Email } from "../valueObjects/email.value.object";
 import { Endereco } from "../valueObjects/endereco.value.object";
 import { Telefone } from "../valueObjects/telefone.value.object";
 import { IPessoa } from "src/domain/interfaces/IPessoa.interface"
-import { CriarPessoaDto } from "src/application/http-controllers/pessoas/dto/criar-pessoa.dto";
+import { CriarPessoaDto } from "src/application/in-adapters/http-controllers/pessoas/dto/criar-pessoa.dto";
 
 
 export class PessoaEntity {

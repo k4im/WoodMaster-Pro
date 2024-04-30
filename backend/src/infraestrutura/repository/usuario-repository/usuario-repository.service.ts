@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Usuario } from 'src/application/http-controllers/usuarios/entities/usuario.entity';
-import { UpdateUsuarioDto } from 'src/application/http-controllers/usuarios/dto/update-usuario.dto';
 import { IResponse } from 'src/domain/interfaces/IResponse.interface';
 import { DatabaseService } from '../../database/database.service';
 import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
 import { Repository } from 'src/application/out-ports/Repository.gateway';
+import { Usuario } from 'src/application/in-adapters/http-controllers/usuarios/entities/usuario.entity';
+import { UpdateUsuarioDto } from 'src/application/in-adapters/http-controllers/usuarios/dto/update-usuario.dto';
 
 @Injectable()
 export class UsuarioRepositoryService implements Repository {
