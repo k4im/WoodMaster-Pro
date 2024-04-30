@@ -1,5 +1,5 @@
 import { ConsoleLogger, Injectable, LoggerService } from '@nestjs/common';
-import { LogLevel } from './logger.enum';
+import { LogLevel } from '../../../core/enum/logger.enum';
 import { createLogger, format, transports } from 'winston';
 import { LoggerGateway } from '../../ports/logger.gateway';
 

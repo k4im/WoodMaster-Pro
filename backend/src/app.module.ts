@@ -22,6 +22,11 @@ import { UsuarioRepositoryService } from './outbound/adapters/repository/usuario
 import { AuthRepositoryService } from './outbound/adapters/repository/auth-repository/auth-repository.service';
 import { TenantRepositoryService } from './outbound/adapters/repository/tenant-repository/tenant-repository.service';
 import { AtualizarFornecedorService } from './usecases/fornecedores/atualizar-fornecedor/atualizar-fornecedor.service';
+import { CriarProdutoService } from './usecases/produtos/criar-produto/criar-produto.service';
+import { CriarFuncionarioService } from './usecases/funcionarios/criar-funcionario/criar-funcionario.service';
+import { RemoverFuncionarioService } from './usecases/funcionarios/remover-funcionario/remover-funcionario.service';
+import { AtualizarFuncionarioService } from './usecases/funcionarios/atualizar-funcionario/atualizar-funcionario.service';
+import { ListarFuncionariosService } from './usecases/funcionarios/listar-funcionarios/listar-funcionarios.service';
 
 @Module({
   imports: [PessoasModule, UsuariosModule,
@@ -36,6 +41,6 @@ import { AtualizarFornecedorService } from './usecases/fornecedores/atualizar-fo
     EstoqueModule,
     ProdutosModule,
     ServicosModule],
-  providers: [ {provide: 'LoggerGateway', useClass: CustomLogger}, DatabaseService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService, AuthService, CriarNovoClienteService, DeletarClienteService, AtualizarClienteService, ListarClientesService, ListarFornecedoresService, CriarFornecedorService, AtualizarFornecedorService],
+  providers: [ {provide: 'LoggerGateway', useClass: CustomLogger}, DatabaseService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService, AuthService, CriarNovoClienteService, DeletarClienteService, AtualizarClienteService, ListarClientesService, ListarFornecedoresService, CriarFornecedorService, AtualizarFornecedorService, CriarProdutoService, CriarFuncionarioService, RemoverFuncionarioService, AtualizarFuncionarioService, ListarFuncionariosService],
 })
 export class AppModule {}
