@@ -8,5 +8,4 @@ export interface DatabaseGateway {
     acessarEstoque(): Promise<Prisma.EstoqueDelegate<DefaultArgs>>
     acessarProdutos(): Promise<Prisma.ProdutosDelegate<DefaultArgs>>
     acessarServicos(): Promise<Prisma.ServicosDelegate<DefaultArgs>>
-
 }
