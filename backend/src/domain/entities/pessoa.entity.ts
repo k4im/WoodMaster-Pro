@@ -1,9 +1,7 @@
-import { randomUUID } from "crypto";
 import { Email } from "../valueObjects/email.value.object";
 import { Endereco } from "../valueObjects/endereco.value.object";
 import { Telefone } from "../valueObjects/telefone.value.object";
-import { IPessoa } from "src/domain/interfaces/IPessoa.interface"
-import { CriarPessoaDto } from "src/application/in-adapters/http-controllers/pessoas/dto/criar-pessoa.dto";
+import { IPessoa } from "src/domain/interfaces/IPessoa.interface";
 
 
 export class PessoaEntity {
@@ -138,7 +136,7 @@ export class PessoaEntity {
      */
     default() { 
         let pessoa: IPessoa = {
-            Uuid: randomUUID(),
+            Uuid: "86968535-e456-45b7-b9cd-16c6e9d0eb8d",
             Nome: "Jonas",
             Email: new Email("jonas@email.com.br"),
             PessoaEndereco: [new Endereco().default()],
@@ -187,7 +185,7 @@ export class PessoaEntity {
      * @param data Recebe um dto para criação de um novo registro
      * @returns 
      */
-    criarPessoaPorDto(data: CriarPessoaDto) {
+    criarPessoaPorDto(data: any) {
         return new PessoaEntity(
             data.Nome,
             data.Inativo,

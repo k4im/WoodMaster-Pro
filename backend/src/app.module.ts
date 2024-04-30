@@ -28,6 +28,7 @@ import { ProdutosModule } from './application/in-adapters/http-controllers/produ
 import { ServicosModule } from './application/in-adapters/http-controllers/servicos/servicos.module';
 import { PessoasModule } from './application/in-adapters/http-controllers/pessoas/pessoas.module';
 import { UsuariosModule } from './application/in-adapters/http-controllers/usuarios/usuarios.module';
+import { ListarEstabelecimentosUseCaseService } from './application/usecases/administradores/commands/listar-estabelecimentos-use-case/listar-estabelecimentos-use-case.service';
 
 @Module({
   imports: [PessoasModule, UsuariosModule,
@@ -42,6 +43,6 @@ import { UsuariosModule } from './application/in-adapters/http-controllers/usuar
     EstoqueModule,
     ProdutosModule,
     ServicosModule],
-  providers: [ {provide: 'LoggerGateway', useClass: CustomLogger}, DatabaseService,  PessoaRepositoryService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService, AuthService, CriarNovoClienteService, DeletarClienteService, AtualizarClienteService, ListarClientesService, ListarFornecedoresService, CriarFornecedorService, AtualizarFornecedorService, CriarProdutoService, CriarFuncionarioService, RemoverFuncionarioService, AtualizarFuncionarioService, ListarFuncionariosService],
+  providers: [ {provide: 'LoggerGateway', useClass: CustomLogger}, DatabaseService,  PessoaRepositoryService, UsuarioRepositoryService, AuthRepositoryService, TenantRepositoryService, AuthService, CriarNovoClienteService, DeletarClienteService, AtualizarClienteService, ListarClientesService, ListarFornecedoresService, CriarFornecedorService, AtualizarFornecedorService, CriarProdutoService, CriarFuncionarioService, RemoverFuncionarioService, AtualizarFuncionarioService, ListarFuncionariosService, ListarEstabelecimentosUseCaseService],
 })
 export class AppModule {}
