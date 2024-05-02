@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
-import { DatabaseService } from '../../database/database.service';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
+import { DatabaseService } from '../../../framework/database/database.service';
 
 @Injectable()
 export class AuthRepositoryService {

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { AuthRepositoryService } from 'src/infraestrutura/repository/auth-repository/auth-repository.service';
-import { DatabaseService } from 'src/infraestrutura/database/database.service';
-import { CustomLogger } from 'src/application/out-adapters/logger/logger.service';
+import { AuthRepositoryService } from 'src/adapters/persistence/repository/auth-repository/auth-repository.service';
+import { DatabaseService } from 'src/adapters/framework/database/database.service';
+import { CustomLogger } from 'src/adapters/out-adapters/logger/logger.service';
 
 @Module({
   controllers: [AuthController],

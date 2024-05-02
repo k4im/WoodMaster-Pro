@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { AuthRepositoryService } from 'src/infraestrutura/repository/auth-repository/auth-repository.service';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
+import { AuthRepositoryService } from 'src/adapters/persistence/repository/auth-repository/auth-repository.service';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 
 @Injectable()
-export class AuthService {
+export class LoginUserUseCase {
 
     constructor(
         private readonly auth: AuthRepositoryService,

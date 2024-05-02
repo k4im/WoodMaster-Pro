@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 
 @Injectable()
-export class CriarProdutoService {
+export class CriarProdutoUseCase {
 
     constructor(
         @Inject("LoggerGateway") private readonly logger: LoggerGateway) {}

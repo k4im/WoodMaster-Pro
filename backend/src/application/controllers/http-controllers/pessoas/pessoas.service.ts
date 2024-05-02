@@ -3,8 +3,8 @@ import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { CriarPessoaDto } from './dto/criar-pessoa.dto';
 import { Pessoa } from '@prisma/client';
 import { PessoaEntity } from 'src/domain/entities/pessoa.entity';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
-import { Repository } from 'src/application/out-ports/Repository.gateway';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
+import { Repository } from 'src/ports/out-ports/Repository.gateway';
 import { IResponse } from 'src/domain/interfaces/IResponse.interface';
 import { PessoaExceptionValidate } from 'src/domain/helpers/exception.helper';
 

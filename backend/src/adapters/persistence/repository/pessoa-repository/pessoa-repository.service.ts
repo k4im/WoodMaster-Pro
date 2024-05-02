@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { filtro } from 'src/domain/enum/filtroPaginacao.enum';
-import { DatabaseService } from '../../database/database.service';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
+import { DatabaseService } from '../../../framework/database/database.service';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 import { PessoaEntity } from 'src/domain/entities/pessoa.entity';
 import { IResponse } from 'src/domain/interfaces/IResponse.interface';
-import { Repository } from 'src/application/out-ports/Repository.gateway';
+import { RepositoryGateway } from 'src/ports/out-ports/Repository.gateway';
 
 @Injectable()
-export class PessoaRepositoryService implements Repository{
+export class PessoaRepositoryService implements RepositoryGateway{
 
     constructor(
         private readonly databaseService: DatabaseService,

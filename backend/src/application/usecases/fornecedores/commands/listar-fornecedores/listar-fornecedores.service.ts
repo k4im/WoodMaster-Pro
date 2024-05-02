@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { filtro } from 'src/domain/enum/filtroPaginacao.enum';
-import { PessoaRepositoryService } from 'src/infraestrutura/repository/pessoa-repository/pessoa-repository.service';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
+import { PessoaRepositoryService } from 'src/adapters/persistence/repository/pessoa-repository/pessoa-repository.service';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 
 @Injectable()
-export class ListarFornecedoresService {
+export class BuscarFornecedoresUseCase {
 
     constructor(private readonly pessoaRepo: PessoaRepositoryService,
         @Inject("LoggerGateway") private readonly logger: LoggerGateway) {}

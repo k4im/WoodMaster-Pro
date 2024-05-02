@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PessoaEntity } from 'src/domain/entities/pessoa.entity';
-import { PessoaRepositoryService } from 'src/infraestrutura/repository/pessoa-repository/pessoa-repository.service';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
-import { CriarPessoaDto } from 'src/application/in-adapters/http-controllers/pessoas/dto/criar-pessoa.dto';
+import { PessoaRepositoryService } from 'src/adapters/persistence/repository/pessoa-repository/pessoa-repository.service';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
+import { CriarPessoaDto } from 'src/application/controllers/http-controllers/pessoas/dto/criar-pessoa.dto';
 
 @Injectable()
-export class CriarFornecedorService {
+export class CriarFornecedorUseCase {
 
     constructor(
         private readonly pessoaRepo: PessoaRepositoryService,

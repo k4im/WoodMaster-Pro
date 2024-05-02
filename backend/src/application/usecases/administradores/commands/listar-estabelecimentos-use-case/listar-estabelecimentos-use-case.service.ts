@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 import { IResponse } from 'src/domain/interfaces/IResponse.interface';
-import { TenantRepositoryService } from 'src/infraestrutura/repository/tenant-repository/tenant-repository.service';
+import { TenantRepositoryService } from 'src/adapters/persistence/repository/tenant-repository/tenant-repository.service';
 
 @Injectable()
 export class ListarEstabelecimentosUseCase {

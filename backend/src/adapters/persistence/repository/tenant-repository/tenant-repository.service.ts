@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IResponse } from 'src/domain/interfaces/IResponse.interface';
-import { DatabaseService } from '../../database/database.service';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
-import { Repository } from 'src/application/out-ports/Repository.gateway';
+import { DatabaseService } from '../../../framework/database/database.service';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 import { Tenant } from '@prisma/client';
+import { RepositoryGateway } from 'src/ports/out-ports/Repository.gateway';
 
 @Injectable()
-export class TenantRepositoryService implements Repository {
+export class TenantRepositoryService implements RepositoryGateway {
     
     constructor(
         private readonly database: DatabaseService,

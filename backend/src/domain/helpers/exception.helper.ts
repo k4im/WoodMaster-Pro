@@ -1,6 +1,5 @@
 import { ExceptionMsgs } from "../../domain/enum/exceptions.enum";
 import { EmailException } from "../../domain/exceptions/email.exceptio";
-import { Email } from "../../domain/valueObjects/email.value.object";
 
 export function PessoaExceptionValidate(error: any) { 
     switch (error) {

@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { CriarUsuarioDto } from './dto/create-usuario.dto';
-import { Repository } from 'src/application/out-ports/Repository.gateway';
+import { Repository } from 'src/ports/out-ports/Repository.gateway';
 import { Usuario } from './entities/usuario.entity';
-import { LoggerGateway } from 'src/application/out-ports/logger.gateway';
+import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 
 @Injectable()
 export class UsuariosService {
