@@ -1,5 +1,5 @@
-import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { Email } from '../../../../domain/valueObjects/email.value.object';
+import { ApiProperty } from '@nestjs/swagger';
+import { Email } from 'src/domain/valueObjects/email.value.object';
 
 export class UpdateUsuarioDto{
     @ApiProperty()

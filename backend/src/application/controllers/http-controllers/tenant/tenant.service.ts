@@ -1,14 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
-import { Repository } from 'src/ports/out-ports/Repository.gateway';
 import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
+import { RepositoryGateway } from 'src/ports/out-ports/Repository.gateway';
 
 @Injectable()
 export class TenantService {
 
   constructor(
-    private readonly repo: Repository,
+    @Inject("RepositoryGateway")
+    private readonly repo: RepositoryGateway,
     @Inject("LoggerGateway")
     private readonly logger: LoggerGateway) {}
 

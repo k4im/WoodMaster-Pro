@@ -4,15 +4,16 @@ import { CriarPessoaDto } from './dto/criar-pessoa.dto';
 import { Pessoa } from '@prisma/client';
 import { PessoaEntity } from 'src/domain/entities/pessoa.entity';
 import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
-import { Repository } from 'src/ports/out-ports/Repository.gateway';
 import { IResponse } from 'src/domain/interfaces/IResponse.interface';
 import { PessoaExceptionValidate } from 'src/domain/helpers/exception.helper';
+import { RepositoryGateway } from 'src/ports/out-ports/Repository.gateway';
 
 @Injectable()
 export class PessoasService {
   
   constructor(
-    private readonly Repository: Repository,
+    @Inject("RepositoryGateway")
+    private readonly Repository: RepositoryGateway,
     @Inject("LoggerGateway")
     private readonly Logger: LoggerGateway) {}
   

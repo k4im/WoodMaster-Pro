@@ -1,12 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { PessoaRepositoryService } from 'src/adapters/persistence/repository/pessoa-repository/pessoa-repository.service';
+import { RepositoryGateway } from 'src/ports/out-ports/Repository.gateway';
 import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 
 @Injectable()
 export class AtualizarFornecedorUseCase {
 
     constructor(
-        private readonly pessoaRepo: PessoaRepositoryService,
+        @Inject("PessoaGateway")
+        private readonly pessoaRepo: RepositoryGateway,
         @Inject("LoggerGateway") private readonly logger: LoggerGateway) {}
     
     /**

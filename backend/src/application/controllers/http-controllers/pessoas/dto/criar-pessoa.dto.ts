@@ -1,8 +1,7 @@
-import { randomUUID } from "crypto";
-import { Email } from "../../../../domain/valueObjects/email.value.object";
-import { Endereco } from "../../../../domain/valueObjects/endereco.value.object";
-import { Telefone } from "../../../../domain/valueObjects/telefone.value.object";
 import { ApiProperty } from "@nestjs/swagger";
+import { Email } from "src/domain/valueObjects/email.value.object";
+import { Endereco } from "src/domain/valueObjects/endereco.value.object";
+import { Telefone } from "src/domain/valueObjects/telefone.value.object";
 
 export class CriarPessoaDto {
     

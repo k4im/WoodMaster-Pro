@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Email } from "../../../../domain/valueObjects/email.value.object";
-import { randomUUID } from "crypto";
 import * as bcrypt from 'bcrypt';
-import { CriarUsuarioDto } from "../dto/create-usuario.dto";
+import { Email } from "src/domain/valueObjects/email.value.object";
 
 export class Usuario {
     @ApiProperty()

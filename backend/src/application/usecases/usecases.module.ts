@@ -14,11 +14,19 @@ import { CriarFuncionarioUseCase } from './funcionarios/commands/criar-funcionar
 import { BuscarFuncionariosUseCase } from './funcionarios/commands/listar-funcionarios/listar-funcionarios.service';
 import { RemoverFuncionariosUseCase } from './funcionarios/commands/remover-funcionario/remover-funcionario.service';
 import { CriarProdutoUseCase } from './produtos/criar-produto/criar-produto.service';
+import { PessoaRepositoryService } from 'src/adapters/persistence/repository/pessoa-repository/pessoa-repository.service';
+import { TenantRepositoryService } from 'src/adapters/persistence/repository/tenant-repository/tenant-repository.service';
+import { AuthService } from '../controllers/http-controllers/auth/auth.service';
+import { CustomLogger } from 'src/adapters/out-adapters/logger/logger.service';
 
 @Module({
     providers: [ListarEstabelecimentosUseCase, LoginUserUseCase, AtualizarClienteUseCase, CriarClienteUseCase, DeletarClienteUseCase,
     BuscarClientesUseCase, AtualizarFornecedorUseCase, CriarFornecedorUseCase, BuscarFornecedoresUseCase, RemoverFornecedorUseCase,
     AtualizarFuncionarioUseCase, CriarFuncionarioUseCase, BuscarFuncionariosUseCase, RemoverFuncionariosUseCase,
-    CriarProdutoUseCase]
+    CriarProdutoUseCase, 
+    {provide: "PessoaGateway", useClass: PessoaRepositoryService},
+    {provide: "EstabelecimentosGateway", useClass: TenantRepositoryService},
+    {provide: "AuthGateway", useClass: AuthService},
+    {provide: 'LoggerGateway', useClass: CustomLogger}]
 })
 export class UsecasesModule {}

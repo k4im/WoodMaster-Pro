@@ -1,13 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
 import { IResponse } from 'src/domain/interfaces/IResponse.interface';
-import { TenantRepositoryService } from 'src/adapters/persistence/repository/tenant-repository/tenant-repository.service';
+import { RepositoryGateway } from 'src/ports/out-ports/Repository.gateway';
+import { BuscarResultadosUseCase } from 'src/ports/in-ports/buscarResultadosUseCase.gateway';
 
 @Injectable()
-export class ListarEstabelecimentosUseCase {
+export class ListarEstabelecimentosUseCase implements BuscarResultadosUseCase{
 
     constructor(
-        private readonly tenantRepo: TenantRepositoryService,
+        @Inject("EstabelecimentosGateway")
+        private readonly tenantRepo: RepositoryGateway,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
     ) {}

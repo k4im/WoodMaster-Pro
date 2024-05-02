@@ -1,13 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { filtro } from 'src/domain/enum/filtroPaginacao.enum';
-import { PessoaRepositoryService } from 'src/adapters/persistence/repository/pessoa-repository/pessoa-repository.service';
 import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
+import { RepositoryGateway } from 'src/ports/out-ports/Repository.gateway';
 
 @Injectable()
 export class BuscarFuncionariosUseCase {
 
     constructor(
-        private readonly pessoaRepo: PessoaRepositoryService,
+        @Inject("PessoaGateway")
+        private readonly pessoaRepo: RepositoryGateway,
         @Inject("LoggerGateway") private readonly logger: LoggerGateway) {}
     
     /**

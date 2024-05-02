@@ -2,10 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LoggerGateway } from 'src/ports/out-ports/logger.gateway';
-import { DatabaseService } from '../../../framework/database/database.service';
+import { DatabaseService } from '../../framework/database/database.service';
+import { AuthGateway } from 'src/ports/in-ports/auth.gateawy';
 
 @Injectable()
-export class AuthRepositoryService {
+export class AuthService implements AuthGateway {
 
     constructor(
         private readonly database: DatabaseService,
