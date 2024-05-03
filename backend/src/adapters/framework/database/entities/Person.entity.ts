@@ -24,6 +24,10 @@ export class Person {
     Rg: string
     @Column({nullable: false, default: true})
     isActive: boolean
+    @Column({nullable: false, default: false})
+    IsClient: boolean
+    @Column({nullable: false, default: false})
+    IsSupplier: boolean
     
     @OneToOne(()=> User, (user) => user.Person)
     User?: User

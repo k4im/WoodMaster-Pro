@@ -4,19 +4,19 @@ import { Person } from "./Person.entity";
 
 @Entity()
 export class User {
+
     @PrimaryGeneratedColumn()
     Id: number;
     @Column({nullable: true, type: "uuid", unique: true})
     @Generated("uuid")    
     Uuid: string
-    @Column({nullable: false, unique: true})
-    AccessCode: string;
     @Column({nullable: true, default: true})
     IsActive: boolean;
     @Column({nullable: false, unique: true})
     EmailAddr: string;
     @Column({nullable: false})
     HashPassword: string;
+    
     @ManyToOne(() => Role, (role) => role.User)
     Role: Role
     @OneToOne(() => Person, (person) => person.User)
