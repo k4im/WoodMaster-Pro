@@ -1,5 +1,7 @@
 import { Person } from "src/adapters/framework/database/entities/Person.entity"
 import { User } from "src/adapters/framework/database/entities/User.entity"
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class DatabaseConfigurations { 
     public static host = process.env.HOST

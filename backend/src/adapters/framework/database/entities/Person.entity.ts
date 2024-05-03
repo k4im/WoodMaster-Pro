@@ -1,12 +1,13 @@
 import { randomUUID } from "crypto";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Person { 
 
     @PrimaryGeneratedColumn()
     Id: number;
-    @Column({nullable: true, default: randomUUID(), unique: true})
+    @Column({nullable: true, type: "uuid", unique: true})
+    @Generated("uuid")    
     Uuid: string
     @Column({nullable: true})
     Name: string

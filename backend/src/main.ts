@@ -3,10 +3,10 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
 import { CustomLogger } from './adapters/out-adapters/logger/logger.service';
+import { DatabaseConfigurations } from './application/config/database.config';
 
 async function bootstrap() {
   dotenv.config();
-  
   let logger = new CustomLogger();
   const app = await NestFactory.create(AppModule);
   

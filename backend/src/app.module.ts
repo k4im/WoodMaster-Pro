@@ -8,6 +8,8 @@ import { Permissions } from './adapters/framework/database/entities/Permissions.
 import { DatabaseConfigurations } from './application/config/database.config';
 import { DatabaseMysqlAdapter } from './adapters/framework/database/database.service';
 import { CustomLogger } from './adapters/out-adapters/logger/logger.service';
+import { Tenant } from './adapters/framework/database/entities/Tenant.entity';
+import { Role } from './adapters/framework/database/entities/Role.entity';
 
 @Module({
   imports: [
@@ -18,12 +20,12 @@ import { CustomLogger } from './adapters/out-adapters/logger/logger.service';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: DatabaseConfigurations.host,
+      host: 'localhost',
       port: parseInt(DatabaseConfigurations.port),
       username: DatabaseConfigurations.username,
-      password: DatabaseConfigurations.pwd,
+      password: 'Xaes@$1412',
       database: DatabaseConfigurations.db_name,
-      entities: [Person, User, Permissions],
+      entities: [Person, User, Permissions, Tenant, Role],
       synchronize: true,
     }),
   ],

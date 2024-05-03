@@ -1,9 +1,10 @@
-import { Inject } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { IGenericRepository } from "src/application/ports/out-ports/GenericRepository.gateway";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { DataSource, EntityTarget } from "typeorm";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 
+@Injectable()
 export class GenericRepository<T> implements IGenericRepository<T> {
     
     private database: DataSource;

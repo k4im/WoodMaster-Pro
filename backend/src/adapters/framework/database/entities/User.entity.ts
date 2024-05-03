@@ -1,13 +1,11 @@
-import { randomUUID } from "crypto";
-import { BeforeInsert, Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
-import { Permissions } from "./Permissions.entity";
-import { Tenant } from "./Tenant.entity";
+import { BeforeInsert, Column, CreateDateColumn, Entity, Generated, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
     Id: number;
-    @Column({nullable: true, default: randomUUID(), unique: true})
+    @Column({nullable: true, type: "uuid", unique: true})
+    @Generated("uuid")    
     Uuid: string
     @Column({nullable: false, unique: true})
     AccessCode: string;
@@ -18,10 +16,6 @@ export class User {
     @Column({nullable: false})
     HashPassword: string;
     @Column({ nullable: true})
-    @OneToMany(() => Permissions, (perm) => perm.User)
-    Permissions: Permissions[]
-    @OneToMany(() => Tenant, (perm) => perm.Users)
-    Tenant: Tenant
     
     @CreateDateColumn()
     createAt: Date;

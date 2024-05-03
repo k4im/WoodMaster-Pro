@@ -1,18 +1,19 @@
-import { randomUUID } from "crypto";
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { User } from "./User.entity";
+import { Column, CreateDateColumn, Entity, Generated, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Role } from "./Role.entity";
 
 @Entity()
 export class Permissions {
     @PrimaryGeneratedColumn()
     Id: number;
-    @Column({default: () => randomUUID(), unique: true})
+    @Column({nullable: true, type: "uuid", unique: true})
+    @Generated("uuid")    
     Uuid: string;
     @Column({nullable: false})
     Action: string;
-    @ManyToOne(() => User, (usr) => usr.Permissions)
-    User: User
-
+    
+    @ManyToOne(() => Role, (role) => role.Permissions)
+    Role: Role
+    
     @CreateDateColumn()
     createAt: Date;
     @UpdateDateColumn()
