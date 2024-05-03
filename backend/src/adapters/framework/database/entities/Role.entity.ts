@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { Column, Entity, Generated, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Permissions } from "./Permissions.entity";
+import { User } from "./User.entity";
 
 @Entity()
 export class Role { 
@@ -13,4 +14,7 @@ export class Role {
     Name: string
     @OneToMany(() => Permissions, (perm) => perm.Role)
     Permissions: Permissions[]
+
+    @OneToMany(() => User, (user) => user.Role)
+    User: User[]
 }

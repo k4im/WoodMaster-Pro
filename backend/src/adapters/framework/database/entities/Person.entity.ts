@@ -1,5 +1,6 @@
 import { randomUUID } from "crypto";
-import { Column, CreateDateColumn, Entity, Generated, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { User } from "./User.entity";
 
 @Entity()
 export class Person { 
@@ -24,6 +25,9 @@ export class Person {
     @Column({nullable: false, default: true})
     isActive: boolean
     
+    @OneToOne(()=> User, (user) => user.Person)
+    User?: User
+
     @CreateDateColumn()
     createAt: Date;
     @UpdateDateColumn()

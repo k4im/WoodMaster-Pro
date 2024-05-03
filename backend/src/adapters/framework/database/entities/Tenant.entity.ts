@@ -11,6 +11,4 @@ export class Tenant {
     AccessKey: string
     @Column({nullable: false})
     Name: string
-
-
 }

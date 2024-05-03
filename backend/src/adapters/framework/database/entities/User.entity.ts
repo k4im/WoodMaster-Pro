@@ -1,4 +1,6 @@
-import { BeforeInsert, Column, CreateDateColumn, Entity, Generated, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Role } from "./Role.entity";
+import { Person } from "./Person.entity";
 
 @Entity()
 export class User {
@@ -15,8 +17,11 @@ export class User {
     EmailAddr: string;
     @Column({nullable: false})
     HashPassword: string;
-    @Column({ nullable: true})
-    
+    @ManyToOne(() => Role, (role) => role.User)
+    Role: Role
+    @OneToOne(() => Person, (person) => person.User)
+    Person: Person
+
     @CreateDateColumn()
     createAt: Date;
     @UpdateDateColumn()
