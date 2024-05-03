@@ -23,7 +23,7 @@ import { Role } from './adapters/framework/database/entities/Role.entity';
       host: 'localhost',
       port: parseInt(DatabaseConfigurations.port),
       username: DatabaseConfigurations.username,
-      password: 'Xaes@$1412',
+      password: DatabaseConfigurations.pwd,
       database: DatabaseConfigurations.db_name,
       entities: [Person, User, Permissions, Tenant, Role],
       synchronize: true,
