@@ -14,6 +14,7 @@ export class CreateNewTenantUseCase {
      */
     async execute(tenant: Tenant) {
         try {
+            const nuevo = new Tenant();
             const result = await this.repo.createRegister(tenant);
             return result;
         } catch (error) {

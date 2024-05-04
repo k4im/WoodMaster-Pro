@@ -1,6 +1,8 @@
 import { randomUUID } from "crypto";
-import { Column, CreateDateColumn, Entity, Generated, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User.entity";
+import { Address } from "./Addresses.entity";
+import { Phone } from "./Phone.entty";
 
 @Entity()
 export class Person { 
@@ -30,7 +32,13 @@ export class Person {
     IsSupplier: boolean
     
     @OneToOne(()=> User, (user) => user.Person)
+    @JoinColumn()
     User?: User
+    
+    @OneToMany(() => Address, (addr) => addr.Person)
+    Addresses: Address[]
+    @OneToMany(() => Phone, (phone) => phone.Person)
+    Phones: Phone[]
 
     @CreateDateColumn()
     createAt: Date;

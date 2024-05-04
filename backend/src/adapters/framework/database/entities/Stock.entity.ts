@@ -1,4 +1,6 @@
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "./Products.entity,";
+import { Tenant } from "./Tenant.entity";
 
 @Entity()
 export class Stock {
@@ -7,7 +9,10 @@ export class Stock {
     @Column({type: 'uuid', nullable: true})
     @Generated('uuid')
     Uuid: string
-    @Column({nullable: false})
-    Name: string
-
+    
+    @OneToMany(() => Product, (products) => products.Stock)
+    Products?: Product[] 
+    
+    @OneToOne(() => Tenant, (tenant) => tenant.Stock)
+    Tenant: Tenant
 }

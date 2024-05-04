@@ -1,4 +1,6 @@
-import { Column, Entity, Generated, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Stock } from "./Stock.entity";
+import { User } from "./User.entity";
 
 @Entity()
 export class Tenant { 
@@ -7,8 +9,15 @@ export class Tenant {
     @Column({nullable: true, type: "uuid", unique: true})
     @Generated("uuid")    
     Uuid: string;
-    @Column({unique: true, nullable: false})
-    AccessKey: string
     @Column({nullable: false})
     Name: string
+    @Column({default: true})
+    IsActive: boolean
+
+    @OneToOne(() => Stock)
+    @JoinColumn()
+    Stock: Stock
+    
+    @OneToMany(() => User, (user) => user.Tenant)
+    User?: User[]
 }

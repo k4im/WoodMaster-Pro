@@ -18,7 +18,7 @@ export class DatabaseMysqlAdapter implements DatabaseGateway {
             port: parseInt(DatabaseConfigurations.port),
             username: DatabaseConfigurations.username,
             password: DatabaseConfigurations.pwd,
-            entities: [Person, Permissions, User]
+            entities: DatabaseConfigurations.entities
         })
         return connection;
     }

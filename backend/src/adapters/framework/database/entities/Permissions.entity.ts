@@ -9,7 +9,7 @@ export class Permissions {
     @Column({nullable: true, type: "uuid", unique: true})
     @Generated("uuid")    
     Uuid: string;
-    @Column({nullable: false, enum: Actions})
+    @Column({nullable: false})
     Action: string;
     
     @ManyToOne(() => Role, (role) => role.Permissions)

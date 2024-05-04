@@ -1,4 +1,5 @@
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Stock } from "./Stock.entity";
 
 @Entity()
 export class Product { 
@@ -20,4 +21,6 @@ export class Product {
     @Column({nullable:true})
     Shelf: string
     
+    @ManyToOne(()=> Stock, (stock) => stock.Products)
+    Stock: Stock
 }
