@@ -13,7 +13,13 @@ export class Address {
     @Column({nullable: true})
     City: string
     @Column({nullable: true})
+    Neighborhood: string
+    @Column({nullable: true})
     ZipCode: string
+    @Column({nullable: true})
+    Country: string
+    @Column({nullable: true})
+    State: string
     @Column({nullable: true})
     Observations: string
     

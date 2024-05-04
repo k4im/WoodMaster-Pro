@@ -1,4 +1,7 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class Cpf { 
+    @ApiProperty()  
     cpf: string
     
     constructor(cpf: string) {
@@ -11,7 +14,7 @@ export class Cpf {
      * @param cpf Recebe o valor do CPF para efetuar a validação.
      * @returns 
      */
-    validarInput(cpf: string) {
+    private validarInput(cpf: string) {
         const regexDigitosIguais = /^(\d)\1{10}$/;
         const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
         if(cpfRegex.test(cpf)) 
@@ -29,7 +32,7 @@ export class Cpf {
      * @param cpf recebe o cpf limpo para efetuar a validação dos digitos presentes.
      * @returns true | false
      */
-    validarCpf(cpf: string) { 
+    private validarCpf(cpf: string) { 
         let sum  = 0;
         let remainder: number;
         
