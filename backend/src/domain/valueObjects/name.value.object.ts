@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class Name { 
     @ApiProperty()
-    FirsName: string
+    readonly FirsName: string
     @ApiProperty()
-    LastName: string
+    readonly LastName: string
 
     constructor(firstName:string, lastName: string) {
         this.FirsName = this.validateName(firstName)
@@ -17,4 +17,5 @@ export class Name {
         throw new Error(`O nome inserido é invalido. 
         Por favor insira um nome contendo apenas letras`)
     }
+
 }

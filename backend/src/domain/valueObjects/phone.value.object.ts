@@ -3,9 +3,9 @@ import { ApiProperty } from "@nestjs/swagger"
 export class Phone { 
     
     @ApiProperty()
-    Phone : string
+    readonly Phone : string
     @ApiProperty()
-    IsPrimary: boolean
+    readonly IsPrimary: boolean
 
     constructor( 
         phone?: string,

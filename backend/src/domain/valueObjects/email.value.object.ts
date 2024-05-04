@@ -5,7 +5,7 @@ import { EmailException } from "src/domain/exceptions/email.exceptio";
 export class Email { 
 
     @ApiProperty()
-    email: string
+    readonly email: string
 
     constructor(email: string) { 
         this.email = this.validacaoEmail(email);

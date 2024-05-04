@@ -4,21 +4,61 @@ import { Email } from "../valueObjects/email.value.object";
 import { Phone } from "../valueObjects/phone.value.object";
 import { Name } from "../valueObjects/name.value.object";
 import { Cpf } from "../valueObjects/cpf.value.object";
+import { RgDocument } from "../valueObjects/rg.value.object";
 
-export class PersonDomainEntity { 
+export default class PersonDomainEntity { 
     @ApiProperty({type: Name})
-    Name: Name;
+    readonly Name: Name;
     @ApiProperty()
-    Email: Email;
+    readonly Email: Email;
     @ApiProperty({isArray: true, type: Address})
-    Addresses: Address[]
+    readonly Addresses: Address[]
     @ApiProperty({isArray: true, type: Phone})
-    Phones: Phone[]
+    readonly Phones: Phone[]
     @ApiProperty({type: Name})
-    FathersName: Name
+    readonly FathersName: Name
     @ApiProperty({type: Name})
-    MothersName: Name 
+    readonly MothersName: Name 
     @ApiProperty({type: Cpf})
-    Cpf: Cpf
+    readonly Cpf: Cpf
+    @ApiProperty({type: RgDocument})
+    readonly Rg: RgDocument
+    @ApiProperty()
+    readonly IsClient: boolean;
+    @ApiProperty()
+    readonly IsSupplier: boolean;
+    @ApiProperty()
+    readonly IsOperator: boolean;
+    @ApiProperty()
+    readonly IsCollaborator: boolean;
+    
+    readonly IsActive: boolean = true;
 
+    constructor(
+        name: Name, 
+        email: Email, 
+        address: Address[], 
+        phone: Phone[], 
+        fathersName: Name, 
+        mothersName: Name,
+        cpf: Cpf,
+        rg: RgDocument,
+        isClient: boolean,
+        isSupplier: boolean,
+        isOperator: boolean,
+        isCollaborator: boolean
+    ) {
+         this.Name = new Name(name.FirsName, name.LastName);
+         this.Email = new Email(email.email);
+         this.Addresses = address;
+         this.Phones = phone;
+         this.FathersName = new Name(fathersName.FirsName, fathersName.LastName);
+         this.MothersName = new Name(mothersName.FirsName, mothersName.LastName);
+         this.Cpf = new Cpf(cpf.cpf);
+         this.Rg = new RgDocument(rg.Rg);
+         this.IsClient = isClient;
+         this.IsSupplier = isSupplier;
+         this.IsOperator = isOperator;
+         this.IsCollaborator = isCollaborator;
+    }
 }

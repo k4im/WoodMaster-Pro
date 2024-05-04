@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { Column, Entity, Generated, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, Index, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Permissions } from "./Permissions.entity";
 import { User } from "./User.entity";
 
@@ -9,6 +9,7 @@ export class Role {
     Id: number;
     @Column({nullable: true, type: "uuid", unique: true})
     @Generated("uuid")
+    @Index()
     Uuid: string;
     @Column({nullable: false})
     Name: string

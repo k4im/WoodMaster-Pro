@@ -1,4 +1,4 @@
-import { Column, Entity, Generated, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, Index, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Person } from "./Person.entity";
 
 @Entity()
@@ -6,7 +6,8 @@ export class Phone {
     @PrimaryGeneratedColumn()
     Id: number;
     @Column({nullable: true, type: "uuid", unique: true})
-    @Generated("uuid")    
+    @Generated("uuid")  
+    @Index()  
     Uuid: string
     @Column({nullable: true})
     Phone: string

@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, Generated, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, Index, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Role } from "./Role.entity";
 import { Person } from "./Person.entity";
 import { Tenant } from "./Tenant.entity";
@@ -9,7 +9,8 @@ export class User {
     @PrimaryGeneratedColumn()
     Id: number;
     @Column({nullable: true, type: "uuid", unique: true})
-    @Generated("uuid")    
+    @Generated("uuid")
+    @Index()  
     Uuid: string
     @Column({nullable: true, default: true})
     IsActive: boolean;

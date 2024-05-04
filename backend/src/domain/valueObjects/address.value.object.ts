@@ -2,21 +2,21 @@ import { ApiProperty } from "@nestjs/swagger"
 
 export class Address { 
     @ApiProperty()
-    StreetName : string        
+    private StreetName : string        
     @ApiProperty()
-    City : string       
+    private City : string       
     @ApiProperty()
-    Neighborhood: string            
+    private Neighborhood: string            
     @ApiProperty()
-    ZipCode: string    
+    private ZipCode: string    
     @ApiProperty()
-    Country: string   
+    private Country: string   
     @ApiProperty()
-    State: string          
+    private State: string          
     @ApiProperty()
-    IsPrimary: boolean 
+    private IsPrimary: boolean 
     @ApiProperty()
-    Observations: string
+    private Observations: string
 
     constructor(   
         streetName? : string,       

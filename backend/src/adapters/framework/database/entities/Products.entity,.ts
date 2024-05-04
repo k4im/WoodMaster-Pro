@@ -1,4 +1,4 @@
-import { Column, Entity, Generated, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, Index, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Stock } from "./Stock.entity";
 
 @Entity()
@@ -7,6 +7,7 @@ export class Product {
     Id: number;
     @Column({type: 'uuid', nullable: true})
     @Generated('uuid')
+    @Index()
     Uuid: string
     @Column({nullable: false})
     Name: string

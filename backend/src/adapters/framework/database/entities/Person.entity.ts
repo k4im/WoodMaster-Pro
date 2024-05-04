@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { Column, CreateDateColumn, Entity, Generated, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User.entity";
 import { Address } from "./Addresses.entity";
 import { Phone } from "./Phone.entty";
@@ -10,7 +10,8 @@ export class Person {
     @PrimaryGeneratedColumn()
     Id: number;
     @Column({nullable: true, type: "uuid", unique: true})
-    @Generated("uuid")    
+    @Generated("uuid")
+    @Index()  
     Uuid: string
     @Column({nullable: true})
     Name: string
@@ -30,7 +31,11 @@ export class Person {
     IsClient: boolean
     @Column({nullable: false, default: false})
     IsSupplier: boolean
-    
+    @Column({nullable: false, default: false})
+    IsOperator: boolean
+    @Column({nullable: false, default: false})
+    IsCollaborator: boolean
+
     @OneToOne(()=> User, (user) => user.Person)
     @JoinColumn()
     User?: User

@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class Cpf { 
     @ApiProperty()  
-    cpf: string
+    readonly cpf: string
     
     constructor(cpf: string) {
         this.cpf = this.validarInput(cpf);
