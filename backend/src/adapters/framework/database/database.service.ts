@@ -1,15 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { DataSource } from "typeorm";
-import { User } from "./entities/User.entity";
-import { Person } from "./entities/Person.entity";
-import { Permissions } from "./entities/Permissions.entity";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { DatabaseConfigurations } from "src/application/config/database.config";
 
 @Injectable()
 export class DatabaseMysqlAdapter implements DatabaseGateway { 
     
-    connect(): DataSource {
+    async connect(): Promise<DataSource> {
    
         const connection = new DataSource({
             type: 'mysql',

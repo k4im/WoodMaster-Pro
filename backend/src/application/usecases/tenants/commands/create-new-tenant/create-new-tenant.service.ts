@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Tenant } from 'src/adapters/framework/database/entities/Tenant.entity';
-import { IGenericRepository } from 'src/application/ports/out-ports/GenericRepository.gateway';
+import { DatabaseGateway } from 'src/application/ports/out-ports/database.gateway';
 
 @Injectable()
 export class CreateNewTenantUseCase {
 
-    constructor(@Inject() private readonly repo: IGenericRepository<Tenant>){}
+    constructor(@Inject("DatabaseGateway") private readonly databaseAdapter: DatabaseGateway){}
 
     /**
      * 
@@ -14,9 +14,9 @@ export class CreateNewTenantUseCase {
      */
     async execute(tenant: Tenant) {
         try {
-            const nuevo = new Tenant();
-            const result = await this.repo.createRegister(tenant);
-            return result;
+            const repo = (await (await this.databaseAdapter.connect()).initialize()).getRepository(Tenant); 
+            repo.create(tenant)
+            return true;
         } catch (error) {
             console.log("Error: " + error)
         }
