@@ -1,14 +1,11 @@
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
-import PersonDomainEntity from "../entities/person.domain";
 import { filter } from "../enum/filter.enum";
 import IPersonRepository from "../interfaces/IPersonRepository.interface";
 import { IResponse } from "../interfaces/IResponse.interface";
-import { Repository } from "typeorm";
 import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import { Inject, Injectable } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { CheckFilter } from "../helpers/checkFilter.helper";
-import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {
@@ -50,7 +47,12 @@ export default class PersonRepository implements IPersonRepository {
             this.logger.log("Gerando transaction... [PersonRepository]")
             await (await this.database.getDataSource()).transaction(async (entityManager) => {
                 const repo = entityManager.getRepository(Person)
-                await repo.save(data)
+                const person = repo.create({
+                    ...data,
+                    Addresses: [...data.Addresses],
+                    Phones: [...data.Phones]
+                });
+                await repo.save(person);
             });
             this.logger.log("Client inserido no banco de dados com sucesso... [PersonRepository]")
             (await this.database.getDataSource()).destroy()

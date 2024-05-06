@@ -23,13 +23,10 @@ export default class PersonDomainEntity  {
     readonly Cpf: Cpf
     @ApiProperty({type: RgDocument})
     readonly Rg: RgDocument
-    @ApiProperty()
+    
     readonly IsClient: boolean;
-    @ApiProperty()
     readonly IsSupplier: boolean;
-    @ApiProperty()
     readonly IsOperator: boolean;
-    @ApiProperty()
     readonly IsCollaborator: boolean;
     
     readonly IsActive: boolean = true;
