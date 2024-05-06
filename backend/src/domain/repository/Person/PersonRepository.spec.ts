@@ -12,16 +12,21 @@ import { Cpf } from 'src/domain/valueObjects/cpf.value.object';
 import { RgDocument } from 'src/domain/valueObjects/rg.value.object';
 import * as fs from 'fs';
 import * as path from 'path';
+import { Repository } from 'typeorm';
+import { Tenant } from 'src/adapters/framework/database/entities/Tenant.entity';
 
 describe('PersonRepository', () => {
     let repository: PersonRepository;
+    let tenantRepo: Repository<Tenant>
+    let tenant: Tenant
 
     beforeEach(async () => { 
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 PersonRepository, 
                 {provide: "LoggerGateway", useClass: CustomLogger}, 
-                {provide: "DatabaseGateway", useClass: DatabaseInMemory}]
+                {provide: "DatabaseGateway", useClass: DatabaseInMemory},
+            ]
         
         }).compile();
         repository = module.get<PersonRepository>(PersonRepository);
@@ -37,11 +42,13 @@ describe('PersonRepository', () => {
             new Name("Joao", "Victor"), 
             new Cpf("00556100050"),
             new RgDocument("42.221.191-6"));
+        person.setTenant(tenant);
         const result = await repository.createPerson(person);
         expect(result).toBe(true)
     });
 
     test("Deve Paginar os resultados", async () => {
+        
         const person = new PersonDomainEntity(
             new Name("Joao", "Victor"), 
             new Email("contato@exameple.com"),
@@ -52,14 +59,15 @@ describe('PersonRepository', () => {
             new Cpf("12395969010"),
             new RgDocument("422211916"),
             true);
+        person.setTenant(tenant);
         await repository.createPerson(person);
         
-        const result = await repository.paginateResults(1, 10, filter.client);
+        const result = await repository.paginateResults(1, 10, tenant.Uuid, filter.client);
         expect(result.resultados).toHaveLength(1)
     });
 
     test("Deve desativar uma pessoa", async () => { 
-        const persons = await repository.paginateResults(1, 10, filter.client);
+        const persons = await repository.paginateResults(1, 10, tenant.Uuid, filter.client);
         const result = await repository.deactivePerson(persons.resultados[0].Uuid);
         expect(result).toBe(true);
     });
@@ -75,15 +83,16 @@ describe('PersonRepository', () => {
             new Cpf("12395969010"),
             new RgDocument("422211916"),
             true);
-        const persons = await repository.paginateResults(1, 10, filter.client);
+        
+        const persons = await repository.paginateResults(1, 10, tenant.Uuid, filter.client);
         const result = await repository.updatePerson(personUpdated, persons.resultados[0].Uuid);
-        const persons2 = await repository.paginateResults(1, 10, filter.client);
+        const persons2 = await repository.paginateResults(1, 10, tenant.Uuid, filter.client);
         expect(persons.resultados[0].Uuid).toEqual(persons2.resultados[0].Uuid)
         expect(result).toBe(true);
     })
     
-    /** A função será executada no final de todos os testes onde estará removendo o arquivo de banco de dados
-     * 
+    /** A função será executada no final de todos os testes 
+     * onde estará removendo o arquivo de banco de dados.
      */
     afterAll(async () => {
         const srcPath = path.resolve(__dirname, '../../../../:memory');

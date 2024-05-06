@@ -4,7 +4,7 @@ import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import PersonDomainEntity from "../entities/person.domain";
 
 export default interface IPersonRepository { 
-    paginateResults(page: number, limit: number, filterStatement: filter): Promise<IResponse<Person>>;
+    paginateResults(page: number, limit: number, tenatnId: string, filterStatement: filter): Promise<IResponse<Person>>;
     
     createPerson(data: PersonDomainEntity): Promise<boolean>;
     

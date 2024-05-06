@@ -5,6 +5,7 @@ import { Phone } from "../valueObjects/phone.value.object";
 import { Name } from "../valueObjects/name.value.object";
 import { Cpf } from "../valueObjects/cpf.value.object";
 import { RgDocument } from "../valueObjects/rg.value.object";
+import { Tenant } from "src/adapters/framework/database/entities/Tenant.entity";
 
 export default class PersonDomainEntity  { 
     @ApiProperty({type: Name})
@@ -30,6 +31,7 @@ export default class PersonDomainEntity  {
     readonly IsCollaborator: boolean;
     
     readonly IsActive: boolean = true;
+    private Tenant: Tenant; 
 
     constructor(
         name: Name, 
@@ -57,5 +59,13 @@ export default class PersonDomainEntity  {
          this.IsSupplier = isSupplier;
          this.IsOperator = isOperator;
          this.IsCollaborator = isCollaborator;
+    }
+
+    setTenant(tenant: Tenant) {
+        this.Tenant = tenant
+    };
+    
+    getTenant() {
+        return this.Tenant
     }
 }

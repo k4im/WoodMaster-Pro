@@ -1,8 +1,9 @@
 import { randomUUID } from "crypto";
-import { Column, CreateDateColumn, Entity, Generated, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, Index, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User.entity";
 import { Address } from "./Addresses.entity";
 import { Phone } from "./Phone.entty";
+import { Tenant } from "./Tenant.entity";
 
 @Entity()
 export class Person { 
@@ -44,6 +45,10 @@ export class Person {
     Addresses: Address[]
     @OneToMany(() => Phone, (phone) => phone.Person, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Phones: Phone[]
+
+    @ManyToOne(() => Tenant, (tenantId) => tenantId.Persons, {onUpdate: "CASCADE", onDelete: "SET NULL"})
+    @JoinColumn({name: "TenantId"})
+    Tenant: Tenant
 
     @CreateDateColumn()
     createAt: Date;

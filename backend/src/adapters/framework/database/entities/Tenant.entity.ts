@@ -1,6 +1,7 @@
-import { Column, Entity, Generated, Index, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, Index, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Stock } from "./Stock.entity";
 import { User } from "./User.entity";
+import { Person } from "./Person.entity";
 
 @Entity()
 export class Tenant { 
@@ -21,4 +22,7 @@ export class Tenant {
     
     @OneToMany(() => User, (user) => user.Tenant, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     User?: User[]
+    
+    @OneToMany(() => Person, (user) => user.Tenant, {onUpdate: "CASCADE", onDelete: "SET NULL"})
+    Persons: Person[]
 }

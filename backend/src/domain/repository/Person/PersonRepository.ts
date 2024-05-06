@@ -8,8 +8,8 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { CheckFilter } from "../../helpers/checkFilter.helper";
 import PersonDomainEntity from "../../entities/person.domain";
 import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
-import { DataSource } from "typeorm";
 import { Phone } from "src/adapters/framework/database/entities/Phone.entty";
+import { Tenant } from "src/adapters/framework/database/entities/Tenant.entity";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {
@@ -30,13 +30,12 @@ export default class PersonRepository implements IPersonRepository {
      * await repo.paginateResults(1, 10, filter.client);
      * @returns IResponse<Person>
      */
-    async paginateResults(page: number, limit: number, filterStatement: filter): Promise<IResponse<Person>> {
+    async paginateResults(page: number, limit: number, tenantId: string, filterStatement: filter): Promise<IResponse<Person>> {
         try {
             this.logger.log("Criando repository para pessoa... [PersonRepository]")
             const db = await this.database.getDataSource();
             const respository = db.getRepository(Person)            
-            let whereStatement: any = await CheckFilter(filterStatement, this.logger);
-            
+            let whereStatement: any = await CheckFilter(tenantId,filterStatement, this.logger);
             const pages = (page -1) * limit;
             const result = await respository.findAndCount({
                 select: {Uuid: true, isActive: true, Name: true},
@@ -77,6 +76,7 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             await db.manager.transaction(async (entityManager) => {
                 const repo = entityManager.getRepository(Person)
+                
                 this.logger.log("Criando pessoa... [PersonRepository]")
                 const person = repo.create({
                     ...data,
@@ -99,6 +99,7 @@ export default class PersonRepository implements IPersonRepository {
                         return ad
                     })],
                     Phones: [...data.Phones],
+                    Tenant: data.getTenant()
                 });
                 await entityManager.save(person);
             });
