@@ -77,6 +77,8 @@ describe('PersonRepository', () => {
             true);
         const persons = await repository.paginateResults(1, 10, filter.client);
         const result = await repository.updatePerson(personUpdated, persons.resultados[0].Uuid);
+        const persons2 = await repository.paginateResults(1, 10, filter.client);
+        expect(persons.resultados[0].Uuid).toEqual(persons2.resultados[0].Uuid)
         expect(result).toBe(true);
     })
     
