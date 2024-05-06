@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class RgDocument { 
     @ApiProperty()
-    Rg: string;
+    value: string;
 
     constructor(rg: string) {
-        this.Rg = this.validateInput(rg);
+        this.value = this.validateInput(rg);
     }
 
     /**

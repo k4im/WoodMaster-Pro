@@ -40,19 +40,19 @@ export default class PersonDomainEntity  {
         mothersName: Name,
         cpf: Cpf,
         rg: RgDocument,
-        isClient: boolean,
-        isSupplier: boolean,
-        isOperator: boolean,
-        isCollaborator: boolean
+        isClient?: boolean,
+        isSupplier?: boolean,
+        isOperator?: boolean,
+        isCollaborator?: boolean
     ) {
-         this.Name = new Name(name.FirsName, name.LastName);
-         this.Email = new Email(email.email);
+         this.Name = name;
+         this.Email = email
          this.Addresses = address;
          this.Phones = phone;
-         this.FathersName = new Name(fathersName.FirsName, fathersName.LastName);
-         this.MothersName = new Name(mothersName.FirsName, mothersName.LastName);
-         this.Cpf = new Cpf(cpf.cpf);
-         this.Rg = new RgDocument(rg.Rg);
+         this.FathersName = fathersName;
+         this.MothersName = mothersName;
+         this.Cpf = cpf
+         this.Rg = rg
          this.IsClient = isClient;
          this.IsSupplier = isSupplier;
          this.IsOperator = isOperator;

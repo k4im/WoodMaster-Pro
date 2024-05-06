@@ -16,6 +16,18 @@ export default class PersonRepository implements IPersonRepository {
        @Inject("LoggerGateway") private readonly logger: LoggerGateway) 
     {}
 
+    /**
+     * O metodo poderá ser utilizado para efetuar a paginação do banco de dados
+     * onde estará navegando através de paginas e efetuando a delemitação de resultados
+     * através de limit.
+     * @param page recebe a pagina para efetuar a nevageção no banco de dados.
+     * @param limit recebe o limite de dados que serão apresentados na paginação.
+     * @param filterStatement recebe o filtro para criação do stetament
+     * @example
+     * const repo =- new PersonRepository(DatabaseGateway, Logger);
+     * await repo.paginateResults(1, 10, filter.client);
+     * @returns IResponse<Person>
+     */
     async paginateResults(page: number, limit: number, filterStatement: filter): Promise<IResponse<Person>> {
         try {
             this.logger.log("Criando repository para pessoa... [PersonRepository]")
@@ -69,8 +81,8 @@ export default class PersonRepository implements IPersonRepository {
                     Email: data.Email.email,
                     FathersName: data.FathersName.getFullName(),
                     MothersName: data.MothersName.getFullName(),
-                    Cpf: data.Cpf.cpf,
-                    Rg: data.Rg.Rg,
+                    Cpf: data.Cpf.value,
+                    Rg: data.Rg.value,
                     Addresses: [...data.Addresses.map(e => {
                         this.logger.log("Criando endereços... [PersonRepository]")
                         const ad = new Address();
@@ -92,15 +104,80 @@ export default class PersonRepository implements IPersonRepository {
             return true;
         } catch (error) {
             (await this.database.getDataSource()).destroy()
-            this.logger.error(`Houve um erro ao tentar criar a pessoa.... [PersonRespository]`)
+            this.logger.error(`Houve um erro ao tentar criar a pessoa.... [PersonRespository]: ${error}`)
             return false;
         }
     }
-    updatePerson(data: PersonDomainEntity, uuid: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+
+    /**
+     * Metodo sera utilizado para efetuar a atualização de um cliente
+     * onde poderá estar sendo repassado todos os dados necessários para efetuar a operação.
+     * @param data Recebe a entidade contendo os dados da pessoa.
+     * @param uuid recebe o uuid para efetuar a atualização.
+     * @example
+     * const repo = new PersonRepository(DatabaseGateway, Logger);
+     * const result = await repo.updatePerson(data, "7e91752c-4c16-4db7-91be-f2c03aed2e2c");
+     * (result) ? "Pessoa atualizada com sucesso!" : "Houve um erro ao tentar atualizar a pessoa";
+     * @returns Promise<boolean>
+     */
+    async updatePerson(data: PersonDomainEntity, uuid: string): Promise<boolean> {
+        try {
+            this.logger.log("Gerando transcation.... [PersonRepository]");
+            await (await this.database.getDataSource()).transaction(async (entityManager) =>  {
+                const repo = await entityManager.getRepository(Person);
+                const personData = repo.create({
+                    ...data,
+                    Name: data.Name.getFullName(),
+                    Email: data.Email.email,
+                    FathersName: data.FathersName.getFullName(),
+                    MothersName: data.MothersName.getFullName(),
+                    Cpf: data.Cpf.value,
+                    Rg: data.Rg.value,
+                    Addresses: [...data.Addresses.map(e => {
+                        this.logger.log("Criando endereços... [PersonRepository]")
+                        const ad = new Address();
+                        ad.City = e.City;
+                        ad.Country = e.Country;
+                        ad.Neighborhood = e.Neighborhood;
+                        ad.Observations = e.Observations;
+                        ad.ZipCode = e.ZipCode;
+                        ad.State = e.State;
+                        ad.StreetName = e.StreetName;
+                        return ad
+                    })],
+                    Phones: [...data.Phones],
+                });
+                await repo.update(uuid, personData);
+                (await this.database.getDataSource()).destroy();
+                this.logger.log("Efetuado update de pessoa.... [PersonRepository]");
+                return true;
+            })
+        } catch (error) {
+            this.logger.error(`Houve um erro ao tentar atualizar a pessoa.... [PersonRepository]: ${error}`)
+            (await this.database.getDataSource()).destroy();
+            return false;
+        }
     }
-    deactivePerson(uuid: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    /**
+     * O metodo sera utilizado para realizar a desativação de uma pessoa.
+     * @param uuid Recebe o uuid da pessoa que sera desativada.
+     * @returns Promise<boolean>
+     */
+    async deactivePerson(uuid: string): Promise<boolean> {
+        try {
+            this.logger.log("Gerando transcation.... [PersonRepository]");
+            await (await this.database.getDataSource()).transaction(async (entityManager) =>  {
+                const repo = await entityManager.getRepository(Person);
+                await repo.update(uuid, {isActive: false});
+                (await this.database.getDataSource()).destroy();
+                this.logger.log("Efetuado desativação de pessoa.... [PersonRepository]");
+                return true;
+            })
+        } catch (error) {
+            this.logger.error(`Houve um erro ao tentar desativar a pessoa.... [PersonRepository]: ${error}`)
+            (await this.database.getDataSource()).destroy();
+            return false;
+        }
     } 
     
 }
