@@ -1,13 +1,15 @@
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
-import { filter } from "../enum/filter.enum";
-import IPersonRepository from "../interfaces/IPersonRepository.interface";
-import { IResponse } from "../interfaces/IResponse.interface";
+import { filter } from "../../enum/filter.enum";
+import IPersonRepository from "../../interfaces/IPersonRepository.interface";
+import { IResponse } from "../../interfaces/IResponse.interface";
 import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import { Inject, Injectable } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { CheckFilter } from "../helpers/checkFilter.helper";
-import PersonDomainEntity from "../entities/person.domain";
+import { CheckFilter } from "../../helpers/checkFilter.helper";
+import PersonDomainEntity from "../../entities/person.domain";
 import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
+import { DataSource } from "typeorm";
+import { Phone } from "src/adapters/framework/database/entities/Phone.entty";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {
@@ -31,7 +33,8 @@ export default class PersonRepository implements IPersonRepository {
     async paginateResults(page: number, limit: number, filterStatement: filter): Promise<IResponse<Person>> {
         try {
             this.logger.log("Criando repository para pessoa... [PersonRepository]")
-            const respository = await this.database.getDataSource().then(e => e.getRepository(Person))            
+            const db = await this.database.getDataSource();
+            const respository = db.getRepository(Person)            
             let whereStatement: any = await CheckFilter(filterStatement, this.logger);
             
             const pages = (page -1) * limit;
@@ -40,11 +43,11 @@ export default class PersonRepository implements IPersonRepository {
                 where: whereStatement,
                 skip: pages,
                 take: limit,
-                cache: 30000
+                // cache: 30000
             });
-            const totalPages = result[1] / limit;
+            const totalPages = Math.ceil(result[1] / limit);
             this.logger.log("Efetuado busca de resultados paginados... [PersonRepository]")
-            (await this.database.getDataSource()).destroy();
+            await db.destroy();
             return {
                 pagina_atual: page,
                 total_paginas: totalPages,
@@ -53,7 +56,6 @@ export default class PersonRepository implements IPersonRepository {
             }
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar paginar os resultados... [PersonRepository]: ${error}`)
-            (await this.database.getDataSource()).destroy();
         }
     }
 
@@ -72,7 +74,8 @@ export default class PersonRepository implements IPersonRepository {
     async createPerson(data: PersonDomainEntity): Promise<boolean> {
         try {
             this.logger.log("Gerando transaction... [PersonRepository]")
-            await (await this.database.getDataSource()).transaction(async (entityManager) => {
+            const db = await this.database.getDataSource();
+            await db.manager.transaction(async (entityManager) => {
                 const repo = entityManager.getRepository(Person)
                 this.logger.log("Criando pessoa... [PersonRepository]")
                 const person = repo.create({
@@ -97,13 +100,12 @@ export default class PersonRepository implements IPersonRepository {
                     })],
                     Phones: [...data.Phones],
                 });
-                await repo.save(person);
+                await entityManager.save(person);
             });
+            db.destroy()
             this.logger.log("Pessoa inserida no banco de dados com sucesso... [PersonRepository]")
-            (await this.database.getDataSource()).destroy()
             return true;
         } catch (error) {
-            (await this.database.getDataSource()).destroy()
             this.logger.error(`Houve um erro ao tentar criar a pessoa.... [PersonRespository]: ${error}`)
             return false;
         }
@@ -123,38 +125,48 @@ export default class PersonRepository implements IPersonRepository {
     async updatePerson(data: PersonDomainEntity, uuid: string): Promise<boolean> {
         try {
             this.logger.log("Gerando transcation.... [PersonRepository]");
-            await (await this.database.getDataSource()).transaction(async (entityManager) =>  {
-                const repo = await entityManager.getRepository(Person);
-                const personData = repo.create({
-                    ...data,
-                    Name: data.Name.getFullName(),
-                    Email: data.Email.email,
-                    FathersName: data.FathersName.getFullName(),
-                    MothersName: data.MothersName.getFullName(),
-                    Cpf: data.Cpf.value,
-                    Rg: data.Rg.value,
-                    Addresses: [...data.Addresses.map(e => {
-                        this.logger.log("Criando endereços... [PersonRepository]")
-                        const ad = new Address();
-                        ad.City = e.City;
-                        ad.Country = e.Country;
-                        ad.Neighborhood = e.Neighborhood;
-                        ad.Observations = e.Observations;
-                        ad.ZipCode = e.ZipCode;
-                        ad.State = e.State;
-                        ad.StreetName = e.StreetName;
-                        return ad
-                    })],
-                    Phones: [...data.Phones],
-                });
-                await repo.update(uuid, personData);
-                (await this.database.getDataSource()).destroy();
-                this.logger.log("Efetuado update de pessoa.... [PersonRepository]");
-                return true;
+            const db = await this.database.getDataSource();
+            await db.transaction(async (entityManager) =>  {
+                const repo = entityManager.getRepository(Person);
+                const person = await repo.findOneBy({Uuid: uuid});
+                if(!person) {
+                    this.logger.error(`Não foi possivel localizar a pessoa com este uuid... [PersonRepository]`);
+                    return false;
+                };
+                person.Name = data.Name.getFullName();
+                person.Email = data.Email.email;
+                person.Cpf = data.Cpf.value;
+                person.Rg = data.Rg.value;
+                person.IsClient = data.IsClient;
+                person.isActive = data.IsActive;
+                person.IsSupplier = data.IsSupplier;
+                person.IsCollaborator = data.IsCollaborator;
+                person.IsOperator = data.IsOperator;
+                person.Phones = [...data.Phones.map(e => {
+                    const phone = new Phone()
+                    phone.Phone = e.Phone;
+                    phone.IsPrimary = e.IsPrimary;
+                    return phone;
+                })];
+                person.Addresses = [...data.Addresses.map(e => {
+                    this.logger.log("Criando endereços... [PersonRepository]")
+                    const ad = new Address();
+                    ad.City = e.City;
+                    ad.Country = e.Country;
+                    ad.Neighborhood = e.Neighborhood;
+                    ad.Observations = e.Observations;
+                    ad.ZipCode = e.ZipCode;
+                    ad.State = e.State;
+                    ad.StreetName = e.StreetName;
+                    return ad
+                })];
+                await repo.save(person);
             })
+            this.logger.log("Efetuado update de pessoa.... [PersonRepository]");
+            db.destroy();
+            return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar atualizar a pessoa.... [PersonRepository]: ${error}`)
-            (await this.database.getDataSource()).destroy();
             return false;
         }
     }
@@ -166,13 +178,14 @@ export default class PersonRepository implements IPersonRepository {
     async deactivePerson(uuid: string): Promise<boolean> {
         try {
             this.logger.log("Gerando transcation.... [PersonRepository]");
-            await (await this.database.getDataSource()).transaction(async (entityManager) =>  {
-                const repo = await entityManager.getRepository(Person);
-                await repo.update(uuid, {isActive: false});
-                (await this.database.getDataSource()).destroy();
-                this.logger.log("Efetuado desativação de pessoa.... [PersonRepository]");
-                return true;
-            })
+            const db = await this.database.getDataSource();
+            await db.transaction(async (entityManager) =>  {
+                const repo = entityManager.getRepository(Person);
+                await repo.update({Uuid: uuid}, {isActive: false});
+            });
+            this.logger.log("Efetuado desativação de pessoa.... [PersonRepository]");
+            await db.destroy();
+            return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar desativar a pessoa.... [PersonRepository]: ${error}`)
             (await this.database.getDataSource()).destroy();

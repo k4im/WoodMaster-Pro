@@ -15,10 +15,10 @@ export class Tenant {
     @Column({default: true})
     IsActive: boolean
 
-    @OneToOne(() => Stock)
+    @OneToOne(() => Stock, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     @JoinColumn()
     Stock: Stock
     
-    @OneToMany(() => User, (user) => user.Tenant)
+    @OneToMany(() => User, (user) => user.Tenant, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     User?: User[]
 }

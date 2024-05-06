@@ -11,9 +11,9 @@ export class Stock {
     @Index()
     Uuid: string
     
-    @OneToMany(() => Product, (products) => products.Stock)
+    @OneToMany(() => Product, (products) => products.Stock, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Products?: Product[] 
     
-    @OneToOne(() => Tenant, (tenant) => tenant.Stock)
+    @OneToOne(() => Tenant, (tenant) => tenant.Stock, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Tenant: Tenant
 }

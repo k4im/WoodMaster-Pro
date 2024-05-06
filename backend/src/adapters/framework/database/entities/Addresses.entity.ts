@@ -23,6 +23,6 @@ export class Address {
     @Column({nullable: true})
     Observations: string
     
-    @ManyToOne(() => Person, (person) => person.Addresses)
+    @ManyToOne(() => Person, (person) => person.Addresses, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Person?: Person
 }

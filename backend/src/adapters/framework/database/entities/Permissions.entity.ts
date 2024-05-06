@@ -12,7 +12,7 @@ export class Permissions {
     @Column({nullable: false})
     Action: string;
     
-    @ManyToOne(() => Role, (role) => role.Permissions)
+    @ManyToOne(() => Role, (role) => role.Permissions, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Role: Role
     
     @CreateDateColumn()

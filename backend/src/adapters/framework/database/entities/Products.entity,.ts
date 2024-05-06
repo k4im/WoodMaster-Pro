@@ -22,6 +22,6 @@ export class Product {
     @Column({nullable:true})
     Shelf: string
     
-    @ManyToOne(()=> Stock, (stock) => stock.Products)
+    @ManyToOne(()=> Stock, (stock) => stock.Products, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Stock: Stock
 }

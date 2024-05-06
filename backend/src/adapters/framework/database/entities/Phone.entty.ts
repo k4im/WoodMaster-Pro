@@ -14,6 +14,6 @@ export class Phone {
     @Column({nullable: false})
     IsPrimary: boolean
 
-    @ManyToOne(() => Person, (person) => person.Phones)
+    @ManyToOne(() => Person, (person) => person.Phones, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Person: Person
 }

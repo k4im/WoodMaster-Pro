@@ -19,11 +19,11 @@ export class User {
     @Column({nullable: false})
     HashPassword: string;
     
-    @ManyToOne(() => Role, (role) => role.User)
+    @ManyToOne(() => Role, (role) => role.User, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Role: Role
-    @OneToOne(() => Person, (person) => person.User)
+    @OneToOne(() => Person, (person) => person.User, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Person: Person
-    @ManyToOne(() => Tenant, (tenant) => tenant.User)
+    @ManyToOne(() => Tenant, (tenant) => tenant.User, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Tenant: Tenant
 
     @CreateDateColumn()

@@ -36,13 +36,13 @@ export class Person {
     @Column({nullable: false, default: false})
     IsCollaborator: boolean
 
-    @OneToOne(()=> User, (user) => user.Person)
+    @OneToOne(()=> User, (user) => user.Person, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     @JoinColumn()
     User?: User
     
-    @OneToMany(() => Address, (addr) => addr.Person)
+    @OneToMany(() => Address, (addr) => addr.Person, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Addresses: Address[]
-    @OneToMany(() => Phone, (phone) => phone.Person)
+    @OneToMany(() => Phone, (phone) => phone.Person, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Phones: Phone[]
 
     @CreateDateColumn()

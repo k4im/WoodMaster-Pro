@@ -14,7 +14,7 @@ export class RgDocument {
      * @returns rg | Error
      */
     private validateInput(rg: string) { 
-        const rgRegex = new RegExp("(^\d{1,2}).?(\d{3}).?(\d{3})-?(\d{1}|X|x$)");
+        const rgRegex = /^(\d{1,2})\.?(\d{3})\.?(\d{3})-?(\d{1}|[Xx]$)/;
         if(rgRegex.test(rg)) return rg;
         throw new Error(`O RG informado encontra-se invalido.
         Por favor informe um RG valido.`)

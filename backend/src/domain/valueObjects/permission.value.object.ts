@@ -6,6 +6,4 @@ export default class PermissionsVO {
     constructor(action: Actions) {
         this.Action = action
     }
-
-    
 }

@@ -19,6 +19,6 @@ export class Name {
     }
 
     getFullName(): string { 
-        return this.FirsName + this.LastName
+        return `${this.FirsName} ${this.LastName}`
     }
 }

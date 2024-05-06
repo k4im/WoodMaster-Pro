@@ -4,18 +4,15 @@ import { DatabaseGateway } from "src/application/ports/out-ports/database.gatewa
 import { DatabaseConfigurations } from "src/application/config/database.config";
 
 @Injectable()
-export class DatabaseMysqlAdapter implements DatabaseGateway { 
+export class DatabaseInMemory implements DatabaseGateway { 
     
     async getDataSource(): Promise<DataSource> {   
         return new DataSource({
-            type: 'mysql',
-            host: DatabaseConfigurations.host,
-            database: DatabaseConfigurations.db_name,
-            port: parseInt(DatabaseConfigurations.port),
-            username: DatabaseConfigurations.username,
-            password: DatabaseConfigurations.pwd,
+            type: 'better-sqlite3',
+            database: ':memory',
+            dropSchema: false,
             entities: DatabaseConfigurations.entities,
-            synchronize: false, 
-        })
+            synchronize: true, 
+        }).initialize()
     }
 }
