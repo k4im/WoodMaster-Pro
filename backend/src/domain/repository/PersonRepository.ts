@@ -6,6 +6,8 @@ import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import { Inject, Injectable } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { CheckFilter } from "../helpers/checkFilter.helper";
+import PersonDomainEntity from "../entities/person.domain";
+import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {
@@ -25,7 +27,8 @@ export default class PersonRepository implements IPersonRepository {
                 select: {Uuid: true, isActive: true, Name: true},
                 where: whereStatement,
                 skip: pages,
-                take: limit
+                take: limit,
+                cache: 30000
             });
             const totalPages = result[1] / limit;
             this.logger.log("Efetuado busca de resultados paginados... [PersonRepository]")
@@ -41,48 +44,62 @@ export default class PersonRepository implements IPersonRepository {
             (await this.database.getDataSource()).destroy();
         }
     }
-    async createClientPerson(data: Person): Promise<void> {
+
+    /**
+     * O metodo podera ser utilizado para efetuar a criação de uma nova pessoa,
+     * onde deverá ser repassado a entidade de dominio para o repositorio para que então
+     * seja possivel efetuar a criação de um novo registro no banco.
+     * @param data Recebe uma entidada do tipo PessoaDomainEntity
+     * @example 
+     * const repo = new PersonRepository(DatabaseGateway, Logger);
+     * const novaPessoa = new PessoaDomainEntity(...dados);
+     * const result = await repo.createPerson(novaPessoa);
+     * (result) ? "A pessoa foi criada com sucesso" : "Houve um erro ao tentar criar a pessoa";
+     * @returns boolean
+     */
+    async createPerson(data: PersonDomainEntity): Promise<boolean> {
         try {
-            if(!data.IsClient) throw new Error("A pessoa deve estar marcada como cliente.");
             this.logger.log("Gerando transaction... [PersonRepository]")
             await (await this.database.getDataSource()).transaction(async (entityManager) => {
                 const repo = entityManager.getRepository(Person)
+                this.logger.log("Criando pessoa... [PersonRepository]")
                 const person = repo.create({
                     ...data,
-                    Addresses: [...data.Addresses],
-                    Phones: [...data.Phones]
+                    Name: data.Name.getFullName(),
+                    Email: data.Email.email,
+                    FathersName: data.FathersName.getFullName(),
+                    MothersName: data.MothersName.getFullName(),
+                    Cpf: data.Cpf.cpf,
+                    Rg: data.Rg.Rg,
+                    Addresses: [...data.Addresses.map(e => {
+                        this.logger.log("Criando endereços... [PersonRepository]")
+                        const ad = new Address();
+                        ad.City = e.City;
+                        ad.Country = e.Country;
+                        ad.Neighborhood = e.Neighborhood;
+                        ad.Observations = e.Observations;
+                        ad.ZipCode = e.ZipCode;
+                        ad.State = e.State;
+                        ad.StreetName = e.StreetName;
+                        return ad
+                    })],
+                    Phones: [...data.Phones],
                 });
                 await repo.save(person);
             });
-            this.logger.log("Client inserido no banco de dados com sucesso... [PersonRepository]")
+            this.logger.log("Pessoa inserida no banco de dados com sucesso... [PersonRepository]")
             (await this.database.getDataSource()).destroy()
+            return true;
         } catch (error) {
             (await this.database.getDataSource()).destroy()
-            this.logger.error(`Houve um erro ao tentar criar o cliente.... [PersonRespository]`)
+            this.logger.error(`Houve um erro ao tentar criar a pessoa.... [PersonRespository]`)
+            return false;
         }
     }
-    createSupplierPerson(data: Person): Promise<void> {
+    updatePerson(data: PersonDomainEntity, uuid: string): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
-    createOperatorPerson(data: Person): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    createCollaboratorPerson(data: Person): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    updateClientPerson(data: Person, uuid: string): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    updateOperatorPerson(data: Person, uuid: string): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    updateCollaboratorPerson(data: Person, uuid: string): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    updateSupplierPerson(data: Person, uuid: string): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    deactivePerson(uuid: string): Promise<void> {
+    deactivePerson(uuid: string): Promise<boolean> {
         throw new Error("Method not implemented.");
     } 
     

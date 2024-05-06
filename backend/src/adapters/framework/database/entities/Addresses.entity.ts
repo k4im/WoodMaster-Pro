@@ -4,10 +4,10 @@ import { Person } from "./Person.entity";
 @Entity() 
 export class Address {
     @PrimaryGeneratedColumn()
-    Id: number
+    Id?: number
     @Column({ nullable: true, type: 'uuid'})
     @Generated("uuid")
-    Uuid: string
+    Uuid?: string
     @Column({nullable: true})
     StreetName: string
     @Column({nullable: true})
@@ -24,5 +24,5 @@ export class Address {
     Observations: string
     
     @ManyToOne(() => Person, (person) => person.Addresses)
-    Person: Person
+    Person?: Person
 }

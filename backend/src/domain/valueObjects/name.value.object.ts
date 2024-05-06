@@ -18,4 +18,7 @@ export class Name {
         Por favor insira um nome contendo apenas letras`)
     }
 
+    getFullName(): string { 
+        return this.FirsName + this.LastName
+    }
 }
