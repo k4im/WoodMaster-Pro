@@ -8,6 +8,7 @@ import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import { Inject, Injectable } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { CheckFilter } from "../helpers/checkFilter.helper";
+import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {
@@ -43,28 +44,40 @@ export default class PersonRepository implements IPersonRepository {
             (await this.database.getDataSource()).destroy();
         }
     }
-    createClientPerson(data: PersonDomainEntity): Promise<void> {
+    async createClientPerson(data: Person): Promise<void> {
+        try {
+            if(!data.IsClient) throw new Error("A pessoa deve estar marcada como cliente.");
+            this.logger.log("Gerando transaction... [PersonRepository]")
+            await (await this.database.getDataSource()).transaction(async (entityManager) => {
+                const repo = entityManager.getRepository(Person)
+                await repo.save(data)
+            });
+            this.logger.log("Client inserido no banco de dados com sucesso... [PersonRepository]")
+            (await this.database.getDataSource()).destroy()
+        } catch (error) {
+            (await this.database.getDataSource()).destroy()
+            this.logger.error(`Houve um erro ao tentar criar o cliente.... [PersonRespository]`)
+        }
+    }
+    createSupplierPerson(data: Person): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    createSupplierPerson(data: PersonDomainEntity): Promise<void> {
+    createOperatorPerson(data: Person): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    createOperatorPerson(data: PersonDomainEntity): Promise<void> {
+    createCollaboratorPerson(data: Person): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    createCollaboratorPerson(data: PersonDomainEntity): Promise<void> {
+    updateClientPerson(data: Person, uuid: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    updateClientPerson(data: PersonDomainEntity, uuid: string): Promise<void> {
+    updateOperatorPerson(data: Person, uuid: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    updateOperatorPerson(data: PersonDomainEntity, uuid: string): Promise<void> {
+    updateCollaboratorPerson(data: Person, uuid: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    updateCollaboratorPerson(data: PersonDomainEntity, uuid: string): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-    updateSupplierPerson(data: PersonDomainEntity, uuid: string): Promise<void> {
+    updateSupplierPerson(data: Person, uuid: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
     deactivePerson(uuid: string): Promise<void> {

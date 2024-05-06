@@ -5,7 +5,7 @@ import { Person } from "./Person.entity";
 export class Address {
     @PrimaryGeneratedColumn()
     Id: number
-    @Column({type: 'uuid'})
+    @Column({ nullable: true, type: 'uuid'})
     @Generated("uuid")
     Uuid: string
     @Column({nullable: true})

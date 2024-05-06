@@ -6,7 +6,7 @@ import { Name } from "../valueObjects/name.value.object";
 import { Cpf } from "../valueObjects/cpf.value.object";
 import { RgDocument } from "../valueObjects/rg.value.object";
 
-export default class PersonDomainEntity { 
+export default class PersonDomainEntity  { 
     @ApiProperty({type: Name})
     readonly Name: Name;
     @ApiProperty()
