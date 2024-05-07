@@ -7,7 +7,6 @@ export class Product {
     Id: number;
     @Column({type: 'uuid', nullable: true})
     @Generated('uuid')
-    @Index()
     Uuid: string
     @Column({nullable: false})
     Name: string

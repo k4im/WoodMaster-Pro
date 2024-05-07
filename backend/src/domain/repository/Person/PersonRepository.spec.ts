@@ -17,7 +17,7 @@ import { Tenant } from 'src/adapters/framework/database/entities/Tenant.entity';
 
 describe('PersonRepository', () => {
     let repository: PersonRepository;
-    let tenantRepo: Repository<Tenant>
+    let databaseInMemory: DatabaseInMemory
     let tenant: Tenant
 
     beforeEach(async () => { 
@@ -31,7 +31,19 @@ describe('PersonRepository', () => {
         }).compile();
         repository = module.get<PersonRepository>(PersonRepository);
     });
+    beforeAll(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            providers: [DatabaseInMemory]
+        
+        }).compile();
+        databaseInMemory = module.get<DatabaseInMemory>(DatabaseInMemory);
 
+        const repo = (await databaseInMemory.getDataSource()).getRepository(Tenant);
+        tenant = repo.create({
+            Name: "Tenant Geraldo"
+        });
+        await repo.save(tenant);
+    });  
     test("Deve criar novo registro em banco", async () => {
         const person = new PersonDomainEntity(
             new Name("Joao", "Victor"), 

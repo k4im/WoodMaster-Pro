@@ -8,7 +8,6 @@ export class Stock {
     Id: number;
     @Column({type: 'uuid', nullable: true})
     @Generated('uuid')
-    @Index()
     Uuid: string
     
     @OneToMany(() => Product, (products) => products.Stock, {onUpdate: "CASCADE", onDelete: "SET NULL"})

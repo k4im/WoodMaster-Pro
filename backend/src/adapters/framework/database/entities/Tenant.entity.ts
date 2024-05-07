@@ -9,7 +9,6 @@ export class Tenant {
     Id: number;
     @Column({nullable: true, type: "uuid", unique: true})
     @Generated("uuid")
-    @Index()  
     Uuid: string;
     @Column({nullable: false})
     Name: string

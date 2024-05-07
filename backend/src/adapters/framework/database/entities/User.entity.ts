@@ -10,7 +10,6 @@ export class User {
     Id: number;
     @Column({nullable: true, type: "uuid", unique: true})
     @Generated("uuid")
-    @Index()  
     Uuid: string
     @Column({nullable: true, default: true})
     IsActive: boolean;

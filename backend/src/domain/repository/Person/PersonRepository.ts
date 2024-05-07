@@ -5,11 +5,12 @@ import { IResponse } from "../../interfaces/IResponse.interface";
 import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import { Inject, Injectable } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { CheckFilter } from "../../helpers/checkFilter.helper";
 import PersonDomainEntity from "../../entities/person.domain";
 import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
 import { Phone } from "src/adapters/framework/database/entities/Phone.entty";
 import { Tenant } from "src/adapters/framework/database/entities/Tenant.entity";
+import { IPersonDto } from "src/domain/dto/Person.dto";
+import { CheckFilter } from "src/domain/helpers/checkFilter.helper";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {
@@ -30,19 +31,20 @@ export default class PersonRepository implements IPersonRepository {
      * await repo.paginateResults(1, 10, filter.client);
      * @returns IResponse<Person>
      */
-    async paginateResults(page: number, limit: number, tenantId: string, filterStatement: filter): Promise<IResponse<Person>> {
+    async paginateResults(page: number, limit: number, tenantId: string, filterStatement: filter): Promise<IResponse<IPersonDto>> {
         try {
             this.logger.log("Criando repository para pessoa... [PersonRepository]")
             const db = await this.database.getDataSource();
-            const respository = db.getRepository(Person)            
-            let whereStatement: any = await CheckFilter(tenantId,filterStatement, this.logger);
+            const respository = db.getRepository(Person);
+            
+            let whereStatement: any = await CheckFilter(tenantId, filterStatement, this.logger);
             const pages = (page -1) * limit;
             const result = await respository.findAndCount({
-                select: {Uuid: true, isActive: true, Name: true},
+                select: {Id: true, Uuid: true, Name: true, isActive: true, Tenant: {Uuid: true}},
+                relations: ['Tenant'],
                 where: whereStatement,
                 skip: pages,
                 take: limit,
-                // cache: 30000
             });
             const totalPages = Math.ceil(result[1] / limit);
             this.logger.log("Efetuado busca de resultados paginados... [PersonRepository]")
@@ -51,7 +53,15 @@ export default class PersonRepository implements IPersonRepository {
                 pagina_atual: page,
                 total_paginas: totalPages,
                 total_itens: result[1],
-                resultados: result[0]
+                resultados: result[0].map(e => {
+                    const person: IPersonDto = {
+                        Uuid: e.Uuid,
+                        Name: e.Name,
+                        isActive: e.isActive,
+                        Tenant: e.Tenant.Uuid
+                    };
+                    return person;
+                })
             }
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar paginar os resultados... [PersonRepository]: ${error}`)

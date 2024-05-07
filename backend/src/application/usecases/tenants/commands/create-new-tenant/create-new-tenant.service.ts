@@ -14,8 +14,8 @@ export class CreateNewTenantUseCase {
      */
     async execute(tenant: Tenant) {
         try {
-            const repo = (await (await this.databaseAdapter.connect()).initialize()).getRepository(Tenant); 
-            repo.create(tenant)
+            // const repo = (await (await this.databaseAdapter.connect()).initialize()).getRepository(Tenant); 
+            // repo.create(tenant)
             return true;
         } catch (error) {
             console.log("Error: " + error)

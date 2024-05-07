@@ -7,7 +7,6 @@ export class Phone {
     Id: number;
     @Column({nullable: true, type: "uuid", unique: true})
     @Generated("uuid")  
-    @Index()  
     Uuid: string
     @Column({nullable: true})
     Phone: string

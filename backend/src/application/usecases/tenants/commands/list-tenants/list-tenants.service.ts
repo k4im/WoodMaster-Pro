@@ -11,20 +11,20 @@ export class ListTenantsUseCase {
     async execute(page: number, limit: number) {
         try {
             const pages = (page - 1) * limit;
-            const repo = (await (await this.databaseAdapter.connect()).initialize()).getRepository(Tenant);
+            // const repo = (await (await this.databaseAdapter.connect()).initialize()).getRepository(Tenant);
             
-            const result = await repo.findAndCount({
-                select: {Name: true, Uuid: true, IsActive: true},
-                skip: pages,
-                take: limit
-            });
-            const response: IResponse = {
-                pagina_atual: page,
-                total_itens: result[1],
-                total_paginas: Math.ceil(result[1] / limit),
-                resultados: result[0],
-            }
-            return response;
+            // const result = await repo.findAndCount({
+            //     select: {Name: true, Uuid: true, IsActive: true},
+            //     skip: pages,
+            //     take: limit
+            // });
+            // const response: IResponse = {
+            //     pagina_atual: page,
+            //     total_itens: result[1],
+            //     total_paginas: Math.ceil(result[1] / limit),
+            //     resultados: result[0],
+            // }
+            // return response;
         } catch (error) {
             console.log("Error: " + error)
         }
