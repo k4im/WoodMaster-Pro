@@ -62,7 +62,7 @@ export class Address {
      * @returns Zipcode | Error 
      */
     private validateZipCode(zipcode: string) {
-        var regexp = /\d\d((\d\d\d)|(\.\d\d\d-))\d\d\d/;
+        var regexp = /^\d{8}$/;
         if (regexp.test(zipcode)) return zipcode
         throw new Error("O CEP informado é invalido.")
     }

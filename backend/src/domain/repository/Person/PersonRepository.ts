@@ -8,7 +8,6 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import PersonDomainEntity from "../../entities/person.domain";
 import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
 import { Phone } from "src/adapters/framework/database/entities/Phone.entty";
-import { Tenant } from "src/adapters/framework/database/entities/Tenant.entity";
 import { IPersonDto } from "src/domain/dto/Person.dto";
 import { CheckFilter } from "src/domain/helpers/checkFilter.helper";
 
@@ -39,6 +38,7 @@ export default class PersonRepository implements IPersonRepository {
             
             let whereStatement: any = await CheckFilter(tenantId, filterStatement, this.logger);
             const pages = (page -1) * limit;
+            
             const result = await respository.findAndCount({
                 select: {Id: true, Uuid: true, Name: true, isActive: true, Tenant: {Uuid: true}},
                 relations: ['Tenant'],
@@ -49,6 +49,7 @@ export default class PersonRepository implements IPersonRepository {
             const totalPages = Math.ceil(result[1] / limit);
             this.logger.log("Efetuado busca de resultados paginados... [PersonRepository]")
             await db.destroy();
+            
             return {
                 pagina_atual: page,
                 total_paginas: totalPages,

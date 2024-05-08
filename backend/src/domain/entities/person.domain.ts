@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Address } from "../valueObjects/address.value.object";
+import { Address } from "../valueObjects/AddressVo/address.value.object";
 import { Email } from "../valueObjects/email.value.object";
 import { Phone } from "../valueObjects/phone.value.object";
 import { Name } from "../valueObjects/name.value.object";

@@ -6,7 +6,7 @@ import { filter } from 'src/domain/enum/filter.enum';
 import PersonDomainEntity from 'src/domain/entities/person.domain';
 import { Name } from 'src/domain/valueObjects/name.value.object';
 import { Email } from 'src/domain/valueObjects/email.value.object';
-import { Address } from 'src/domain/valueObjects/address.value.object';
+import { Address } from 'src/domain/valueObjects/AddressVo/address.value.object';
 import { Phone } from 'src/domain/valueObjects/phone.value.object';
 import { Cpf } from 'src/domain/valueObjects/cpf.value.object';
 import { RgDocument } from 'src/domain/valueObjects/rg.value.object';
