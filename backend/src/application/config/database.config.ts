@@ -23,14 +23,3 @@ export class DatabaseConfigurations {
         Tenant, Role, Stock, 
         Product, Address, Phone]
 }
-
-export class DatabaseOptionsConfiguration { 
-    type = 'mysql';
-    host = process.env.HOST;
-    port = process.env.PORT;
-    username = process.env.USER_DB
-    password = process.env.PWD_DB;
-    database = process.env.DB_NAME
-    entities: [Person, User];
-    synchronize: true;
-}
