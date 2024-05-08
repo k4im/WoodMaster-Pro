@@ -5,15 +5,15 @@ import { DatabaseInMemory } from 'src/adapters/framework/database/databaseInMemo
 import { filter } from 'src/domain/enum/filter.enum';
 import PersonDomainEntity from 'src/domain/entities/person.domain';
 import { Name } from 'src/domain/valueObjects/name.value.object';
-import { Email } from 'src/domain/valueObjects/email.value.object';
 import { Address } from 'src/domain/valueObjects/AddressVo/address.value.object';
 import { Phone } from 'src/domain/valueObjects/phone.value.object';
-import { Cpf } from 'src/domain/valueObjects/cpf.value.object';
 import { RgDocument } from 'src/domain/valueObjects/rg.value.object';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Repository } from 'typeorm';
 import { Tenant } from 'src/adapters/framework/database/entities/Tenant.entity';
+import { Cpf } from 'src/domain/valueObjects/cpfVo/cpf.value.object';
+import { Email } from 'src/domain/valueObjects/emailVo/email.value.object';
 
 describe('PersonRepository', () => {
     let repository: PersonRepository;

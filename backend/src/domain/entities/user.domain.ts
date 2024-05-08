@@ -1,4 +1,4 @@
-import { Email } from "../valueObjects/email.value.object";
+import { Email } from "../valueObjects/emailVo/email.value.object";
 import RoleDomainEntity from "./role.domain";
 import * as bcrypt from 'bcrypt';
 

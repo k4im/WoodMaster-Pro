@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Address } from "../valueObjects/AddressVo/address.value.object";
-import { Email } from "../valueObjects/email.value.object";
+import { Email } from "../valueObjects/emailVo/email.value.object";
 import { Phone } from "../valueObjects/phone.value.object";
 import { Name } from "../valueObjects/name.value.object";
-import { Cpf } from "../valueObjects/cpf.value.object";
+import { Cpf } from "../valueObjects/cpfVo/cpf.value.object";
 import { RgDocument } from "../valueObjects/rg.value.object";
 import { Tenant } from "src/adapters/framework/database/entities/Tenant.entity";
 
