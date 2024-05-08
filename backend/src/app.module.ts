@@ -15,7 +15,7 @@ import { CustomLogger } from './adapters/out-adapters/logger/logger.service';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: DatabaseConfigurations.host,
       port: parseInt(DatabaseConfigurations.port),
       username: DatabaseConfigurations.username,
       password: DatabaseConfigurations.pwd,

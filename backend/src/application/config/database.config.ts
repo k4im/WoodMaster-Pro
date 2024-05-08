@@ -13,9 +13,9 @@ import { Phone } from "src/adapters/framework/database/entities/Phone.entty";
 dotenv.config();
 
 export class DatabaseConfigurations { 
-    public static host = process.env.HOST
+    public static host = `${process.env.HOST}`
     public static username = process.env.USER_DB
-    public static port = process.env.PORT
+    public static port = process.env.PORT_DB
     public static pwd = process.env.PWD_DB
     public static db_name = process.env.DB_NAME
     public static entities = [
