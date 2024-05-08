@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { DataSource } from "typeorm";
-import IDatabaseService from "./database.interface";
+import IDatabaseService from "../../application/ports/out-ports/database.interface";
 import { User } from "src/adapters/framework/database/entities/User.entity";
 
 @Injectable()
