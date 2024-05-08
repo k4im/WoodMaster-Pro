@@ -4,7 +4,10 @@ import { DatabaseGateway } from "src/application/ports/out-ports/database.gatewa
 import { DatabaseConfigurations } from "src/application/config/database.config";
 
 @Injectable()
-export class DatabaseMysqlAdapter implements DatabaseGateway { 
+export class DatabaseMysqlAdapter implements DatabaseGateway {
+    async closeConnection(db: DataSource): Promise<void> {
+        await db.destroy();
+    } 
     
     async getDataSource(): Promise<DataSource> {   
         return new DataSource({

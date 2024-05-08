@@ -1,10 +1,11 @@
+import { Actions } from "../enum/permissoes.enum";
 import PermissionsVO from "../valueObjects/permission.value.object"
 
 export default class RoleDomainEntity { 
     private Name: string
-    private Permissions: PermissionsVO;
+    private Permissions: Actions[];
     
-    constructor(name: string, permissions: PermissionsVO) {
+    constructor(name: string, permissions: Actions[]) {
         this.Name = name;
         this.Permissions = permissions;
     }
@@ -21,7 +22,7 @@ export default class RoleDomainEntity {
      * Metodo podera ser utilizado para buscar as ações atribuidas em uma permissão
      * @returns string
      */
-    getActionPermissions(): string {
-        return this.Permissions.Action
+    getActionPermissions(): Actions[] {
+        return this.Permissions
     }
 }

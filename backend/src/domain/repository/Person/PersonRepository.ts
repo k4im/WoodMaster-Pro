@@ -8,8 +8,8 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import PersonDomainEntity from "../../entities/person.domain";
 import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
 import { Phone } from "src/adapters/framework/database/entities/Phone.entty";
-import { IPersonDto } from "src/domain/dto/Person.dto";
 import { CheckFilter } from "src/domain/helpers/checkFilter.helper";
+import { IPersonDto } from "src/domain/dto/Person.dto";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {

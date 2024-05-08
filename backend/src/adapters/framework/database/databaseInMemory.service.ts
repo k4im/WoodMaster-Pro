@@ -5,6 +5,9 @@ import { DatabaseConfigurations } from "src/application/config/database.config";
 
 @Injectable()
 export class DatabaseInMemory implements DatabaseGateway { 
+    async closeConnection(db: DataSource): Promise<void> {
+        await db.destroy();
+    } 
     
     async getDataSource(): Promise<DataSource> {   
         return new DataSource({

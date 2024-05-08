@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, Generated, Index, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, Index, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Role } from "./Role.entity";
 import { Person } from "./Person.entity";
 import { Tenant } from "./Tenant.entity";
@@ -23,6 +23,7 @@ export class User {
     @OneToOne(() => Person, (person) => person.User, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Person: Person
     @ManyToOne(() => Tenant, (tenant) => tenant.User, {onUpdate: "CASCADE", onDelete: "SET NULL"})
+    @JoinColumn({name: "TenantId"})
     Tenant: Tenant
 
     @CreateDateColumn()

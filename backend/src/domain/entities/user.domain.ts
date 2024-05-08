@@ -8,15 +8,18 @@ export default class UserDomanEntity {
     readonly EmailAddr: Email;
     readonly HashPassword: string;
     readonly Role: RoleDomainEntity
+    readonly PersonId: string
     
     constructor(
         email: Email, 
         password: string, 
-        role: RoleDomainEntity) {
+        role: RoleDomainEntity,
+        personId: string) {
         
             this.EmailAddr = email;
             this.Role = role;
             this.HashPassword = this.hashPassword(password);
+            this.PersonId = personId;
         }
 
     /**

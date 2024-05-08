@@ -8,7 +8,6 @@ import { Address } from 'src/domain/valueObjects/AddressVo/address.value.object'
 import { Phone } from 'src/domain/valueObjects/phone.value.object';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Repository } from 'typeorm';
 import { Tenant } from 'src/adapters/framework/database/entities/Tenant.entity';
 import { Cpf } from 'src/domain/valueObjects/cpfVo/cpf.value.object';
 import { Email } from 'src/domain/valueObjects/emailVo/email.value.object';

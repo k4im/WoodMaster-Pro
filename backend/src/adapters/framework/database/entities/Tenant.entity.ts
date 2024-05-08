@@ -20,7 +20,7 @@ export class Tenant {
     Stock: Stock
     
     @OneToMany(() => User, (user) => user.Tenant, {onUpdate: "CASCADE", onDelete: "SET NULL"})
-    User?: User[]
+    User: User[]
     
     @OneToMany(() => Person, (user) => user.Tenant, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Persons: Person[]
