@@ -19,6 +19,7 @@ import { Actions } from "src/domain/enum/permissoes.enum";
 import { Tenant } from "src/adapters/framework/database/entities/Tenant.entity";
 import { FakeLogger } from "src/adapters/out-adapters/logger/Fakelogger.service";
 import RoleService from "src/infrastructure/services/role.service";
+import { Role } from "src/domain/enum/roles.enum";
 describe("UserRepository", () =>  {
     let repository: UserRepository;
     let database: DatabaseInMemory;
@@ -90,7 +91,7 @@ describe("UserRepository", () =>  {
         const user = new UserDomanEntity(
             new Email("exemplo@exemplo.com.br"),
             'asdasdasd',
-            new RoleDomainEntity('Admin', [Actions.manage]),
+            new RoleDomainEntity(Role.admin, [Actions.manage]),
             person.Uuid,
         );
         const result = await repository.createNewUser(user);

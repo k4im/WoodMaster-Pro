@@ -1,11 +1,13 @@
 import { Actions } from "../enum/permissoes.enum";
+import { Role } from "../enum/roles.enum";
 import PermissionsVO from "../valueObjects/permission.value.object"
 
 export default class RoleDomainEntity { 
-    private Name: string
+
+    private Name: Role
     private Permissions: Actions[];
     
-    constructor(name: string, permissions: Actions[]) {
+    constructor(name: Role, permissions: Actions[]) {
         this.Name = name;
         this.Permissions = permissions;
     }
