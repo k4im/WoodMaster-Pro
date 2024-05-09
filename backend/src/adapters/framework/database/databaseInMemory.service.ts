@@ -14,6 +14,7 @@ export class DatabaseInMemory implements DatabaseGateway {
             type: 'better-sqlite3',
             database: ':memory',
             dropSchema: false,
+            timeout: 9000,
             entities: DatabaseConfigurations.entities,
             synchronize: true, 
         }).initialize()
