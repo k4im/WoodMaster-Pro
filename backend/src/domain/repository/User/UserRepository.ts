@@ -31,6 +31,7 @@ export default class UserRepository implements IUserRespository {
                 relations: ["Role", "Role.Permissions"],
                 where: { Uuid: uuid, Tenant: { Uuid: tenantId } }
             });
+            await this.database.closeConnection(db);
             return {
                 Uuid: result.Uuid,
                 Email: result.EmailAddr, IsActive: result.IsActive,
@@ -133,6 +134,7 @@ export default class UserRepository implements IUserRespository {
             user.EmailAddr = data.EmailAddr.email;
             user.HashPassword = data.Password;
             await repo.save(user);
+            await this.database.closeConnection(db);
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar atualizar o usuario [UserRepositoy]: ${error}`)
@@ -149,6 +151,7 @@ export default class UserRepository implements IUserRespository {
         try {
             const db = await this.database.getDataSource();
             await db.getRepository(User).update({Uuid: uuid},{IsActive: false});
+            await this.database.closeConnection(db);
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar desativar o usuario [UserRepositoy]: ${error}`)

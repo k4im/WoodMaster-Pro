@@ -60,11 +60,18 @@ export default class PersonDomainEntity  {
          this.IsOperator = isOperator;
          this.IsCollaborator = isCollaborator;
     }
-
+    /**
+     * ira estar setando um tenant para a pessoa.
+     * @param tenant Recebe um tenant para estar setando.
+     */
     setTenant(tenant: Tenant) {
         this.Tenant = tenant
     };
-    
+    /**
+     * O metodo poderá ser utilizado para buscar 
+     * um tenant presente na pessoa.
+     * @returns Tenant
+     */
     getTenant() {
         return this.Tenant
     }
