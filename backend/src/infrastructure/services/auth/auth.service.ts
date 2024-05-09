@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import IJwtService from "../jwt/IJwtService";
 import AuthAbstraction from "./abstrations/AuthAbstrancion";
-import { User } from "src/adapters/framework/database/entities/User.entity";
+import { User } from "src/infrastructure/database/entities/User.entity";
 import * as bcrypt from 'bcrypt';
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 

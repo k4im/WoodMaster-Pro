@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { Permissions } from "src/adapters/framework/database/entities/Permissions.entity";
-import { Role } from "src/adapters/framework/database/entities/Role.entity";
+import { Permissions } from "src/infrastructure/database/entities/Permissions.entity";
+import { Role } from "src/infrastructure/database/entities/Role.entity";
 import RoleDomainEntity from "src/domain/entities/role.domain";
 import { EntityManager } from "typeorm";
 

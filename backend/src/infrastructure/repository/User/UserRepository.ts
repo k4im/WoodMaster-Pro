@@ -1,13 +1,13 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Person } from "src/adapters/framework/database/entities/Person.entity";
-import { User } from "src/adapters/framework/database/entities/User.entity";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { IUserDto } from "src/domain/dto/IUser.dto";
+import { IUserDto } from "src/application/dto/IUser.dto";
 import UserDomanEntity from "src/domain/entities/user.domain";
-import { IResponse } from "src/domain/interfaces/IResponse.interface";
 import RoleService from "src/infrastructure/services/role.service";
 import IUserRespository from "../abstraction/IUserRepository.interface";
+import { User } from "src/domain/databaseEntities/User.entity";
+import { IResponse } from "src/application/dto/IResponse.interface";
+import { Person } from "src/domain/databaseEntities/Person.entity";
 
 
 @Injectable()

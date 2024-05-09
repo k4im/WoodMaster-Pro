@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { env } from 'process';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DatabaseConfigurations } from './application/config/database.config';
-import { DatabaseMysqlAdapter } from './adapters/framework/database/database.service';
-import { CustomLogger } from './adapters/out-adapters/logger/logger.service';
+import { DatabaseConfigurations } from './infrastructure/config/database.config';
+import { DatabaseMysqlAdapter } from './infrastructure/database/database.service';
+import { CustomLogger } from './infrastructure/logger/logger.service';
 
 @Module({
   imports: [

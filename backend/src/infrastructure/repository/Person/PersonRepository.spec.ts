@@ -1,18 +1,18 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import PersonRepository from './PersonRepository';
-import { DatabaseInMemory } from 'src/adapters/framework/database/databaseInMemory.service';
+import { DatabaseInMemory } from 'src/infrastructure/database/databaseInMemory.service';
 import { filter } from 'src/domain/enum/filter.enum';
 import PersonDomainEntity from 'src/domain/entities/person.domain';
 import { Address } from 'src/domain/valueObjects/AddressVo/address.value.object';
 import { Phone } from 'src/domain/valueObjects/phone.value.object';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Tenant } from 'src/adapters/framework/database/entities/Tenant.entity';
 import { Cpf } from 'src/domain/valueObjects/cpfVo/cpf.value.object';
 import { Email } from 'src/domain/valueObjects/emailVo/email.value.object';
 import { Name } from 'src/domain/valueObjects/nameVo/name.value.object';
 import { RgDocument } from 'src/domain/valueObjects/rgVo/rg.value.object';
-import { FakeLogger } from 'src/adapters/out-adapters/logger/Fakelogger.service';
+import { FakeLogger } from 'src/infrastructure/logger/Fakelogger.service';
+import { Tenant } from 'src/domain/databaseEntities/Tenant.entity';
 
 describe('PersonRepository', () => {
     let repository: PersonRepository;

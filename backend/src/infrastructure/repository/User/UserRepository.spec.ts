@@ -1,7 +1,6 @@
 import UserRepository from "./UserRepository";
-import { DatabaseInMemory } from "src/adapters/framework/database/databaseInMemory.service";
+import { DatabaseInMemory } from "src/infrastructure/database/databaseInMemory.service";
 import { Test, TestingModule } from "@nestjs/testing";
-import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import PersonDomainEntity from "src/domain/entities/person.domain";
 import { Name } from "src/domain/valueObjects/nameVo/name.value.object";
 import { Email } from "src/domain/valueObjects/emailVo/email.value.object";
@@ -9,17 +8,18 @@ import { Address as AddressVo } from "src/domain/valueObjects/AddressVo/address.
 import { Phone } from "src/domain/valueObjects/phone.value.object";
 import { Cpf } from "src/domain/valueObjects/cpfVo/cpf.value.object";
 import { RgDocument } from "src/domain/valueObjects/rgVo/rg.value.object";
-import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
 
 import * as fs from 'fs';
 import * as path from 'path';
 import UserDomanEntity from "src/domain/entities/user.domain";
 import RoleDomainEntity from "src/domain/entities/role.domain";
 import { Actions } from "src/domain/enum/permissoes.enum";
-import { Tenant } from "src/adapters/framework/database/entities/Tenant.entity";
-import { FakeLogger } from "src/adapters/out-adapters/logger/Fakelogger.service";
+import { FakeLogger } from "src/infrastructure/logger/Fakelogger.service";
 import RoleService from "src/infrastructure/services/role.service";
 import { Role } from "src/domain/enum/roles.enum";
+import { Person } from "src/domain/databaseEntities/Person.entity";
+import { Tenant } from "src/domain/databaseEntities/Tenant.entity";
+import { Address } from "src/domain/databaseEntities/Addresses.entity";
 describe("UserRepository", () =>  {
     let repository: UserRepository;
     let database: DatabaseInMemory;

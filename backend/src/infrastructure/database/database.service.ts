@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { DataSource } from "typeorm";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
-import { DatabaseConfigurations } from "src/application/config/database.config";
+import { DatabaseConfigurations } from "src/infrastructure/config/database.config";
 
 @Injectable()
 export class DatabaseMysqlAdapter implements DatabaseGateway {

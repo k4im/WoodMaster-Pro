@@ -1,6 +1,5 @@
-import { Column, CreateDateColumn, Entity, Generated, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Role } from "./Role.entity";
-import { Actions } from "src/domain/enum/permissoes.enum";
 
 @Entity()
 export class Permissions {

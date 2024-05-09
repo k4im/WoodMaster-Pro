@@ -1,15 +1,16 @@
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
-import { filter } from "../../enum/filter.enum";
+import { filter } from "../../../domain/enum/filter.enum";
 import IPersonRepository from "../abstraction/IPersonRepository.interface";
-import { IResponse } from "../../dto/IResponse.interface";
-import { Person } from "src/adapters/framework/database/entities/Person.entity";
+import { IResponse } from "../../../application/dto/IResponse.interface";
 import { Inject, Injectable } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import PersonDomainEntity from "../../entities/person.domain";
-import { Address } from "src/adapters/framework/database/entities/Addresses.entity";
-import { Phone } from "src/adapters/framework/database/entities/Phone.entty";
-import { IPersonDto } from "src/domain/dto/Person.dto";
+import PersonDomainEntity from "../../../domain/entities/person.domain";
+
+import { IPersonDto } from "src/application/dto/Person.dto";
 import { CheckFilter } from "src/infrastructure/helpers/checkFilter.helper";
+import { Person } from "src/domain/databaseEntities/Person.entity";
+import { Address } from "src/domain/databaseEntities/Addresses.entity";
+import { Phone } from "src/domain/databaseEntities/Phone.entty";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {

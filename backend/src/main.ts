@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { CustomLogger } from './adapters/out-adapters/logger/logger.service';
+import { CustomLogger } from './infrastructure/logger/logger.service';
 import { env } from 'process';
 import * as dotenv from 'dotenv';
 

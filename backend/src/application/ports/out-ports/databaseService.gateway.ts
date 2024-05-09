@@ -1,4 +1,4 @@
-import { User } from "src/adapters/framework/database/entities/User.entity";
+import { User } from "src/infrastructure/database/entities/User.entity";
 import { DataSource } from "typeorm";
 
 export default interface IDatabaseService {

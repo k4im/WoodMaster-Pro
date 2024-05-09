@@ -1,7 +1,7 @@
-import { IResponse } from "../../dto/IResponse.interface";
-import { filter } from "../../enum/filter.enum";
-import PersonDomainEntity from "../../entities/person.domain";
-import { IPersonDto } from "../../dto/Person.dto";
+import { IResponse } from "../../../application/dto/IResponse.interface";
+import { filter } from "../../../domain/enum/filter.enum";
+import PersonDomainEntity from "../../../domain/entities/person.domain";
+import { IPersonDto } from "../../../application/dto/Person.dto";
 
 export default interface IPersonRepository { 
     paginateResults(page: number, limit: number, tenatnId: string, filterStatement: filter): Promise<IResponse<IPersonDto>>;

@@ -1,6 +1,6 @@
-import { IUserDto } from "../../dto/IUser.dto";
-import UserDomanEntity from "../../entities/user.domain";
-import { IResponse } from "../../dto/IResponse.interface";
+import { IUserDto } from "../../../application/dto/IUser.dto";
+import UserDomanEntity from "../../../domain/entities/user.domain";
+import { IResponse } from "../../../application/dto/IResponse.interface";
 
 export default interface IUserRespository { 
     findUserByUuid(uuid: string, tenantId: string): Promise<IUserDto>;
