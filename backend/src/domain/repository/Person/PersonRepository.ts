@@ -1,7 +1,7 @@
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { filter } from "../../enum/filter.enum";
 import IPersonRepository from "../abstraction/IPersonRepository.interface";
-import { IResponse } from "../../interfaces/IResponse.interface";
+import { IResponse } from "../../dto/IResponse.interface";
 import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import { Inject, Injectable } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";

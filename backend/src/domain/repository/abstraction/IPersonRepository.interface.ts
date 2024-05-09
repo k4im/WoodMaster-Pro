@@ -1,4 +1,4 @@
-import { IResponse } from "../../interfaces/IResponse.interface";
+import { IResponse } from "../../dto/IResponse.interface";
 import { filter } from "../../enum/filter.enum";
 import PersonDomainEntity from "../../entities/person.domain";
 import { IPersonDto } from "../../dto/Person.dto";
