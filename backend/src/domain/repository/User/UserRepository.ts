@@ -102,7 +102,7 @@ export default class UserRepository implements IUserRespository {
                 const user = userRepo.create({
                     EmailAddr: data.EmailAddr.email,
                     Person: person,
-                    HashPassword: data.HashPassword,
+                    HashPassword: data.Password,
                     Tenant: person.Tenant,
                     Role: role,
                     IsActive: data.IsActive,
@@ -131,7 +131,7 @@ export default class UserRepository implements IUserRespository {
             const repo = db.getRepository(User);
             const user = await repo.findOneBy({Uuid: uuid});
             user.EmailAddr = data.EmailAddr.email;
-            user.HashPassword = data.HashPassword;
+            user.HashPassword = data.Password;
             await repo.save(user);
             return true;
         } catch (error) {
@@ -139,7 +139,7 @@ export default class UserRepository implements IUserRespository {
             return false;
         }
     }
-    
+
     /**
      * Estará desativando um usuario a partir do uuid.
      * @param uuid uuid do usuario para desativação

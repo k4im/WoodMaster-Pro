@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Email } from "../valueObjects/emailVo/email.value.object";
 import RoleDomainEntity from "./role.domain";
 import * as bcrypt from 'bcrypt';
@@ -5,9 +6,13 @@ import * as bcrypt from 'bcrypt';
 export default class UserDomanEntity {
     
     readonly IsActive: boolean = true;
+    @ApiProperty({type: Email})
     readonly EmailAddr: Email;
-    readonly HashPassword: string;
+    @ApiProperty()
+    readonly Password: string;
+    @ApiProperty({type: RoleDomainEntity})
     readonly Role: RoleDomainEntity
+    @ApiProperty()
     readonly PersonId: string
     
     constructor(
@@ -18,7 +23,7 @@ export default class UserDomanEntity {
         
             this.EmailAddr = email;
             this.Role = role;
-            this.HashPassword = this.hashPassword(password);
+            this.Password = this.hashPassword(password);
             this.PersonId = personId;
         }
 

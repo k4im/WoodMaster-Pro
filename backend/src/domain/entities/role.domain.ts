@@ -1,10 +1,12 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Actions } from "../enum/permissoes.enum";
 import { Role } from "../enum/roles.enum";
-import PermissionsVO from "../valueObjects/permission.value.object"
 
 export default class RoleDomainEntity { 
 
+    @ApiProperty()
     private Name: Role
+    @ApiProperty()
     private Permissions: Actions[];
     
     constructor(name: Role, permissions: Actions[]) {

@@ -105,6 +105,8 @@ describe('PersonRepository', () => {
         expect(result.Uuid).toEqual(persons.resultados[0].Uuid);
 
     })
+    
+    /**O METODO DEVERÁ SER ATIVADO CASO QUEIRA RODAR O TESTE DE FORMA UNITÁRIA PARA VALIDAÇÃO */
     /** A função será executada no final de todos os testes 
      * onde estará removendo o arquivo de banco de dados.
      */
