@@ -1,7 +1,7 @@
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { filter } from "../enum/filter.enum";
+import { filter } from "../../domain/enum/filter.enum";
 
-export function CheckFilter(tenantId: string, filterStatement: filter, logger: LoggerGateway) {   
+export async function CheckFilter(tenantId: string, filterStatement: filter, logger: LoggerGateway) {   
     switch (filterStatement) {
         case filter.client:
             logger.log("Where Statement IsClient=true... [PersonRepository]")
