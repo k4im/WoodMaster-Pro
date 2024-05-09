@@ -1,6 +1,6 @@
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { filter } from "../../enum/filter.enum";
-import IPersonRepository from "../../interfaces/IPersonRepository.interface";
+import IPersonRepository from "../abstraction/IPersonRepository.interface";
 import { IResponse } from "../../interfaces/IResponse.interface";
 import { Person } from "src/adapters/framework/database/entities/Person.entity";
 import { Inject, Injectable } from "@nestjs/common";
@@ -17,6 +17,25 @@ export default class PersonRepository implements IPersonRepository {
        @Inject("DatabaseGateway") private readonly database: DatabaseGateway,  
        @Inject("LoggerGateway") private readonly logger: LoggerGateway) 
     {}
+    
+    /**
+     * Deve buscar uma pessoa no banco de dados.
+     * @param uuid uuid do cliente
+     * @param tenantId tenantId do cliente
+     * @returns IPersonDto
+     */
+    async findPersonByUuid(uuid: string, tenantId: string): Promise<IPersonDto> {
+        try {
+            this.logger.log("Criando repository para pessoa... [PersonRepository]")
+            const db = await this.database.getDataSource();
+            const repository = db.getRepository(Person);
+            this.logger.log("Efetuado busca de pessoa por uuid... [PersonRepository]")
+            const result = await repository.findOne({relations: ['Tenant'], where: {Uuid: uuid, Tenant: {Uuid: tenantId}}});
+            return {Name: result.Name, isActive: result.isActive, Uuid: result.Uuid, Tenant: result.Tenant.Uuid};
+        } catch (error) {
+            this.logger.error(`Houve um erro ao tentar buscar pessoa... [PersonRepository]: ${error}`)
+        }
+    }
 
     /**
      * O metodo poderá ser utilizado para efetuar a paginação do banco de dados

@@ -1,4 +1,3 @@
-import { CustomLogger } from "src/adapters/out-adapters/logger/logger.service";
 import UserRepository from "./UserRepository";
 import { DatabaseInMemory } from "src/adapters/framework/database/databaseInMemory.service";
 import { Test, TestingModule } from "@nestjs/testing";
@@ -18,7 +17,8 @@ import UserDomanEntity from "src/domain/entities/user.domain";
 import RoleDomainEntity from "src/domain/entities/role.domain";
 import { Actions } from "src/domain/enum/permissoes.enum";
 import { Tenant } from "src/adapters/framework/database/entities/Tenant.entity";
-import DatabaseService from "src/infrastructure/Database/database.service";
+import { FakeLogger } from "src/adapters/out-adapters/logger/Fakelogger.service";
+import RoleService from "src/infrastructure/services/role.service";
 describe("UserRepository", () =>  {
     let repository: UserRepository;
     let database: DatabaseInMemory;
@@ -29,9 +29,9 @@ describe("UserRepository", () =>  {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 UserRepository, 
-                {provide: "IDatabaseService", useClass: DatabaseService}, 
-                {provide: "LoggerGateway", useClass: CustomLogger}, 
+                {provide: "LoggerGateway", useClass: FakeLogger}, 
                 {provide: "DatabaseGateway", useClass: DatabaseInMemory},
+                {provide: "RoleService", useClass: RoleService}
             ]
         
         }).compile();
@@ -93,17 +93,22 @@ describe("UserRepository", () =>  {
             new RoleDomainEntity('Admin', [Actions.manage]),
             person.Uuid,
         );
-        const result = await repository.save(user);
+        const result = await repository.createNewUser(user);
         expect(result).toBe(true);
     })
     test("Deve paginar resultados", async () => {
-        const result = await repository.find(1, 10, person.Tenant.Uuid);
-        console.log(JSON.stringify(result.resultados))
+        const result = await repository.paginateUsers(1, 10, person.Tenant.Uuid);
         expect(result.resultados).toHaveLength(1);
     })
-
-    afterAll(async () => {
-        const srcPath = path.resolve(__dirname, '../../../../:memory');
-        fs.unlinkSync(srcPath);
+    test("Deve buscar um unico resultado a partir de um uuid", async () => {
+        const persons = await repository.paginateUsers(1, 10, person.Tenant.Uuid);
+        const result = await repository.findUserByUuid(persons.resultados[0].Uuid, tenant.Uuid);
+        expect(result.Uuid).toEqual(persons.resultados[0].Uuid)
     })
+    
+    /**O METODO DEVERÁ SER ATIVADO CASO QUEIRA RODAR O TESTE DE FORMA UNITÁRIA PARA VALIDAÇÃO */
+    // afterAll(async () => {
+    //     const srcPath = path.resolve(__dirname, '../../../../:memory');
+    //     fs.unlinkSync(srcPath);
+    // })
 })
