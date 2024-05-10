@@ -45,13 +45,14 @@ describe("UserRepository", () =>  {
         }).compile();
         
         database = module.get<DatabaseInMemory>(DatabaseInMemory);
-        const repo = (await database.getDataSource()).getRepository(Person);
-        const repoTenant = (await database.getDataSource()).getRepository(Tenant);
+        const db = await database.getDataSource();
+        const repo = db.getRepository(Person);
+        const repoTenant = db.getRepository(Tenant);
         tenant = repoTenant.create({
             Name: "Tenant Geraldo"
         });
         await repoTenant.save(tenant);
-
+        
         const persona = new PersonDomainEntity(
             new Name("Joao", "Victor"), 
             new Email("contato@example.com"),
@@ -84,7 +85,7 @@ describe("UserRepository", () =>  {
                 Tenant: tenant
             });
         await repo.save(person);
-        
+        await db.destroy();
         
     });
     test("Deve criar usuario", async () => {
@@ -108,8 +109,8 @@ describe("UserRepository", () =>  {
     })
     
     /**O METODO DEVERÁ SER ATIVADO CASO QUEIRA RODAR O TESTE DE FORMA UNITÁRIA PARA VALIDAÇÃO */
-    // afterAll(async () => {
-    //     const srcPath = path.resolve(__dirname, '../../../../:memory');
-    //     fs.unlinkSync(srcPath);
-    // })
+    afterAll(async () => {
+        const srcPath = path.resolve(__dirname, '../../../../:memory');
+        fs.unlinkSync(srcPath);
+    })
 })

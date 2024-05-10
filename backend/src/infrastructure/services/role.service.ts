@@ -36,7 +36,8 @@ export default class RoleService  {
             const perm = manager.getRepository(Permissions).create({
                 Action: action
             });
-            return await manager.getRepository(Permissions).save(perm);
+            const permSaved = await manager.getRepository(Permissions).save(perm);
+            return permSaved;
         }));
     }
 }

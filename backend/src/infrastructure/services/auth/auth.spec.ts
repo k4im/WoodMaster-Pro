@@ -53,8 +53,9 @@ describe("Auth", () => {
         repository = module.get<UserRepository>(UserRepository);
 
         const database = module.get<DatabaseInMemory>(DatabaseInMemory);
-        const repo = (await database.getDataSource()).getRepository(Person);
-        const repoTenant = (await database.getDataSource()).getRepository(Tenant);
+        const db = await database.getDataSource();
+        const repo = db.getRepository(Person);
+        const repoTenant = db.getRepository(Tenant);
         tenant = repoTenant.create({
             Name: "Tenant Geraldo"
         });
@@ -93,6 +94,7 @@ describe("Auth", () => {
                 Tenant: tenant
             });
         await repo.save(person);
+        await db.destroy();
         const user = new UserDomanEntity(
             new Email("auth@exemplo.com.br"),
             'asdasdasd',

@@ -36,12 +36,14 @@ describe('PersonRepository', () => {
         
         }).compile();
         databaseInMemory = module.get<DatabaseInMemory>(DatabaseInMemory);
-
-        const repo = (await databaseInMemory.getDataSource()).getRepository(Tenant);
+        const db = await databaseInMemory.getDataSource();
+        const repo = db.getRepository(Tenant);
         tenant = repo.create({
             Name: "Tenant Geraldo"
         });
         await repo.save(tenant);
+        await db.destroy();
+        
     });  
     test("Deve criar novo registro em banco", async () => {
         const person = new PersonDomainEntity(

@@ -68,7 +68,7 @@ export default class PersonRepository implements IPersonRepository {
             });
             const totalPages = Math.ceil(result[1] / limit);
             this.logger.log("Efetuado busca de resultados paginados... [PersonRepository]")
-            await db.destroy();
+            await this.database.closeConnection(db);
             
             return {
                 pagina_atual: page,
@@ -134,7 +134,7 @@ export default class PersonRepository implements IPersonRepository {
                 });
                 await entityManager.save(person);
             });
-            db.destroy()
+            await this.database.closeConnection(db);
             this.logger.log("Pessoa inserida no banco de dados com sucesso... [PersonRepository]")
             return true;
         } catch (error) {
@@ -195,7 +195,7 @@ export default class PersonRepository implements IPersonRepository {
                 await repo.save(person);
             })
             this.logger.log("Efetuado update de pessoa.... [PersonRepository]");
-            db.destroy();
+            await this.database.closeConnection(db);
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar atualizar a pessoa.... [PersonRepository]: ${error}`)
@@ -216,11 +216,10 @@ export default class PersonRepository implements IPersonRepository {
                 await repo.update({Uuid: uuid}, {isActive: false});
             });
             this.logger.log("Efetuado desativação de pessoa.... [PersonRepository]");
-            await db.destroy();
+            await this.database.closeConnection(db);
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar desativar a pessoa.... [PersonRepository]: ${error}`)
-            (await this.database.getDataSource()).destroy();
             return false;
         }
     } 
