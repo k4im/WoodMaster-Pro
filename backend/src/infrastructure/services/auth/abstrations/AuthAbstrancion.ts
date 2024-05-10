@@ -1,9 +1,3 @@
-export default abstract class AuthAbstraction {  
-    async login(email: string, pwd: string): Promise<string> {
-        return
-    };
-    
-    async checkPassword(pwd: string, hash: string): Promise<boolean> {
-        return
-    }
+export default interface AuthAbstraction {  
+    login(email: string, pwd: string): Promise<string>;    
 }

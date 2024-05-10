@@ -17,7 +17,29 @@ export default class UserRepository implements IUserRespository {
         @Inject("RoleService") private readonly roleService: RoleService,
         @Inject("DatabaseGateway") private readonly database: DatabaseGateway,
         @Inject("LoggerGateway") private readonly logger: LoggerGateway) { }
-    
+
+
+
+    async findUserByEmail(email: string): Promise<IUserDto> {
+        try {
+            const db = await this.database.getDataSource();
+            const result = await db.getRepository(User).findOne({
+                relations: ["Role", "Role.Permissions"],
+                where: { EmailAddr: email }
+            });
+            await this.database.closeConnection(db);
+            return {
+                Uuid: result.Uuid,
+                Email: result.EmailAddr, IsActive: result.IsActive,
+                Role: result.Role.Name,
+                Hash: result.HashPassword, 
+                Permissions: result.Role.Permissions.map(perm => perm.Action)
+            };
+        } catch (error) {
+            this.logger.error(`Houve um erro ao efetuar a busca por Email.... [UserRespository]: ${error}`);
+        }
+    }
+
     /**
      * O metodo estará buscando um usuario a partir de um uuid.
      * @param uuid recebe o uuid
@@ -28,7 +50,7 @@ export default class UserRepository implements IUserRespository {
         try {
             const db = await this.database.getDataSource();
             const result = await db.getRepository(User).findOne({
-                relations: ["Role", "Role.Permissions"],
+                relations: ["Role", "Role.Permissions", 'Tenant'],
                 where: { Uuid: uuid, Tenant: { Uuid: tenantId } }
             });
             await this.database.closeConnection(db);
@@ -36,10 +58,11 @@ export default class UserRepository implements IUserRespository {
                 Uuid: result.Uuid,
                 Email: result.EmailAddr, IsActive: result.IsActive,
                 Role: result.Role.Name,
+                Tenant: result.Tenant.Uuid,
                 Permissions: result.Role.Permissions.map(perm => perm.Action)
             };
         } catch (error) {
-
+            this.logger.error(`Houve um erro ao efetuar a busca por UUID.... [UserRespository]: ${error}`);
         }
     }
 
@@ -130,7 +153,7 @@ export default class UserRepository implements IUserRespository {
         try {
             const db = await this.database.getDataSource();
             const repo = db.getRepository(User);
-            const user = await repo.findOneBy({Uuid: uuid});
+            const user = await repo.findOneBy({ Uuid: uuid });
             user.EmailAddr = data.EmailAddr.email;
             user.HashPassword = data.Password;
             await repo.save(user);
@@ -150,7 +173,7 @@ export default class UserRepository implements IUserRespository {
     async deactiveUser(uuid: string): Promise<boolean> {
         try {
             const db = await this.database.getDataSource();
-            await db.getRepository(User).update({Uuid: uuid},{IsActive: false});
+            await db.getRepository(User).update({ Uuid: uuid }, { IsActive: false });
             await this.database.closeConnection(db);
             return true;
         } catch (error) {

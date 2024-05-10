@@ -37,7 +37,13 @@ export default class JwtCustomService implements IJwtService {
      * @returns string
      */
     async encodeJwt(data: any): Promise<string> {
-        const token = await this.jwtService.signAsync(data);
+        const payload = {
+            Uuid: data.Uuid,
+            Role: data.Role,
+            Permissons: data.Permissions,
+            Tenant: data.Tenant
+        }
+        const token = await this.jwtService.signAsync(payload);
         return token;
     }
 
