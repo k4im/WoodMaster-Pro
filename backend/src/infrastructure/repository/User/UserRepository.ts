@@ -24,17 +24,19 @@ export default class UserRepository implements IUserRespository {
         try {
             const db = await this.database.getDataSource();
             const result = await db.getRepository(User).findOne({
-                relations: ["Role", "Role.Permissions"],
+                relations: ["Role", "Role.Permissions", "Tenant"],
                 where: { EmailAddr: email }
             });
             await this.database.closeConnection(db);
-            return {
+            const valueReturn: IUserDto = {
                 Uuid: result.Uuid,
                 Email: result.EmailAddr, IsActive: result.IsActive,
                 Role: result.Role.Name,
                 Hash: result.HashPassword, 
+                Tenant: result.Tenant.Uuid,
                 Permissions: result.Role.Permissions.map(perm => perm.Action)
-            };
+            }
+            return valueReturn;
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca por Email.... [UserRespository]: ${error}`);
         }
