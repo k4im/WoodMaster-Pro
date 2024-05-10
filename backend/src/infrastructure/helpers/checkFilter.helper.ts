@@ -1,5 +1,5 @@
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { filter } from "../../domain/enum/filter.enum";
+import { filter } from "../../application/enum/filter.enum";
 
 export async function CheckFilter(tenantId: string, filterStatement: filter, logger: LoggerGateway) {   
     switch (filterStatement) {

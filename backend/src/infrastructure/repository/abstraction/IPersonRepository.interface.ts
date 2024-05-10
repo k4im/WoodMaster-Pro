@@ -1,5 +1,5 @@
 import { IResponse } from "../../../application/dto/IResponse.interface";
-import { filter } from "../../../domain/enum/filter.enum";
+import { filter } from "../../../application/enum/filter.enum";
 import PersonDomainEntity from "../../../domain/entities/person.domain";
 import { IPersonDto } from "../../../application/dto/Person.dto";
 

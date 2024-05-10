@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ExceptionMsgs } from "src/domain/enum/exceptions.enum";
+import { ExceptionMsgs } from "src/application/enum/exceptions.enum";
 
 export class Email { 
 

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import PersonRepository from './PersonRepository';
 import { DatabaseInMemory } from 'src/infrastructure/database/databaseInMemory.service';
-import { filter } from 'src/domain/enum/filter.enum';
+import { filter } from 'src/application/enum/filter.enum';
 import PersonDomainEntity from 'src/domain/entities/person.domain';
 import { Address } from 'src/domain/valueObjects/AddressVo/address.value.object';
 import { Phone } from 'src/domain/valueObjects/phone.value.object';

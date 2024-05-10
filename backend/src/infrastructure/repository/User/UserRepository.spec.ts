@@ -13,13 +13,13 @@ import * as fs from 'fs';
 import * as path from 'path';
 import UserDomanEntity from "src/domain/entities/user.domain";
 import RoleDomainEntity from "src/domain/entities/role.domain";
-import { Actions } from "src/domain/enum/permissoes.enum";
+import { Actions } from "src/application/enum/permissoes.enum";
 import { FakeLogger } from "src/infrastructure/logger/Fakelogger.service";
 import RoleService from "src/infrastructure/services/role.service";
-import { Role } from "src/domain/enum/roles.enum";
 import { Person } from "src/domain/databaseEntities/Person.entity";
 import { Tenant } from "src/domain/databaseEntities/Tenant.entity";
 import { Address } from "src/domain/databaseEntities/Addresses.entity";
+import { Role } from "src/application/enum/roles.enum";
 describe("UserRepository", () =>  {
     let repository: UserRepository;
     let database: DatabaseInMemory;

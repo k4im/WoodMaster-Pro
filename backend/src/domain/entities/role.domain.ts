@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Actions } from "../enum/permissoes.enum";
-import { Role } from "../enum/roles.enum";
+import { Actions } from "../../application/enum/permissoes.enum";
+import { Role } from "../../application/enum/roles.enum";
 
 export default class RoleDomainEntity { 
 
