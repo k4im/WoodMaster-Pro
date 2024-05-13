@@ -5,7 +5,7 @@ import { Phone } from "../valueObjects/phone.value.object";
 import { Name } from "../valueObjects/nameVo/name.value.object";
 import { Cpf } from "../valueObjects/cpfVo/cpf.value.object";
 import { RgDocument } from "../valueObjects/rgVo/rg.value.object";
-import { Tenant } from "../../infrastructure/database/model/Tenant.entity";
+import { Tenant } from "../../infrastructure/database/models/Tenant.entity";
 
 export default class PersonDomainEntity  { 
     @ApiProperty({type: Name})

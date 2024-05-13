@@ -2,10 +2,10 @@ import { Inject } from "@nestjs/common";
 import ITenantRepository from "../abstraction/ITenantRepository.interface";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { Tenant } from "src/infrastructure/database/model/Tenant.entity";
+import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { ITenantDto } from "src/application/dto/ITenant.dto";
 import { IResponse } from "src/application/dto/IResponse.interface";
-import { Stock } from "src/infrastructure/database/model/Stock.entity";
+import { Stock } from "src/infrastructure/database/models/Stock.entity";
 
 export default class TenantRepository implements ITenantRepository {
     constructor(

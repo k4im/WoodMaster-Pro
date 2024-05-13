@@ -16,9 +16,9 @@ import RoleDomainEntity from "src/domain/entities/role.domain";
 import { Actions } from "src/application/enum/permissoes.enum";
 import { FakeLogger } from "src/infrastructure/logger/Fakelogger.service";
 import RoleService from "src/infrastructure/services/Role/role.service";
-import { Person } from "src/infrastructure/database/model/Person.entity";
-import { Tenant } from "src/infrastructure/database/model/Tenant.entity";
-import { Address } from "src/infrastructure/database/model/Addresses.entity";
+import { Person } from "src/infrastructure/database/models/Person.entity";
+import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
+import { Address } from "src/infrastructure/database/models/Addresses.entity";
 import { Role } from "src/application/enum/roles.enum";
 describe("UserRepository", () =>  {
     let repository: UserRepository;

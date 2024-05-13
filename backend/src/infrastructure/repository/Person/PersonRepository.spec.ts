@@ -12,7 +12,7 @@ import { Email } from 'src/domain/valueObjects/emailVo/email.value.object';
 import { Name } from 'src/domain/valueObjects/nameVo/name.value.object';
 import { RgDocument } from 'src/domain/valueObjects/rgVo/rg.value.object';
 import { FakeLogger } from 'src/infrastructure/logger/Fakelogger.service';
-import { Tenant } from 'src/infrastructure/database/model/Tenant.entity';
+import { Tenant } from 'src/infrastructure/database/models/Tenant.entity';
 
 describe('PersonRepository', () => {
     let repository: PersonRepository;

@@ -1,13 +1,13 @@
 import * as dotenv from 'dotenv';
-import { Address } from 'src/infrastructure/database/model/Addresses.entity';
-import { Permissions } from 'src/infrastructure/database/model/Permissions.entity';
-import { Person } from 'src/infrastructure/database/model/Person.entity';
-import { Phone } from 'src/infrastructure/database/model/Phone.entty';
-import { Product } from 'src/infrastructure/database/model/Products.entity,';
-import { Role } from 'src/infrastructure/database/model/Role.entity';
-import { Stock } from 'src/infrastructure/database/model/Stock.entity';
-import { Tenant } from 'src/infrastructure/database/model/Tenant.entity';
-import { User } from 'src/infrastructure/database/model/User.entity';
+import { Address } from 'src/infrastructure/database/models/Addresses.entity';
+import { Permissions } from 'src/infrastructure/database/models/Permissions.entity';
+import { Person } from 'src/infrastructure/database/models/Person.entity';
+import { Phone } from 'src/infrastructure/database/models/Phone.entty';
+import { Product } from 'src/infrastructure/database/models/Products.entity,';
+import { Role } from 'src/infrastructure/database/models/Role.entity';
+import { Stock } from 'src/infrastructure/database/models/Stock.entity';
+import { Tenant } from 'src/infrastructure/database/models/Tenant.entity';
+import { User } from 'src/infrastructure/database/models/User.entity';
 dotenv.config();
 
 export class DatabaseConfigurations { 
