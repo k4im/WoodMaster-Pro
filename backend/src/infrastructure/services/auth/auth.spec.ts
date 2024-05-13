@@ -23,13 +23,15 @@ import { Actions } from "src/application/enum/permissoes.enum";
 
 import * as fs from 'fs';
 import * as path from 'path';
+import TenantRepository from "src/infrastructure/repository/Tenant/TenantRepository";
+import { Repository } from "typeorm";
 
 describe("Auth", () => {
     let service: AuthService
     let repository: UserRepository;
     let tenant: Tenant;
     let person: Person;
-
+    let database: DatabaseInMemory;
 
     beforeAll(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -43,6 +45,7 @@ describe("Auth", () => {
             providers: [AuthService, UserRepository, DatabaseInMemory,
                 {provide: "RoleService", useClass: RoleService},
                 {provide: "DatabaseGateway", useClass: DatabaseInMemory},
+                {provide: "ITenantRepository", useClass: TenantRepository},
                 {provide: "IUserRepository", useClass: UserRepository},
                 {provide: "LoggerGateway", useClass: FakeLogger},
                 {provide: "IJwtService", useClass: JwtCustomService},
@@ -52,12 +55,12 @@ describe("Auth", () => {
         service = module.get<AuthService>(AuthService)
         repository = module.get<UserRepository>(UserRepository);
 
-        const database = module.get<DatabaseInMemory>(DatabaseInMemory);
+        database = module.get<DatabaseInMemory>(DatabaseInMemory);
         const db = await database.getDataSource();
         const repo = db.getRepository(Person);
         const repoTenant = db.getRepository(Tenant);
         tenant = repoTenant.create({
-            Name: "Tenant Geraldo"
+            Name: "Tenant Geraldo",
         });
         await repoTenant.save(tenant);
 
@@ -112,10 +115,16 @@ describe("Auth", () => {
     test("Ao tentar logar o usuario com credenciais erradas, deverá gerar uma exceção", async () => {
         await expect(service.login("auth@exemplo.com.br", "asdasdassd")).rejects.toThrow("Senha ou usuário incorretos.")        
     });
+    test("Ao tentar logar o usuario de um tenant desativado, deverá gerar uma exceção", async () => {
+        const db = await database.getDataSource();
+        await db.getRepository(Tenant).update({Uuid: tenant.Uuid}, {IsActive: false});
+        database.closeConnection(db);
+        await expect(service.login("auth@exemplo.com.br", "asdasdasd")).rejects.toThrow("Senha ou usuário incorretos.")        
+    });
 
     /**O METODO DEVERÁ SER ATIVADO CASO QUEIRA RODAR O TESTE DE FORMA UNITÁRIA PARA VALIDAÇÃO */
-    // afterAll(async () => {
-    //     const srcPath = path.resolve(__dirname, '../../../../:memory');
-    //     fs.unlinkSync(srcPath);
-    // })
+    afterAll(async () => {
+        const srcPath = path.resolve(__dirname, '../../../../:memory');
+        fs.unlinkSync(srcPath);
+    })
 })

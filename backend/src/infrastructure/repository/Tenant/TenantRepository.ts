@@ -5,6 +5,7 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { Tenant } from "src/infrastructure/database/model/Tenant.entity";
 import { ITenantDto } from "src/application/dto/ITenant.dto";
 import { IResponse } from "src/application/dto/IResponse.interface";
+import { Stock } from "src/infrastructure/database/model/Stock.entity";
 
 export default class TenantRepository implements ITenantRepository {
     constructor(
@@ -95,10 +96,15 @@ export default class TenantRepository implements ITenantRepository {
             const db = await this.database.getDataSource();
             await db.manager.transaction(async (manager) => {
                 const repo = manager.getRepository(Tenant);
+                const repoStock = manager.getRepository(Stock);
                 const tenantCreated = repo.create({
-                    Name: tenant.Name
+                    Name: tenant.Name,
                 });
-                await manager.save(tenantCreated);
+                const savedTenant = await manager.save(tenantCreated);
+                const stock = repoStock.create({
+                    Tenant: savedTenant
+                });
+                await manager.save(stock);
             })
             await this.database.closeConnection(db);
             return true;

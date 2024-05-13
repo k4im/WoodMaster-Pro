@@ -4,12 +4,14 @@ import AuthAbstraction from "./abstrations/AuthAbstrancion";
 import * as bcrypt from 'bcrypt';
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import IUserRespository from "src/infrastructure/repository/abstraction/IUserRepository.interface";
+import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 
 
 @Injectable()
 export default class AuthService implements AuthAbstraction {
 
     constructor(
+        @Inject("ITenantRepository") private readonly _repositoryTenant: ITenantRepository,
         @Inject("IUserRepository") private readonly _repository: IUserRespository,
         @Inject("LoggerGateway") private readonly logger: LoggerGateway,
         @Inject("IJwtService") private readonly jwt: IJwtService) { }
@@ -23,9 +25,12 @@ export default class AuthService implements AuthAbstraction {
      */
     async login(email: string, pwd: string): Promise<string> {
             const user = await this._repository.findUserByEmail(email);
-            if(await this.checkPassword(pwd, user.Hash)) {
-                return this.jwt.encodeJwt(user);
-            };
+            const tenant  = await this._repositoryTenant.findTenantByUuid(user.Tenant);
+            if(tenant.IsActive) {
+                if(await this.checkPassword(pwd, user.Hash)) {
+                    return this.jwt.encodeJwt(user);
+                };
+            }
             throw new Error("Senha ou usuário incorretos.");
     };
     
