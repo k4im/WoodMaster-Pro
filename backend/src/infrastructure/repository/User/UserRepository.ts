@@ -3,18 +3,18 @@ import { DatabaseGateway } from "src/application/ports/out-ports/database.gatewa
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { IUserDto } from "src/application/dto/IUser.dto";
 import UserDomanEntity from "src/domain/entities/user.domain";
-import RoleService from "src/infrastructure/services/role.service";
 import IUserRespository from "../abstraction/IUserRepository.interface";
 import { User } from "src/domain/databaseEntities/User.entity";
 import { IResponse } from "src/application/dto/IResponse.interface";
 import { Person } from "src/domain/databaseEntities/Person.entity";
+import IRoleService from "src/infrastructure/services/Role/IRole.interface";
 
 
 @Injectable()
 export default class UserRepository implements IUserRespository {
 
     constructor(
-        @Inject("RoleService") private readonly roleService: RoleService,
+        @Inject("RoleService") private readonly roleService: IRoleService,
         @Inject("DatabaseGateway") private readonly database: DatabaseGateway,
         @Inject("LoggerGateway") private readonly logger: LoggerGateway) { }
 
@@ -83,7 +83,11 @@ export default class UserRepository implements IUserRespository {
             const pages = (page - 1) * limit;
 
             const result = await repo.findAndCount({
-                select: { Id: true, Uuid: true, EmailAddr: true, IsActive: true, Role: { Name: true, Permissions: { Id: true, Action: true } }, Tenant: {} },
+                select: { 
+                    Id: true, Uuid: true, 
+                    EmailAddr: true, IsActive: true, 
+                    Role: { Name: true, Permissions: { Id: true, Action: true } }, 
+                    Tenant: {} },
                 relations: ['Tenant', 'Role', 'Role.Permissions'],
                 where: { Tenant: { Uuid: tenantId } },
                 skip: pages,

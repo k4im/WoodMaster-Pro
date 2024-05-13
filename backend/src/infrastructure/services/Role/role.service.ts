@@ -3,9 +3,10 @@ import { Permissions } from "src/domain/databaseEntities/Permissions.entity";
 import { Role } from "src/domain/databaseEntities/Role.entity";
 import RoleDomainEntity from "src/domain/entities/role.domain";
 import { EntityManager } from "typeorm";
+import IRoleService from "./IRole.interface";
 
 @Injectable()
-export default class RoleService  {
+export default class RoleService implements IRoleService  {
     
     /**
      * O metodo estará verificando se o usuario existe no banco de dados

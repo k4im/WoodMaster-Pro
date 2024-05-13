@@ -4,20 +4,20 @@ import { LogLevel } from 'src/application/enum/logger.enum';
 import { LoggerGateway } from 'src/application/ports/out-ports/logger.gateway';
 
 @Injectable()
-export class CustomLogger  implements LoggerService, LoggerGateway{
-    
+export class CustomLogger implements LoggerService, LoggerGateway {
+
     private logger = createLogger({
         transports: [
-          new transports.Console(),
-          new transports.File({ filename: 'WoodMaster.log' }),
+            new transports.Console(),
+            new transports.File({ filename: 'WoodMaster.log' }),
         ],
         format: format.combine(
-          format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-          format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`),
+            format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+            format.printf(info => `${info.timestamp} ${info.level}: ${info.message}`),
         ),
-      });
-    
-      log(message: any, ...optionalParams: any[]) {
+    });
+
+    log(message: any, ...optionalParams: any[]) {
         this.logger.info(`${LogLevel.INFO}INFO: ${LogLevel.RESET}${message}`)
     }
 

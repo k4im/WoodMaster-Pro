@@ -22,6 +22,7 @@ import { CustomLogger } from './infrastructure/logger/logger.service';
       database: DatabaseConfigurations.db_name,
       entities: DatabaseConfigurations.entities,
       synchronize: true,
+      autoLoadEntities: true
     }),
   ],
   providers: [{provide: "DatabaseGateway", useClass: DatabaseMysqlAdapter}, {provide: "LoggerGateway", useClass: CustomLogger}],

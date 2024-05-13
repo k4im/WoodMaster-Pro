@@ -5,7 +5,7 @@ import UserRepository from "src/infrastructure/repository/User/UserRepository";
 import { FakeLogger } from "src/infrastructure/logger/Fakelogger.service";
 import JwtCustomService from "../jwt/JwtService";
 import { DatabaseInMemory } from "src/infrastructure/database/databaseInMemory.service";
-import RoleService from "../role.service";
+import RoleService from "../Role/role.service";
 import { Tenant } from "src/domain/databaseEntities/Tenant.entity";
 import { Person } from "src/domain/databaseEntities/Person.entity";
 import PersonDomainEntity from "src/domain/entities/person.domain";
