@@ -8,9 +8,9 @@ import PersonDomainEntity from "../../../domain/entities/person.domain";
 
 import { IPersonDto } from "src/application/dto/Person.dto";
 import { CheckFilter } from "src/infrastructure/helpers/checkFilter.helper";
-import { Person } from "src/domain/databaseEntities/Person.entity";
-import { Address } from "src/domain/databaseEntities/Addresses.entity";
-import { Phone } from "src/domain/databaseEntities/Phone.entty";
+import { Person } from "src/infrastructure/database/model/Person.entity";
+import { Address } from "src/infrastructure/database/model/Addresses.entity";
+import { Phone } from "src/infrastructure/database/model/Phone.entty";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {

@@ -13,17 +13,17 @@ import { CustomLogger } from './infrastructure/logger/logger.service';
       secret: env.SECRET_KEY,
       signOptions: {expiresIn: '1h'}
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: DatabaseConfigurations.host,
-      port: parseInt(DatabaseConfigurations.port),
-      username: DatabaseConfigurations.username,
-      password: DatabaseConfigurations.pwd,
-      database: DatabaseConfigurations.db_name,
-      entities: DatabaseConfigurations.entities,
-      synchronize: true,
-      autoLoadEntities: true
-    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'mysql',
+    //   host: DatabaseConfigurations.host,
+    //   port: parseInt(DatabaseConfigurations.port),
+    //   username: DatabaseConfigurations.username,
+    //   password: DatabaseConfigurations.pwd,
+    //   database: DatabaseConfigurations.db_name,
+    //   entities: DatabaseConfigurations.entities,
+    //   synchronize: true,
+    //   autoLoadEntities: true
+    // }),
   ],
   providers: [{provide: "DatabaseGateway", useClass: DatabaseMysqlAdapter}, {provide: "LoggerGateway", useClass: CustomLogger}],
 })
