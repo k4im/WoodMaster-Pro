@@ -123,8 +123,8 @@ describe("Auth", () => {
     });
 
     /**O METODO DEVERÁ SER ATIVADO CASO QUEIRA RODAR O TESTE DE FORMA UNITÁRIA PARA VALIDAÇÃO */
-    afterAll(async () => {
-        const srcPath = path.resolve(__dirname, '../../../../:memory');
-        fs.unlinkSync(srcPath);
-    })
+    // afterAll(async () => {
+    //     const srcPath = path.resolve(__dirname, '../../../../:memory');
+    //     fs.unlinkSync(srcPath);
+    // })
 })
