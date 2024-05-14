@@ -5,12 +5,13 @@ import { DatabaseConfigurations } from "src/infrastructure/config/database.confi
 
 @Injectable()
 export class DatabaseMysqlAdapter implements DatabaseGateway {
+
     async closeConnection(db: DataSource): Promise<void> {
         await db.destroy();
     } 
     
     async getDataSource(): Promise<DataSource> {   
-        return new DataSource({
+        const database = new DataSource({
             type: 'mysql',
             host: DatabaseConfigurations.host,
             database: DatabaseConfigurations.db_name,
@@ -19,6 +20,8 @@ export class DatabaseMysqlAdapter implements DatabaseGateway {
             password: DatabaseConfigurations.pwd,
             entities: DatabaseConfigurations.entities,
             synchronize: false, 
-        })
+        });
+        await database.initialize(); 
+        return database;
     }
 }

@@ -8,8 +8,29 @@ import { Role } from 'src/infrastructure/database/models/Role.entity';
 import { Stock } from 'src/infrastructure/database/models/Stock.entity';
 import { Tenant } from 'src/infrastructure/database/models/Tenant.entity';
 import { User } from 'src/infrastructure/database/models/User.entity';
+import { DataSource, DataSourceOptions } from 'typeorm';
 dotenv.config();
+//#region Configuração de banco de dados para utilização do CLI
+export const databaseOptions: DataSourceOptions = { 
+    type: 'mysql',
+    host: `${process.env.HOST}`,
+    port: parseInt(process.env.PORT_DB),
+    username: process.env.USER_DB,
+    password: process.env.PWD_DB,
+    database: process.env.DB_NAME,
+    entities: [
+        Person, User, Permissions, 
+        Tenant, Role, Stock, 
+        Product, Address, Phone],
+    synchronize: true,
+    migrations: ['dist/infrastructure/database/migrations/*{.ts,.js}'],
 
+}
+const dataSource = new DataSource(databaseOptions);
+export default dataSource;
+//#endregion
+
+//#region configs para gerar novas conexões
 export class DatabaseConfigurations { 
     public static host = `${process.env.HOST}`
     public static username = process.env.USER_DB
@@ -21,3 +42,4 @@ export class DatabaseConfigurations {
         Tenant, Role, Stock, 
         Product, Address, Phone]
 }
+//#endregion
