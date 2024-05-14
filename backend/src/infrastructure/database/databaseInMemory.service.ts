@@ -16,7 +16,7 @@ export class DatabaseInMemory implements DatabaseGateway {
             dropSchema: false,
             timeout: 9000,
             readonly: false,
-            entities: DatabaseConfigurations.entities,
+            entities: ['src/infrastructure/database/models/*{.ts,.js}'],
             synchronize: true, 
         }).initialize()
     }
