@@ -18,7 +18,6 @@ export default class Password  {
         const regexExp = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
         if(regexExp.test(password)) return this.hashPassword(password)
         throw new Error("A senha deve conter entre 8 e 16 caracteres, sendo letras maiusculas, minusculas e numeros.");
-        
     }
 
     /**
