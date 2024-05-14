@@ -18,7 +18,7 @@ export class DatabaseMysqlAdapter implements DatabaseGateway {
             port: parseInt(DatabaseConfigurations.port),
             username: DatabaseConfigurations.username,
             password: DatabaseConfigurations.pwd,
-            entities: ['dist/infrastructure/database/models/'],
+            entities: ['dist/infrastructure/database/models/*{.ts,.js}'],
             synchronize: false, 
         });
         await database.initialize(); 
