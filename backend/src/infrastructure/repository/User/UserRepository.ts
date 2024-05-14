@@ -132,7 +132,7 @@ export default class UserRepository implements IUserRespository {
                 const user = userRepo.create({
                     EmailAddr: data.EmailAddr.email,
                     Person: person,
-                    HashPassword: data.Password,
+                    HashPassword: data.Password.value,
                     Tenant: person.Tenant,
                     Role: role,
                     IsActive: data.IsActive,
@@ -161,7 +161,7 @@ export default class UserRepository implements IUserRespository {
             const repo = db.getRepository(User);
             const user = await repo.findOneBy({ Uuid: uuid });
             user.EmailAddr = data.EmailAddr.email;
-            user.HashPassword = data.Password;
+            user.HashPassword = data.Password.value;
             await repo.save(user);
             await this.database.closeConnection(db);
             return true;

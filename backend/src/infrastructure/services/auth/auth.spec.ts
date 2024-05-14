@@ -100,7 +100,7 @@ describe("Auth", () => {
         await db.destroy();
         const user = new UserDomanEntity(
             new Email("auth@exemplo.com.br"),
-            'asdasdasd',
+            'Gn$5P4gs23@$%',
             new RoleDomainEntity(Role.suporte, [Actions.read, Actions.update, Actions.create]),
             person.Uuid,
         );
@@ -108,7 +108,7 @@ describe("Auth", () => {
     });
 
     test("Ao logar o usuario com as credenciais corretas, deverá estar emitindo um token de acesso.", async () => {
-        const token = await service.login("auth@exemplo.com.br", "asdasdasd");
+        const token = await service.login("auth@exemplo.com.br", "Gn$5P4gs23@$%");
         expect(typeof(token)).toBe('string')
     });
 
@@ -119,7 +119,7 @@ describe("Auth", () => {
         const db = await database.getDataSource();
         await db.getRepository(Tenant).update({Uuid: tenant.Uuid}, {IsActive: false});
         database.closeConnection(db);
-        await expect(service.login("auth@exemplo.com.br", "asdasdasd")).rejects.toThrow("Senha ou usuário incorretos.")        
+        await expect(service.login("auth@exemplo.com.br", "Gn$5P4gs23@$%")).rejects.toThrow("Senha ou usuário incorretos.")        
     });
 
     /**O METODO DEVERÁ SER ATIVADO CASO QUEIRA RODAR O TESTE DE FORMA UNITÁRIA PARA VALIDAÇÃO */
