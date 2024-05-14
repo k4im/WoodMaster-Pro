@@ -9,7 +9,7 @@ export default class Password  {
     }
 
     /**
-     * Efetua a validação da password e caso a mesma encontra-se valida
+     * @description Efetua a validação da password e caso a mesma encontra-se valida
      * estará efetuando o hash da password.
      * @param password string contendo a senha para validação
      * @returns string | Error
