@@ -1,5 +1,4 @@
-import { randomUUID } from "crypto";
-import { Column, Entity, Generated, Index, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Generated, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Permissions } from "./Permissions.entity";
 import { User } from "./User.entity";
 

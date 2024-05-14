@@ -14,15 +14,18 @@ export default class Order  {
     OrderType: string
     @Column({nullable: true, type: 'json'})
     DeliveryAddress: Address
-
+    @Column({nullable: false})
+    Status: string
+    @Column({nullable: true})
+    Observations: string
+    
     @OneToMany(() => OrderItem, (ot) => ot.OrderId, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     OrderItens: OrderItem[]
-
     @ManyToOne(() => Tenant, (t) => t.Orders, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Tenant: Tenant
 
     @CreateDateColumn()
-    createAt: Date;
+    createAt: Date
     @UpdateDateColumn()
     updateAt: Date
 }

@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, Generated, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export default class Administrator {
@@ -10,7 +10,7 @@ export default class Administrator {
     @Column({nullable: true, default: true})
     IsActive: boolean;
     @Column({nullable: false, unique: true})
-    EmailAddr: string;
+    EmailAddr: string; 
     @Column({nullable: false})
     HashPassword: string;
 
