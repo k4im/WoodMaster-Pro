@@ -1,5 +1,5 @@
 import CollaboratorDto from "src/application/dto/collaborator.dto";
-import { ICommandInterface } from "../Abstrations/ICoomands.interface";
+import { ICommandInterface } from "../../../Abstrations/ICoomands.interface";
 
 export default class updateCollaboratorUseCase implements ICommandInterface<CollaboratorDto> {
     

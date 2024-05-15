@@ -67,6 +67,8 @@ export default class PersonDomainEntity  {
     setTenant(tenant: Tenant) {
         this.Tenant = tenant
     };
+
+    
     /**
      * O metodo poderá ser utilizado para buscar 
      * um tenant presente na pessoa.
