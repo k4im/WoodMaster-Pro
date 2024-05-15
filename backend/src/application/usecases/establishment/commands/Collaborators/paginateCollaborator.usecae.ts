@@ -17,7 +17,5 @@ export default class PaginateCollaboratorsUseCase implements ICommandInterfacePa
         } catch (error) {
             console.log(`Houve um erro: ${error}`);
         }
-
     }
-
 }
