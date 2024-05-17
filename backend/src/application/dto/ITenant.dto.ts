@@ -3,3 +3,5 @@ export interface ITenantDto {
     Name: string,
     IsActive: boolean
 }
+
+export interface newTenantDto {Name: string}

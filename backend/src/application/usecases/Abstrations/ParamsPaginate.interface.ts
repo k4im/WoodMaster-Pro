@@ -1,1 +1,1 @@
-export interface ParamsPaginate {page: number, limit: number, tenantId: string};
+export interface ParamsPaginate {page: number, limit: number, tenantId?: string};
