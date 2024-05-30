@@ -4,12 +4,12 @@ import { DatabaseMysqlAdapter } from './infrastructure/database/database.service
 import { CustomLogger } from './infrastructure/logger/logger.service';
 import { ConfigModule } from '@nestjs/config';
 import { AdministrativeUseCaseModule } from './application/usecases/administrator/administrator.usecase.module';
-import AuthUseCaseModule from './application/usecases/authentication/auth.usecase.module';
+import EstablishmentModule from './application/usecases/establishment/estabilishment.usecase.module';
 
 @Module({
   imports: [
     AdministrativeUseCaseModule,
-    AuthUseCaseModule,
+    EstablishmentModule,
     JwtModule.register({
       global: true,
       secret: process.env.SECRET_KEY,
