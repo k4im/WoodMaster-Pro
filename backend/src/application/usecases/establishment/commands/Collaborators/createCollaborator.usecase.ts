@@ -1,5 +1,5 @@
 import CollaboratorDto from "src/application/dto/collaborator.dto";
-import { ICommandInterface } from "../../../Abstrations/ICoomands.interface";
+import { ICommandCreatePerson, ICommandInterface } from "../../../Abstrations/ICoomands.interface";
 import { Inject } from "@nestjs/common";
 import IPersonRepository from "src/infrastructure/repository/abstraction/IPersonRepository.interface";
 import PersonDomainEntity from "src/domain/entities/person.domain";
@@ -7,12 +7,13 @@ import { Name } from "src/domain/valueObjects/nameVo/name.value.object";
 import { Email } from "src/domain/valueObjects/emailVo/email.value.object";
 import { Cpf } from "src/domain/valueObjects/cpfVo/cpf.value.object";
 import { RgDocument } from "src/domain/valueObjects/rgVo/rg.value.object";
+import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 
-export default class createCollaboratorUseCase implements ICommandInterface<CollaboratorDto> {
+export default class createCollaboratorUseCase implements ICommandCreatePerson<CollaboratorDto, Tenant> {
     constructor(
         @Inject("IPersonRepository") private readonly personRepository: IPersonRepository) { }
 
-    async execute(data: CollaboratorDto): Promise<boolean> {
+    async execute(data: CollaboratorDto, other: Tenant): Promise<boolean> {
         try {
             const collaborator = new PersonDomainEntity(
                 new Name(data.Name.FirsName, data.Name.LastName),
@@ -24,6 +25,7 @@ export default class createCollaboratorUseCase implements ICommandInterface<Coll
                 new RgDocument(data.Rg.value),
                 false, false, false,
                 data.IsCollaborator);
+                collaborator.setTenant(other)
             const result = await this.personRepository.createPerson(collaborator);
             return result;
         } catch (error) {

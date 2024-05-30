@@ -1,3 +1,7 @@
+export interface ICommandCreatePerson<T, U> {
+    execute(data: T, other: U): Promise<boolean>; 
+}
+
 export interface ICommandInterface<T> {
     execute(data: T): Promise<boolean>; 
 }
