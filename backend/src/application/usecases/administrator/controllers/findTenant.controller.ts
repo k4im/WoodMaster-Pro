@@ -16,13 +16,17 @@ export default class FindTenantController {
     @Inject("LoggerGateway")
     private readonly Logger: LoggerGateway) {}
     
-    @Get('findUnique/Tenant')
+    @Get('tenant')
     @ApiOperation({
         summary: 
         'A rota poderá ser utilizada para efetuar a consulta de um tenant existente',
         description: `Para realizar a operação busca de um tenant poderá estar utilizando
         a rota em questão, onde deverá ser repassado o UUID do cliente para refeutar a
-        consulta.`    
+        consulta. **Objeto de resposta:**
+        
+        Uuid: string,
+        Name: string,
+        IsActive: boolean`    
     })
     @ApiQuery({
         name: 'uuid',

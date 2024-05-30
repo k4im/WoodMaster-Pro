@@ -1,3 +1,12 @@
+/**
+ * Auth de tenants
+ * 
+ * O serviço poderá ser utilizado para um tenant
+ * que já encontra-se cadastrado no sistema
+ * realizar a operação de  login dentro do sistema.
+ * 
+ */
+
 import { Inject, Injectable } from "@nestjs/common";
 import IJwtService from "../jwt/IJwtService";
 import AuthAbstraction from "./abstrations/AuthAbstrancion";
