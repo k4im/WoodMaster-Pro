@@ -1,11 +1,12 @@
 import { Controller, Get, Inject, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { ICommandInterfacePaginate } from "../../Abstrations/ICoomands.interface";
-import { ParamsPaginate } from "../../Abstrations/ParamsPaginate.interface";
 import { IResponse } from "src/application/dto/IResponse.interface";
 import { IPersonDto } from "src/application/dto/Person.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { Response } from "express";
+import { ICommandInterfacePaginate } from "src/application/usecases/Abstrations/ICoomands.interface";
+import { ParamsPaginate } from "src/application/usecases/Abstrations/ParamsPaginate.interface";
+import { ResponseSwaggerDoc } from "src/application/usecases/administrator/docs/response.swagger.doc";
 
 @Controller('establishment')
 @ApiTags('establishment')
@@ -20,7 +21,7 @@ export default class ListCollaboratorsController {
     ) {}
 
     @Get('collaborators')
-    @ApiResponse({status: 200, description: 'Resposta de sucesso.'})
+    @ApiResponse({status: 200, description: 'Resposta de sucesso.', type: ResponseSwaggerDoc})
     @ApiResponse({status: 404, description: 'Resposta de lista de colaboradores vazia.'})
     @ApiResponse({status: 500, description: 'Resposta erro interno.'})
     @ApiOperation({

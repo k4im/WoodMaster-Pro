@@ -8,17 +8,18 @@ import UserRepository from "src/infrastructure/repository/User/UserRepository";
 import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
 import RoleService from "src/infrastructure/services/Role/role.service";
 import EstablishmentLoginController from "./controllers/EstablishmentLogin.controler";
-import listTenantsUseCase from "../administrator/commands/listTenants.usecase";
-import ListCollaboratorsController from "./controllers/listCollaborators.controller";
 import PaginateCollaboratorsUseCase from "./commands/Collaborators/paginateCollaborator.usecae";
 import PersonRepository from "src/infrastructure/repository/Person/PersonRepository";
 import createCollaboratorUseCase from "./commands/Collaborators/createCollaborator.usecase";
-import CreateCollaboratorController from "./controllers/CreateCollaborator.controller";
+import ListCollaboratorsController from "./controllers/collaborators/listCollaborators.controller";
+import CreateCollaboratorController from "./controllers/collaborators/CreateCollaborator.controller";
+import FindCollaboratorController from "./controllers/collaborators/FindCollaborator.controller";
+import findCollaboratorUseCase from "./commands/Collaborators/findCollaborator.usecase";
 
 @Module({
     controllers: [
         EstablishmentLoginController, ListCollaboratorsController,
-        CreateCollaboratorController],
+        CreateCollaboratorController, FindCollaboratorController],
     providers: [        
         {provide: 'LoggerGateway', useClass: CustomLogger},
         {provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter},
@@ -31,6 +32,7 @@ import CreateCollaboratorController from "./controllers/CreateCollaborator.contr
         {provide: 'listCollaborators', useClass: PaginateCollaboratorsUseCase},
         {provide: 'IPersonRepository', useClass: PersonRepository},
         {provide: 'CreateCollaborator', useClass: createCollaboratorUseCase},
+        {provide: 'FindCollaborator', useClass: findCollaboratorUseCase},
     ]
 })
 export default class EstablishmentModule {}

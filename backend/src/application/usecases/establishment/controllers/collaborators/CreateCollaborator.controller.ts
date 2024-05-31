@@ -1,11 +1,11 @@
 import { Body, Controller, Inject, Param, Post } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
-import { ICommandCreatePerson } from "../../Abstrations/ICoomands.interface";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
+import { ICommandCreatePerson } from "src/application/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
 @ApiTags('establishment')

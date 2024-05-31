@@ -18,7 +18,7 @@ export default class EstablishmentLoginController {
 
     @Post('login')
     @ApiOperation({
-        summary: 'ROTA EM DESENVOLVIMENTO',
+        summary: 'Rota utilizada para um determinado tenant realizar login.',
         description: `Rota estará sendo utilizada para efetuar o login de um cliente,
         realizar o login corretamente estará retornando um token de acesso.
         
