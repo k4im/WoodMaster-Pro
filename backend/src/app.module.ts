@@ -1,25 +1,26 @@
 import { Module } from '@nestjs/common';
-import { DatabaseService } from './adapters/framework/database/database.service';
 import { JwtModule } from '@nestjs/jwt';
-import { env } from 'process';
-import { AuthModule } from './application/controllers/http-controllers/auth/auth.module';
-import { TenantModule } from './application/controllers/http-controllers/tenant/tenant.module';
-import { PessoasModule } from './application/controllers/http-controllers/pessoas/pessoas.module';
-import { UsuariosModule } from './application/controllers/http-controllers/usuarios/usuarios.module';
-import { UsecasesModule } from './application/usecases/usecases.module';
-import { PersistenceModule } from './adapters/persistence/persistence.module';
+import { DatabaseMysqlAdapter } from './infrastructure/database/database.service';
+import { CustomLogger } from './infrastructure/logger/logger.service';
+import { ConfigModule } from '@nestjs/config';
+import { AdministrativeUseCaseModule } from './application/usecases/administrator/administrator.usecase.module';
+import EstablishmentModule from './application/usecases/establishment/estabilishment.usecase.module';
 
 @Module({
-  imports: [PessoasModule, UsuariosModule,
+  imports: [
+    AdministrativeUseCaseModule,
+    EstablishmentModule,
     JwtModule.register({
       global: true,
-      secret: env.SECRET_KEY,
+      secret: process.env.SECRET_KEY,
       signOptions: {expiresIn: '1h'}
     }),
-    AuthModule,
-    TenantModule,
-    UsecasesModule,
-    PersistenceModule],
-  providers: [DatabaseService],
+    ConfigModule.forRoot({
+      envFilePath: '.env'
+    })
+  ],
+  providers: [
+    {provide: "DatabaseGateway", useClass: DatabaseMysqlAdapter}, 
+    {provide: "LoggerGateway", useClass: CustomLogger}],
 })
 export class AppModule {}
