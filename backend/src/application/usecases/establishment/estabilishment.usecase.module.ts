@@ -8,9 +8,17 @@ import UserRepository from "src/infrastructure/repository/User/UserRepository";
 import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
 import RoleService from "src/infrastructure/services/Role/role.service";
 import EstablishmentLoginController from "./controllers/EstablishmentLogin.controler";
+import listTenantsUseCase from "../administrator/commands/listTenants.usecase";
+import ListCollaboratorsController from "./controllers/listCollaborators.controller";
+import PaginateCollaboratorsUseCase from "./commands/Collaborators/paginateCollaborator.usecae";
+import PersonRepository from "src/infrastructure/repository/Person/PersonRepository";
+import createCollaboratorUseCase from "./commands/Collaborators/createCollaborator.usecase";
+import CreateCollaboratorController from "./controllers/CreateCollaborator.controller";
 
 @Module({
-    controllers: [EstablishmentLoginController],
+    controllers: [
+        EstablishmentLoginController, ListCollaboratorsController,
+        CreateCollaboratorController],
     providers: [        
         {provide: 'LoggerGateway', useClass: CustomLogger},
         {provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter},
@@ -19,6 +27,10 @@ import EstablishmentLoginController from "./controllers/EstablishmentLogin.contr
         {provide: 'ITenantRepository', useClass: TenantRepository},
         {provide: 'IUserRepository', useClass: UserRepository},
         {provide: 'IJwtService', useClass: JwtCustomService},
-        {provide: 'RoleService', useClass: RoleService}]
+        {provide: 'RoleService', useClass: RoleService},
+        {provide: 'listCollaborators', useClass: PaginateCollaboratorsUseCase},
+        {provide: 'IPersonRepository', useClass: PersonRepository},
+        {provide: 'CreateCollaborator', useClass: createCollaboratorUseCase},
+    ]
 })
 export default class EstablishmentModule {}
