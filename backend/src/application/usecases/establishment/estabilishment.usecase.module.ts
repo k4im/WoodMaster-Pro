@@ -15,11 +15,15 @@ import ListCollaboratorsController from "./controllers/collaborators/listCollabo
 import CreateCollaboratorController from "./controllers/collaborators/CreateCollaborator.controller";
 import FindCollaboratorController from "./controllers/collaborators/FindCollaborator.controller";
 import findCollaboratorUseCase from "./commands/Collaborators/findCollaborator.usecase";
+import UpdateCollaboratorController from "./controllers/collaborators/updateCollaborator.controller";
+import updateCollaboratorUseCase from "./commands/Collaborators/updateCollaborator.usecase";
+import deactivateCollaboratorUseCase from "./commands/Collaborators/deactivateCollaborator.usecase";
 
 @Module({
     controllers: [
         EstablishmentLoginController, ListCollaboratorsController,
-        CreateCollaboratorController, FindCollaboratorController],
+        CreateCollaboratorController, FindCollaboratorController,
+        UpdateCollaboratorController],
     providers: [        
         {provide: 'LoggerGateway', useClass: CustomLogger},
         {provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter},
@@ -33,6 +37,8 @@ import findCollaboratorUseCase from "./commands/Collaborators/findCollaborator.u
         {provide: 'IPersonRepository', useClass: PersonRepository},
         {provide: 'CreateCollaborator', useClass: createCollaboratorUseCase},
         {provide: 'FindCollaborator', useClass: findCollaboratorUseCase},
+        {provide: 'updateCollaborator', useClass: updateCollaboratorUseCase},
+        {provide: 'deactivateCollab', useClass: deactivateCollaboratorUseCase}
     ]
 })
 export default class EstablishmentModule {}

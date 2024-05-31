@@ -2,7 +2,7 @@ import { Inject } from "@nestjs/common";
 import { ISingleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 import IPersonRepository from "src/infrastructure/repository/abstraction/IPersonRepository.interface";
 
-export default class createCollaboratorUseCase implements ISingleCommandInterface<boolean> {
+export default class deactivateCollaboratorUseCase implements ISingleCommandInterface<boolean> {
     constructor(
         @Inject("IPersonRepository") private readonly personRepository: IPersonRepository) { }
 
