@@ -37,7 +37,7 @@ export default class AdmAuthService implements AuthAbstraction {
         if(!admin) 
             throw new Error("Administrator not founded.")
         
-        if(await this.checkPassword(pwd, admin.Password.value)) {
+        if(await this.checkPassword(pwd, admin.Password)) {
             const payload = {email: email}
             return this.jwt.encodeJwt(payload);
         }

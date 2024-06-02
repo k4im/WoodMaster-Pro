@@ -1,3 +1,5 @@
+import { LoginDTO } from "src/application/dto/login.dto";
+
 export interface ICommandCreatePerson<T, U> {
     execute(data: T, other: U): Promise<boolean>; 
 }
@@ -23,4 +25,7 @@ export interface IAuthCommand{
 
 export interface IFindTenantByName<T> {
     execute(name: string): Promise<T>;     
+}
+export interface ILoginCommand {
+    execute({email, password}: LoginDTO, userAgent: string);
 }

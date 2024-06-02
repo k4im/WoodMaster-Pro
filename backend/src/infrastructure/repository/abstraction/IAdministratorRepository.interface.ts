@@ -7,13 +7,14 @@
  * @author João Victor
  */
 
+import { IAdmin } from "src/application/dto/IAdm.dto";
 import { IResponse } from "src/application/dto/IResponse.interface";
 import Administrator from "src/domain/entities/admin.domain.entity";
 
 export interface IAdministratorRepository {
-    getAdministrators(page: number, limit: number): Promise<IResponse<Administrator>>;
-    getAdministrator(uuid: string): Promise<Administrator>;
-    getAdministratorByEmail(email: string): Promise<Administrator>;
+    getAdministrators(page: number, limit: number): Promise<IResponse<IAdmin>>;
+    getAdministrator(uuid: string): Promise<IAdmin>;
+    getAdministratorByEmail(email: string): Promise<IAdmin>;
     createAdministrator(admin: Administrator): Promise<boolean>;
     deactivateAdministrator(uuid: string): Promise<boolean>;
 }

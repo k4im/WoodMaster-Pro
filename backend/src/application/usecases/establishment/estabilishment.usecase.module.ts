@@ -18,12 +18,13 @@ import findCollaboratorUseCase from "./commands/Collaborators/findCollaborator.u
 import UpdateCollaboratorController from "./controllers/collaborators/updateCollaborator.controller";
 import updateCollaboratorUseCase from "./commands/Collaborators/updateCollaborator.usecase";
 import deactivateCollaboratorUseCase from "./commands/Collaborators/deactivateCollaborator.usecase";
+import DeactiveCollaboratorController from "./controllers/collaborators/DeactivateCollaborator.controller";
 
 @Module({
     controllers: [
         EstablishmentLoginController, ListCollaboratorsController,
         CreateCollaboratorController, FindCollaboratorController,
-        UpdateCollaboratorController],
+        UpdateCollaboratorController, DeactiveCollaboratorController],
     providers: [        
         {provide: 'LoggerGateway', useClass: CustomLogger},
         {provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter},
