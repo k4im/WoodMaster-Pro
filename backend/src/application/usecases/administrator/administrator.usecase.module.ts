@@ -11,6 +11,10 @@ import { CreateTenantController } from "./controllers/createTenant.controller";
 import deactiveTenantUsecase from "./commands/deactivateTenant.usecase";
 import DeactivateTenantController from "./controllers/deactivateTenant.controller";
 import AuthAdminController from "./controllers/auth.controller";
+import AdmAuthService from "src/infrastructure/services/auth/admin/admin.auth.service";
+import { JwtService } from "@nestjs/jwt";
+import AdministratorRepository from "src/infrastructure/repository/Administrator/AdministratorRepository";
+import AuthAdministratorUseCase from "./commands/authAdm.usecase";
 
 @Module({
   controllers: [
@@ -26,7 +30,12 @@ import AuthAdminController from "./controllers/auth.controller";
     {provide: 'ListTenants', useClass: listTenantsUseCase},
     {provide: 'CreateTenant', useClass: createNewTenantUsecase},
     {provide: 'DeactivateTenant', useClass: deactiveTenantUsecase},
-    {provide: "ITenantRepository", useClass: TenantRepository}
+    {provide: "ITenantRepository", useClass: TenantRepository},
+    {provide: 'AuthAbstracion', useClass: AdmAuthService},
+    {provide: 'IJwtService', useClass: JwtService},
+    {provide: 'IAdministratorRepository', useClass: AdministratorRepository},
+    {provide: 'AuthUseCase', useClass: AuthAdministratorUseCase},
+    {provide: 'AuthAbstraction', useClass: AdmAuthService}
 ]
 })
 export class AdministrativeUseCaseModule {}

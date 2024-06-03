@@ -20,7 +20,7 @@ export interface ISingleCommandInterface<T> {
 }
 
 export interface IAuthCommand{
-    execute(email: string, senha: string): Promise<string>; 
+    execute(email: string, senha: string, userAgent: string): Promise<string>; 
 }
 
 export interface IFindTenantByName<T> {

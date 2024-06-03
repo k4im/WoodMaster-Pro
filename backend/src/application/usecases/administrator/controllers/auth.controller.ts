@@ -1,15 +1,46 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, HttpStatus, Inject, Post, Req } from "@nestjs/common";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { stat } from "fs";
+import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
+import ExpectedHttpError from "src/application/types/expectedhttp.error";
+import AuthAbstraction from "src/infrastructure/services/auth/abstrations/AuthAbstrancion";
+import AdmAuthService from "src/infrastructure/services/auth/admin/admin.auth.service";
+import { IAuthCommand } from "../../Abstrations/ICoomands.interface";
 
 @Controller('admin')
 @ApiTags('admin')
 export default class AuthAdminController  {
     
     /** TODO */
+    constructor(
+        @Inject("AuthUseCase")
+        private readonly authAdmService: IAuthCommand,
+        @Inject("LoggerGateway")
+        private readonly logger: LoggerGateway
+    ) {}
 
     @Post('auth')
-    @ApiOperation({summary: 'ROTA EM DESENVOLVIMENTO.'})
-    async handle(@Body() {email, password}: any) {
-
+    @ApiOperation({
+        summary: 'Rota utilizada para efetuar login de um ADM.',
+        description: `Poderá estar sendo utilizada esta rota para realizar
+        a operação de login de um administrador.
+        
+        token: string`
+    })
+    @ApiResponse({status: 500, description: 'Erro interno.'})
+    @ApiResponse({status: 200, description: 'Resposta de sucesso.'})
+    async handle(@Req() {headers}: Request, @Body() {email, password}: any) {
+        try {
+            const userAgent = headers['user-agent'];
+            const authAdmTokenResult = await this.authAdmService
+            .execute(email, password, userAgent);
+            if(!authAdmTokenResult) 
+                throw new ExpectedHttpError('token not created.', 
+                HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (error) {
+            if(error instanceof ExpectedHttpError) 
+                this.logger.error(`Expected controller adm login error: ${error}`);
+            this.logger.error(`Houve um erro no controlador de login ADM: ${error}`)
+        }
     }
 }

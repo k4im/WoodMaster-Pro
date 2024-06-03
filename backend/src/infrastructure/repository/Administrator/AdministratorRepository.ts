@@ -45,7 +45,7 @@ export default class AdministratorRepository implements IAdministratorRepository
                 total_itens: result[1],
                 total_paginas: Math.ceil(result[1] / limit),
                 resultados: result[0].map(admin => {
-                    const adminReturn: IAdmin = {Email: admin.EmailAddr, 
+                    const adminReturn: IAdmin = {Uuid:admin.Uuid, Email: admin.EmailAddr, 
                         IsActive: admin.IsActive}
                     return adminReturn;})
             }
@@ -74,7 +74,7 @@ export default class AdministratorRepository implements IAdministratorRepository
                 HttpStatus.NOT_FOUND);
             } 
             await this.database.closeConnection(db);
-            return {Email: result.EmailAddr, 
+            return {Uuid: result.Uuid, Email: result.EmailAddr, 
                     IsActive: result.IsActive}
         } catch (error) {
             this.logger.error(`Houve um erro ao realizar
@@ -102,7 +102,7 @@ export default class AdministratorRepository implements IAdministratorRepository
                 HttpStatus.NOT_FOUND)
             }
             await this.database.closeConnection(db);
-            return {Email: administrator.EmailAddr, IsActive: administrator.IsActive,
+            return {Uuid: administrator.Uuid, Email: administrator.EmailAddr, IsActive: administrator.IsActive,
                 Password: administrator.HashPassword
             }
         } catch (error) {

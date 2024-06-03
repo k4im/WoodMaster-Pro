@@ -12,5 +12,4 @@ import { newTenantDto } from "src/application/dto/ITenant.dto";
 export class tenantSwaggerDocs implements newTenantDto {
     @ApiProperty()
     Name: string;
-
 }

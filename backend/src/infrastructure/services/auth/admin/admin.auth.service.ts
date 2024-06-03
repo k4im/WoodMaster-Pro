@@ -32,13 +32,13 @@ export default class AdmAuthService implements AuthAbstraction {
      * @param pwd senha para verificação.
      * @returns Token
      */
-    async login(email: string, pwd: string): Promise<string> {
+    async login(email: string, pwd: string, userAgent: string): Promise<string> {
         const admin = await this.admRepository.getAdministratorByEmail(email);
         if(!admin) 
             throw new Error("Administrator not founded.")
         
         if(await this.checkPassword(pwd, admin.Password)) {
-            const payload = {email: email}
+            const payload = {email: admin.Email, userAgent: userAgent}
             return this.jwt.encodeJwt(payload);
         }
         

@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import IJwtService from "./IJwtService";
 import { JwtService } from "@nestjs/jwt";
+import { Email } from "src/domain/valueObjects/emailVo/email.value.object";
 
 @Injectable()
 export default class JwtCustomService implements IJwtService {
@@ -55,8 +56,7 @@ export default class JwtCustomService implements IJwtService {
         }
         const payload = {
             Uuid: data.Uuid,
-            Role: data.Role,
-            Permissons: data.Permissions,
+            Email: data.email,
             UserAgent: data.UserAgent,
         }
         return payload;
