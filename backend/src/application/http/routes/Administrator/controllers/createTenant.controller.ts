@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Inject, Post, Query } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { ICommandInterface } from "../../Abstrations/ICoomands.interface";
 import { newTenantDto } from "src/application/dto/ITenant.dto";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { Response } from "express";
-import { tenantSwaggerDocs } from "../docs/newTenant.swagger.doc";
+import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
+import { ICommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { tenantSwaggerDocs } from "src/domain/agregrators/usecases/administrator/docs/newTenant.swagger.doc";
 
 @ApiTags('admin')
 @Controller('admin')

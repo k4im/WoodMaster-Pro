@@ -2,11 +2,11 @@ import { Controller, Get, Inject, Query } from "@nestjs/common";
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { IResponse } from "src/application/dto/IResponse.interface";
 import { IPersonDto } from "src/application/dto/Person.dto";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { Response } from "express";
-import { ICommandInterfacePaginate } from "src/application/usecases/Abstrations/ICoomands.interface";
-import { ParamsPaginate } from "src/application/usecases/Abstrations/ParamsPaginate.interface";
-import { ResponseSwaggerDoc } from "src/application/usecases/administrator/docs/response.swagger.doc";
+import { ICommandInterfacePaginate } from "../../../Abstrations/ICoomands.interface";
+import { ParamsPaginate } from "../../../Abstrations/ParamsPaginate.interface";
+import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
+import { ResponseSwaggerDoc } from "../../../administrator/docs/response.swagger.doc";
 
 @Controller('establishment')
 @ApiTags('establishment')

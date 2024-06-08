@@ -2,8 +2,8 @@ import { Body, Controller, Inject, Param, Put } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
+import { ICommandInterface } from "../../../Abstrations/ICoomands.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ICommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
 @ApiTags('establishment')

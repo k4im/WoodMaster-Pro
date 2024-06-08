@@ -1,6 +1,6 @@
 import { Inject } from "@nestjs/common";
-import { ISingleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 import IPersonRepository from "src/infrastructure/repository/abstraction/IPersonRepository.interface";
+import { ISingleCommandInterface } from "../../../Abstrations/ICoomands.interface";
 
 export default class deactivateCollaboratorUseCase implements ISingleCommandInterface<boolean> {
     constructor(

@@ -2,9 +2,9 @@ import { Inject } from "@nestjs/common";
 import { IResponse } from "src/application/dto/IResponse.interface";
 import { IPersonDto } from "src/application/dto/Person.dto";
 import { filter } from "src/application/enum/filter.enum";
-import { ICommandInterfacePaginate } from "src/application/usecases/Abstrations/ICoomands.interface";
-import { ParamsPaginate } from "src/application/usecases/Abstrations/ParamsPaginate.interface";
 import IPersonRepository from "src/infrastructure/repository/abstraction/IPersonRepository.interface";
+import { ICommandInterfacePaginate } from "../../../Abstrations/ICoomands.interface";
+import { ParamsPaginate } from "../../../Abstrations/ParamsPaginate.interface";
 
 export default class PaginateCollaboratorsUseCase implements ICommandInterfacePaginate<ParamsPaginate, IResponse<IPersonDto>>  {
     constructor(

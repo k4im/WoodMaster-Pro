@@ -1,11 +1,8 @@
 import { Body, Controller, HttpStatus, Inject, Post, Req } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { stat } from "fs";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
-import AuthAbstraction from "src/infrastructure/services/auth/abstrations/AuthAbstrancion";
-import AdmAuthService from "src/infrastructure/services/auth/admin/admin.auth.service";
-import { IAuthCommand } from "../../Abstrations/ICoomands.interface";
+import { IAuthCommand } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
 @Controller('admin')
 @ApiTags('admin')

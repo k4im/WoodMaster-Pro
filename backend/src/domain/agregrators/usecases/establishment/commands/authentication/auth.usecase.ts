@@ -1,6 +1,6 @@
 import { Inject } from "@nestjs/common";
-import { IAuthCommand } from "src/application/usecases/Abstrations/ICoomands.interface";
 import AuthAbstraction from "src/infrastructure/services/auth/abstrations/AuthAbstrancion";
+import { IAuthCommand } from "../../../Abstrations/ICoomands.interface";
 
 export default class AuthUseCase implements IAuthCommand { 
 

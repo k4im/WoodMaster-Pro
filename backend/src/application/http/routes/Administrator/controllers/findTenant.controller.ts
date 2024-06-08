@@ -1,10 +1,10 @@
 import {Controller, Get, Inject, Query } from "@nestjs/common";
-import { ISingleCommandInterface } from "../../Abstrations/ICoomands.interface";
 import { ITenantDto } from "src/application/dto/ITenant.dto";
 import { Response } from "express";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import TenantDomainEntity from "src/domain/entities/tenant.domain";
+import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 
 @Controller("admin")
 @ApiTags("admin")

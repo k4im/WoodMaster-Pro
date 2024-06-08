@@ -2,9 +2,9 @@ import { Controller, Get, Inject, Param } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { IPersonDto } from "src/application/dto/Person.dto";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ISingleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 import PersonDomainEntity from "src/domain/entities/person.domain";
+import { ISingleCommandInterface } from "../../../Abstrations/ICoomands.interface";
+import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 
 @Controller('establishment')
 @ApiTags('establishment')

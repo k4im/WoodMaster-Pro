@@ -1,8 +1,8 @@
 import { Controller, Inject, Param, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { ISimpleCommandInterface } from "../../Abstrations/ICoomands.interface";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { Response } from "express";
+import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
+import { ISimpleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
 @Controller('admin')
 @ApiTags('admin')
