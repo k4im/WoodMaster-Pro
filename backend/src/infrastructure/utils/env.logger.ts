@@ -9,23 +9,19 @@
  */
 
 import { Inject } from "@nestjs/common";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-
+const signale = require('signale');
 export default class EnvLogger {
-    constructor(
-        @Inject("LoggerGateway")
-        private readonly logger: LoggerGateway
-    ) { }
+    constructor() {}
 
     Log() {
-        this.logger.log("MY ENV VARS: ")
-        this.logger.log("==================================")
-        this.logger.log('DB HOST: ' + process.env.HOST);
-        this.logger.log('DB PORT: ' + process.env.PORT_DB);
-        this.logger.log('DB USER: ' + process.env.USER_DB);
-        this.logger.log('DB NAME: ' + process.env.DB_NAME);
-        this.logger.log('PORT_APP: ' + process.env.PORT_APP);
-        this.logger.log("==================================")
+        signale.star("MY ENV VARS: ")
+        signale.star("==================================")
+        signale.info('DB HOST: ' + process.env.HOST);
+        signale.info('DB PORT: ' + process.env.PORT_DB);
+        signale.info('DB USER: ' + process.env.USER_DB);
+        signale.info('DB NAME: ' + process.env.DB_NAME);
+        signale.info('PORT_APP: ' + process.env.PORT_APP);
+        signale.star("==================================")
     
     }
 }

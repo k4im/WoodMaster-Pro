@@ -12,7 +12,7 @@ async function bootstrap() {
 
   let logger = new CustomLogger();
   const app = await NestFactory.create(AppModule);
-  const envLogger = new EnvLogger(logger);
+  const envLogger = new EnvLogger();
 
     
   const config = new DocumentBuilder()
