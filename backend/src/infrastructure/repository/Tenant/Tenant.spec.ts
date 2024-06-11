@@ -4,7 +4,7 @@ import { DatabaseInMemory } from "src/infrastructure/database/databaseInMemory.s
 import { FakeLogger } from "src/infrastructure/logger/Fakelogger.service";
 import * as fs from 'fs';
 import * as path from 'path';
-import { ITenantDto } from "src/application/dto/ITenant.dto";
+import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
 
 
 describe("tenant", () => {

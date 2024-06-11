@@ -18,6 +18,7 @@ export default class CreateCollaboratorController {
         @Inject("LoggerGateway") 
         private readonly logger: LoggerGateway
     ){}
+    
     @Post('collaborator/:tenantId')
     @ApiOperation({
         summary: `Rota utilizada para realizar a criação de colaboradores.`,

@@ -1,6 +1,7 @@
-import CollaboratorDto from "src/application/dto/collaborator.dto";
+import { Inject, Injectable } from "@nestjs/common";
 import { ICommandCreatePerson, ICommandInterface } from "../../../Abstrations/ICoomands.interface";
-import { Inject } from "@nestjs/common";
+import SupllierDto from "src/application/dto/supplier.dto";
+import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import IPersonRepository from "src/infrastructure/repository/abstraction/IPersonRepository.interface";
 import PersonDomainEntity from "src/domain/entities/person.domain";
 import { Name } from "src/domain/valueObjects/nameVo/name.value.object";
@@ -8,15 +9,19 @@ import { Email } from "src/domain/valueObjects/emailVo/email.value.object";
 import { Cpf } from "src/domain/valueObjects/cpfVo/cpf.value.object";
 import { RgDocument } from "src/domain/valueObjects/rgVo/rg.value.object";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
-import { decode } from 'jsonwebtoken';
 
-export default class createCollaboratorUseCase implements ICommandCreatePerson<CollaboratorDto, Tenant> {
+@Injectable()
+export default class CreateSupplierUseCase implements ICommandCreatePerson<SupllierDto, Tenant> {
     constructor(
-        @Inject("IPersonRepository") private readonly personRepository: IPersonRepository) { }
+        @Inject("LoggerGateway")
+        private readonly Logger: LoggerGateway,
+        @Inject("IPersonRepository")
+        private readonly repo: IPersonRepository
+    ) {}
 
-    async execute(data: CollaboratorDto, other: Tenant): Promise<boolean> {
+    async execute(data: SupllierDto, other: Tenant): Promise<boolean> {
         try {
-            const collaborator = new PersonDomainEntity(
+            const person = new PersonDomainEntity(
                 new Name(data.Name.FirsName, data.Name.LastName),
                 new Email(data.Email.email),
                 data.Addresses, data.Phones,
@@ -24,13 +29,12 @@ export default class createCollaboratorUseCase implements ICommandCreatePerson<C
                 new Name(data.MothersName.FirsName, data.MothersName.LastName),
                 new Cpf(data.Cpf.value),
                 new RgDocument(data.Rg.value),
-                false, false, false,
-                data.IsCollaborator);
-                collaborator.setTenant(other)
-            const result = await this.personRepository.createPerson(collaborator);
-            return result;
+                false, data.IsSupplier, false, false
+            );
+            person.setTenant(other);
+            return await this.repo.createPerson(person);
         } catch (error) {
-            console.log(`Houve um erro: ${error}`)
+            this.Logger.error(`Houve um erro no usecase de supplier: ${error}`);  
         }
     }
 

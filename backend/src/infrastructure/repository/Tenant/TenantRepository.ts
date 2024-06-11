@@ -3,9 +3,9 @@ import ITenantRepository from "../abstraction/ITenantRepository.interface";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
-import { ITenantDto } from "src/application/dto/ITenant.dto";
-import { IResponse } from "src/application/dto/IResponse.interface";
 import { Stock } from "src/infrastructure/database/models/Stock.entity";
+import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
+import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
 
 export default class TenantRepository implements ITenantRepository {
     constructor(

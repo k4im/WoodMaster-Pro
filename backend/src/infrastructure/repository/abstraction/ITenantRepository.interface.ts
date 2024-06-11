@@ -1,5 +1,6 @@
-import { IResponse } from "src/application/dto/IResponse.interface";
-import { ITenantDto } from "src/application/dto/ITenant.dto";
+
+import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
+import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 
 export default interface ITenantRepository {

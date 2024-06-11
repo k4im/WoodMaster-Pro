@@ -1,12 +1,12 @@
 import { HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { IAdministratorRepository } from "../abstraction/IAdministratorRepository.interface";
-import { IResponse } from "src/application/dto/IResponse.interface";
 import Administrator  from "src/domain/entities/admin.domain.entity";
 import * as adm from 'src/infrastructure/database/models/Administrator.entity';
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { IAdmin } from "src/application/dto/IAdm.dto";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
+import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
+import { IAdmin } from "src/application/dto/interfaces/IAdm.dto";
 
 @Injectable()
 export default class AdministratorRepository implements IAdministratorRepository {

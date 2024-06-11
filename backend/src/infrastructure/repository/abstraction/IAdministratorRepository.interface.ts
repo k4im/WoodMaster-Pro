@@ -7,8 +7,8 @@
  * @author João Victor
  */
 
-import { IAdmin } from "src/application/dto/IAdm.dto";
-import { IResponse } from "src/application/dto/IResponse.interface";
+import { IAdmin } from "src/application/dto/interfaces/IAdm.dto";
+import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import Administrator from "src/domain/entities/admin.domain.entity";
 
 export interface IAdministratorRepository {

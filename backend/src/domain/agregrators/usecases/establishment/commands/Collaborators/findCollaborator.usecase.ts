@@ -1,7 +1,8 @@
 import { ISingleCommandInterface } from "../../../Abstrations/ICoomands.interface";
 import { Inject } from "@nestjs/common";
+import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import IPersonRepository from "src/infrastructure/repository/abstraction/IPersonRepository.interface";
-import { IPersonDto } from "src/application/dto/Person.dto";
+
 
 export default class findCollaboratorUseCase implements ISingleCommandInterface<IPersonDto> {
     constructor(
