@@ -3,10 +3,10 @@ import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { IResponse } from "src/application/dto/IResponse.interface";
 import { IPersonDto } from "src/application/dto/Person.dto";
 import { Response } from "express";
-import { ICommandInterfacePaginate } from "../../../Abstrations/ICoomands.interface";
-import { ParamsPaginate } from "../../../Abstrations/ParamsPaginate.interface";
+import { ICommandInterfacePaginate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ParamsPaginate } from "src/domain/agregrators/usecases/Abstrations/ParamsPaginate.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ResponseSwaggerDoc } from "../../../administrator/docs/response.swagger.doc";
+import { ResponseSwaggerDoc } from "src/domain/agregrators/usecases/administrator/docs/response.swagger.doc";
 
 @Controller('establishment')
 @ApiTags('establishment')

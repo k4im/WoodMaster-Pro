@@ -3,8 +3,8 @@ import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { IPersonDto } from "src/application/dto/Person.dto";
 import PersonDomainEntity from "src/domain/entities/person.domain";
-import { ISingleCommandInterface } from "../../../Abstrations/ICoomands.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
+import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
 @ApiTags('establishment')

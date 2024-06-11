@@ -1,9 +1,9 @@
 import { Body, Controller, Inject, Post, Req } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { IAuthCommand } from "../../Abstrations/ICoomands.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { LoginDTO } from "src/application/dto/login.dto";
 import { Response } from "express";
+import { IAuthCommand } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
 @ApiTags('establishment')

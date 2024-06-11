@@ -7,18 +7,18 @@ import TenantRepository from "src/infrastructure/repository/Tenant/TenantReposit
 import UserRepository from "src/infrastructure/repository/User/UserRepository";
 import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
 import RoleService from "src/infrastructure/services/Role/role.service";
-import EstablishmentLoginController from "./controllers/EstablishmentLogin.controler";
+import EstablishmentLoginController from "src/application/http/routes/establishment/controllers/EstablishmentLogin.controler";
+import ListCollaboratorsController from "src/application/http/routes/establishment/controllers/collaborators/listCollaborators.controller";
+import FindCollaboratorController from "src/application/http/routes/establishment/controllers/collaborators/FindCollaborator.controller";
+import CreateCollaboratorController from "src/application/http/routes/establishment/controllers/collaborators/CreateCollaborator.controller";
+import UpdateCollaboratorController from "src/application/http/routes/establishment/controllers/collaborators/updateCollaborator.controller";
+import DeactiveCollaboratorController from "src/application/http/routes/establishment/controllers/collaborators/DeactivateCollaborator.controller";
 import PaginateCollaboratorsUseCase from "./commands/Collaborators/paginateCollaborator.usecae";
 import PersonRepository from "src/infrastructure/repository/Person/PersonRepository";
 import createCollaboratorUseCase from "./commands/Collaborators/createCollaborator.usecase";
-import ListCollaboratorsController from "./controllers/collaborators/listCollaborators.controller";
-import CreateCollaboratorController from "./controllers/collaborators/CreateCollaborator.controller";
-import FindCollaboratorController from "./controllers/collaborators/FindCollaborator.controller";
 import findCollaboratorUseCase from "./commands/Collaborators/findCollaborator.usecase";
-import UpdateCollaboratorController from "./controllers/collaborators/updateCollaborator.controller";
 import updateCollaboratorUseCase from "./commands/Collaborators/updateCollaborator.usecase";
 import deactivateCollaboratorUseCase from "./commands/Collaborators/deactivateCollaborator.usecase";
-import DeactiveCollaboratorController from "./controllers/collaborators/DeactivateCollaborator.controller";
 
 @Module({
     controllers: [

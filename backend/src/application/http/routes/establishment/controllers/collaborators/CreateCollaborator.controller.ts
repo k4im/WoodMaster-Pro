@@ -4,8 +4,8 @@ import ITenantRepository from "src/infrastructure/repository/abstraction/ITenant
 import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { Response } from "express";
-import { ICommandCreatePerson } from "../../../Abstrations/ICoomands.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
+import { ICommandCreatePerson } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
 @ApiTags('establishment')
