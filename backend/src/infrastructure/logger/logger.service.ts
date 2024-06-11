@@ -1,4 +1,4 @@
-import { ConsoleLogger, Injectable, LoggerService } from '@nestjs/common';
+import { Injectable, LoggerService } from '@nestjs/common';
 import { createLogger, format, transports } from 'winston';
 import { LogLevel } from 'src/application/enum/logger.enum';
 import { LoggerGateway } from 'src/application/ports/out-ports/logger.gateway';
@@ -33,13 +33,16 @@ export class CustomLogger implements LoggerService, LoggerGateway {
         this.logger.warn(`${LogLevel.WARNING}WARN: ${LogLevel.RESET}${message}`)
     }
     debug?(message: any, ...optionalParams: any[]) {
+        signale.debug(`${new Date()} - ${message}`)
         this.logger.debug(`${LogLevel.DEBUG}DEBUG: ${LogLevel.RESET}${message}`)
     }
     verbose?(message: any, ...optionalParams: any[]) {
-        throw new Error('Method not implemented.');
+        signale.info(`${new Date()} - ${message}`)
+        this.logger.info(`${LogLevel.RESET}${message}`)
     }
     fatal?(message: any, ...optionalParams: any[]) {
-        throw new Error('Method not implemented.');
+        signale.fatal(`${new Date()} - ${message}`)
+        this.logger.error(`${LogLevel.RESET}${message}`)
     }
 
 }

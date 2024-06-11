@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Inject, Post, Query } from "@nestjs/common";
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { newTenantDto } from "src/application/dto/interfaces/ITenant.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
@@ -8,6 +8,7 @@ import { tenantSwaggerDocs } from "src/domain/agregrators/usecases/administrator
 
 @ApiTags('admin')
 @Controller('admin')
+@ApiBearerAuth()
 export class CreateTenantController  {
     constructor(
         @Inject('CreateTenant')

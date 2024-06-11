@@ -1,6 +1,6 @@
 import {Controller, Get, Inject, Query } from "@nestjs/common";
 import { Response } from "express";
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import TenantDomainEntity from "src/domain/entities/tenant.domain";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
@@ -8,6 +8,7 @@ import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
 
 @Controller("admin")
 @ApiTags("admin")
+@ApiBearerAuth()
 export default class FindTenantController { 
     
     constructor(

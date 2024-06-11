@@ -1,11 +1,12 @@
 import { Controller, Inject, Param, Post } from "@nestjs/common";
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
 @ApiTags('establishment')
+@ApiBearerAuth()
 export default class DeactiveCollaboratorController { 
     constructor(
         @Inject('deactivateCollab')

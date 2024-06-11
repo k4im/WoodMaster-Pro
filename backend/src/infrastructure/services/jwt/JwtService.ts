@@ -27,9 +27,9 @@ export default class JwtCustomService implements IJwtService {
     async isExpire(token: string): Promise<boolean> {
         try {
             await this.jwtService.verifyAsync(token);
-            return true;
-        } catch (error) {
             return false;
+        } catch (error) {
+            return true;
         }
     }
     /**

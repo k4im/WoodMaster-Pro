@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, Param } from "@nestjs/common";
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import PersonDomainEntity from "src/domain/entities/person.domain";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
@@ -8,6 +8,7 @@ import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 
 @Controller('establishment')
 @ApiTags('establishment')
+@ApiBearerAuth()
 export default class FindCollaboratorController { 
     constructor(
         @Inject("FindCollaborator")

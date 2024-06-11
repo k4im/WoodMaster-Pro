@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, Query } from "@nestjs/common";
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { ICommandInterfacePaginate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import { ParamsPaginate } from "src/domain/agregrators/usecases/Abstrations/ParamsPaginate.interface";
@@ -10,6 +10,7 @@ import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
 
 @Controller('admin')
 @ApiTags('admin')
+@ApiBearerAuth()
 export default class ListTenantsController {
 
     constructor(

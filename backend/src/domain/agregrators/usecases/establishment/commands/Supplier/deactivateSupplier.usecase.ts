@@ -3,7 +3,7 @@ import IPersonRepository from "src/infrastructure/repository/abstraction/IPerson
 import { ISingleCommandInterface } from "../../../Abstrations/ICoomands.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 
-export default class deactivateCollaboratorUseCase implements ISingleCommandInterface<boolean> {
+export default class deactivateSupplierUseCase implements ISingleCommandInterface<boolean> {
     constructor(
         @Inject("IPersonRepository") 
         private readonly personRepository: IPersonRepository,

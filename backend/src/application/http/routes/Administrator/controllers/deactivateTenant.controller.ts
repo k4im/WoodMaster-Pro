@@ -1,11 +1,12 @@
 import { Controller, Inject, Param, Post, Query } from "@nestjs/common";
-import { ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISimpleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
 @Controller('admin')
 @ApiTags('admin')
+@ApiBearerAuth()
 export default class DeactivateTenantController  {
     constructor(
         @Inject("DeactivateTenant")

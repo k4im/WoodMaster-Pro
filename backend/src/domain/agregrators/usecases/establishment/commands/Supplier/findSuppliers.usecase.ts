@@ -17,7 +17,11 @@ export default class FindSupplierUseCase implements ICommandInterfacePaginate<Pa
         private readonly logger: LoggerGateway
     ) {}
 
-    
+    /**
+     * Executa o caso de uso de paginação de supplier.
+     * @param data para paginação. 
+     * @returns 
+     */
     execute(data: ParamsPaginate): Promise<IResponse<IPersonDto>> {
         try {
             return this.repo.paginateResults(data.page, data.limit, data.tenantId, filter.supplier);

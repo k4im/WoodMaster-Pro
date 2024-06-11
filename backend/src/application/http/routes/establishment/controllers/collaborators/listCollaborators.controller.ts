@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, Query } from "@nestjs/common";
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 import { Response } from "express";
 import { ICommandInterfacePaginate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
@@ -11,6 +11,7 @@ import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 
 @Controller('establishment')
 @ApiTags('establishment')
+@ApiBearerAuth()
 export default class ListCollaboratorsController { 
 
     constructor(

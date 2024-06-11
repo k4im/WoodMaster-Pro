@@ -6,7 +6,7 @@ import { Name } from "src/domain/valueObjects/nameVo/name.value.object";
 import { Phone } from "src/domain/valueObjects/phone.value.object";
 import { RgDocument } from "src/domain/valueObjects/rgVo/rg.value.object";
 
-export default class SupllierDto {
+export default class SupplierDto {
     @ApiProperty()
     readonly Name: Name;
     @ApiProperty()
