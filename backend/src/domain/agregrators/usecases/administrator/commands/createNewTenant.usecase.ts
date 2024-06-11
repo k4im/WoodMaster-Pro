@@ -1,6 +1,6 @@
-import { newTenantDto } from "src/application/dto/ITenant.dto";
 import { ICommandInterface } from "../../Abstrations/ICoomands.interface";
 import { Inject } from "@nestjs/common";
+import { newTenantDto } from "src/application/dto/interfaces/ITenant.dto";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 
 export default class createNewTenantUsecase implements ICommandInterface<newTenantDto> {

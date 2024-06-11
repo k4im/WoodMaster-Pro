@@ -1,7 +1,10 @@
-import { LoginDTO } from "src/application/dto/login.dto";
+import { LoginDTO } from "src/application/dto/interfaces/login.dto";
 
 export interface ICommandCreatePerson<T, U> {
     execute(data: T, other: U): Promise<boolean>; 
+}
+export interface ICommandInterfaceUpdate<T> {
+    execute(data: T, uuid:string): Promise<boolean>; 
 }
 
 export interface ICommandInterface<T> {

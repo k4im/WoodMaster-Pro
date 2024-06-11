@@ -7,7 +7,7 @@
  */
 
 import { ApiProperty } from "@nestjs/swagger";
-import { newTenantDto } from "src/application/dto/ITenant.dto";
+import { newTenantDto } from "src/application/dto/interfaces/ITenant.dto";
 
 export class tenantSwaggerDocs implements newTenantDto {
     @ApiProperty()

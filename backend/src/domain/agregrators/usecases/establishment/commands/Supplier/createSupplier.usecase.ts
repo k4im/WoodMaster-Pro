@@ -21,7 +21,7 @@ export default class CreateSupplierUseCase implements ICommandCreatePerson<Supll
 
     async execute(data: SupllierDto, other: Tenant): Promise<boolean> {
         try {
-            const person = new PersonDomainEntity(
+            const supplier = new PersonDomainEntity(
                 new Name(data.Name.FirsName, data.Name.LastName),
                 new Email(data.Email.email),
                 data.Addresses, data.Phones,
@@ -31,8 +31,8 @@ export default class CreateSupplierUseCase implements ICommandCreatePerson<Supll
                 new RgDocument(data.Rg.value),
                 false, data.IsSupplier, false, false
             );
-            person.setTenant(other);
-            return await this.repo.createPerson(person);
+            supplier.setTenant(other);
+            return await this.repo.createPerson(supplier);
         } catch (error) {
             this.Logger.error(`Houve um erro no usecase de supplier: ${error}`);  
         }

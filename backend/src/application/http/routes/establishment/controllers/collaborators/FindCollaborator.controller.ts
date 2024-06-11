@@ -1,10 +1,10 @@
 import { Controller, Get, Inject, Param } from "@nestjs/common";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
-import { IPersonDto } from "src/application/dto/Person.dto";
 import PersonDomainEntity from "src/domain/entities/person.domain";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 
 @Controller('establishment')
 @ApiTags('establishment')

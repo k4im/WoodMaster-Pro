@@ -8,7 +8,7 @@
  */
 
 import { ApiProperty } from "@nestjs/swagger";
-import { IResponse } from "src/application/dto/IResponse.interface";
+import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 
 export class ResponseSwaggerDoc implements IResponse<Tenant> {
