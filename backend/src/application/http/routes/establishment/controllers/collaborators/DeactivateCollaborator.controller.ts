@@ -1,6 +1,7 @@
-import { Controller, Inject, Param, Post } from "@nestjs/common";
+import { Controller, Inject, Param, Post, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
+import AuthMiddleware from "src/application/http/middlewares/auth.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
@@ -16,6 +17,7 @@ export default class DeactiveCollaboratorController {
     ) {}
     
     @Post('collaborator/:tenantId/deactivate/:uuid')
+    @UseGuards(AuthMiddleware)
     @ApiParam({name: 'uuid', 
     description: `UUID do colaborador que deseja desativar.`})
     @ApiParam({name: 'tenantId', 

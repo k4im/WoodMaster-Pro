@@ -1,10 +1,11 @@
-import { Controller, Get, Inject, Param } from "@nestjs/common";
+import { Controller, Get, Inject, Param, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import PersonDomainEntity from "src/domain/entities/person.domain";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
+import AuthMiddleware from "src/application/http/middlewares/auth.guard";
 
 @Controller('establishment')
 @ApiTags('establishment')
@@ -19,6 +20,7 @@ export default class FindCollaboratorController {
     ) {}
 
     @Get("collaborator/:tenantId/:uuid")
+    @UseGuards(AuthMiddleware)
     @ApiOperation({
         summary: 'A rota poderá ser utilizada para busca de um colaborador.',
         description: `Poderá estar realizando acesso a determinado colaborador

@@ -1,22 +1,30 @@
-import { CanActivate, ExecutionContext, Inject, Injectable } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
+import { CanActivate, ExecutionContext, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { Request } from "express";
-import { Observable } from "rxjs";
-import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
-
+import IJwtService from "src/infrastructure/services/jwt/IJwtService";
+import ExpectedHttpError from "src/application/types/expectedhttp.error";
 @Injectable()
 export default class AuthMiddleware implements CanActivate {
+    
     constructor(
-        @Inject("JwtService")
-        private readonly service: JwtCustomService
-    )   {}
+        @Inject("IJwtService")
+        private readonly service: IJwtService
+    ){}
+
     async canActivate(context: ExecutionContext):  Promise<boolean> {
         const request = context.switchToHttp().getRequest<Request>();
         const { authorization } = request.headers;
-        if(!authorization)
+        const {TenantId} = this.service.decodeJwt(authorization) as any;
+        
+        if(TenantId !== request.params.tenantId)
             return false;
+        
+        if(!authorization)
+            throw new ExpectedHttpError('Token not informed.', 
+            HttpStatus.UNAUTHORIZED);
+            
         if(this.service.isExpire(authorization))
             return false;
+
         return true;
     } 
     

@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Param, Post } from "@nestjs/common";
+import { Body, Controller, Inject, Param, Post, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
@@ -6,6 +6,7 @@ import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandCreatePerson } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import AuthMiddleware from "src/application/http/middlewares/auth.guard";
 
 @Controller('establishment')
 @ApiTags('establishment')
@@ -21,6 +22,7 @@ export default class CreateCollaboratorController {
     ){}
     
     @Post('collaborator/:tenantId')
+    @UseGuards(AuthMiddleware)
     @ApiOperation({
         summary: `Rota utilizada para realizar a criação de colaboradores.`,
         description: `Rota poderá ser utilizada para realizar a criação de novos colaboradores

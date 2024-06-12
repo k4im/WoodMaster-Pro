@@ -1,6 +1,7 @@
-import { Controller, Inject, Param, Post, Query } from "@nestjs/common";
+import { Controller, Inject, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
+import AuthMiddleware from "src/application/http/middlewares/auth.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISimpleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
@@ -16,6 +17,7 @@ export default class DeactivateTenantController  {
     ) {}
 
     @Post('deactivate')
+    @UseGuards(AuthMiddleware)
     @ApiQuery({
         name: 'uuid',
         description: 'deverá ser repassado na rota o uuid do tenant.',

@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Inject, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { newTenantDto } from "src/application/dto/interfaces/ITenant.dto";
+import AuthMiddleware from "src/application/http/middlewares/auth.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import { tenantSwaggerDocs } from "src/domain/agregrators/usecases/administrator/docs/newTenant.swagger.doc";
@@ -18,6 +19,7 @@ export class CreateTenantController  {
     ) {}
 
     @Post('tenant')
+    @UseGuards(AuthMiddleware)
     @ApiOperation({
         summary: 'Rota utilizada para criação de um novo tenant.',
         description: `Está rota poderá ser utilizado para efetuar a criação de

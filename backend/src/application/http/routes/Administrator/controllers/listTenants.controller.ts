@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query } from "@nestjs/common";
+import { Controller, Get, Inject, Query, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { ICommandInterfacePaginate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
@@ -7,6 +7,7 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ResponseSwaggerDoc } from "src/domain/agregrators/usecases/administrator/docs/response.swagger.doc";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
+import AuthMiddleware from "src/application/http/middlewares/auth.guard";
 
 @Controller('admin')
 @ApiTags('admin')
@@ -23,6 +24,7 @@ export default class ListTenantsController {
     ) {}
     
     @Get('tenants')
+    @UseGuards(AuthMiddleware)
     @ApiOperation({
         summary: `Efetua a busca de tenants que encontram-se cadastrados no banco de dados.`,
         description: `Estará realizando a busca de tenants que encontram-se presente no banco

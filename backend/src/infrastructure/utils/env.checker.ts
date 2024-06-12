@@ -12,7 +12,9 @@ class EnvChecker  {
         if(!process.env.DB_NAME)
           throw Error('É necessário especificar o nome do banco')
         if(!process.env.PORT_APP) 
-          throw Error("A porta do app precisa ser definida")      
+          throw Error("A porta do app precisa ser definida")
+        if(!process.env.SECRET_KEY)
+          throw Error('Secret key not informed.')      
     }
 }
 
