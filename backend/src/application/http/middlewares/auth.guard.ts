@@ -11,11 +11,12 @@ export default class AuthMiddleware implements CanActivate {
     ){}
 
     async canActivate(context: ExecutionContext):  Promise<boolean> {
+        // busca a request
         const request = context.switchToHttp().getRequest<Request>();
         const { authorization } = request.headers;
-        const {TenantId} = this.service.decodeJwt(authorization) as any;
+        const {Tenant} = await this.service.decodeJwt(authorization);
         
-        if(TenantId !== request.params.tenantId)
+        if(Tenant !== request.params.tenantId)
             return false;
         
         if(!authorization)

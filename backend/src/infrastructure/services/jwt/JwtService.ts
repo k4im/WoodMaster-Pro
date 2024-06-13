@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import IJwtService from "./IJwtService";
 import { JwtService } from "@nestjs/jwt";
 import { Email } from "src/domain/valueObjects/emailVo/email.value.object";
+import { jwtDecoded } from "src/application/dto/interfaces/jwtDecoded.dto";
 
 @Injectable()
 export default class JwtCustomService implements IJwtService {
@@ -15,8 +16,8 @@ export default class JwtCustomService implements IJwtService {
      * @param token recebe o token para decodificação
      * @returns string
      */
-    async decodeJwt(token: string): Promise<string> {
-        return this.jwtService.decode<string>(token);
+    async decodeJwt(token: string): Promise<jwtDecoded> {
+        return this.jwtService.decode<jwtDecoded>(token);
     }
 
     /**
