@@ -21,22 +21,22 @@ describe("jwt", () => {
     });
     
     it("Deve criar um jwt valido", async () => {
-        const data = {Uuid: 'asdasd', Role: 'admin', Permissions: ['read', 'create', 'update', 'remove']};
+        const data = {Uuid: 'asdasd', Role: 'admin'};
         const token = await service.encodeJwt(data);
         expect(typeof(token)).toBe('string')
     });
 
     it("Deve retornar false para um token expirado", async() => {
-        const data = {Uuid: 'asdasd', Role: 'admin', Permissions: ['read', 'create', 'update', 'remove']};
+        const data = {Uuid: 'asdasd', Role: 'admin'};
         const token = await service.encodeJwt(data);
         await new Promise(resolve => setTimeout(resolve, 3000));
-        expect(await service.isExpire(token)).toBe(false);
+        expect(await service.isExpire(token)).toBe(true);
     });
     
     it("Deve retornar true para um token valido", async() => {
-        const data = {Uuid: 'asdasd', Role: 'admin', Permissions: ['read', 'create', 'update', 'remove']};
+        const data = {Uuid: 'asdasd', Role: 'admin'};
         const token = await service.encodeJwt(data);
-        expect(await service.isExpire(token)).toBe(true);
+        expect(await service.isExpire(token)).toBe(false);
     });
     
 })

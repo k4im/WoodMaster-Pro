@@ -24,7 +24,7 @@ export default class UserRepository implements IUserRespository {
         try {
             const db = await this.database.getDataSource();
             const result = await db.getRepository(User).findOne({
-                relations: ["Role", "Role.Permissions", "Tenant"],
+                relations: ["Role", "Tenant"],
                 where: { EmailAddr: email }
             });
             await this.database.closeConnection(db);
@@ -34,7 +34,6 @@ export default class UserRepository implements IUserRespository {
                 Role: result.Role.Name,
                 Hash: result.HashPassword, 
                 Tenant: result.Tenant.Uuid,
-                Permissions: result.Role.Permissions.map(perm => perm.Action)
             }
             return valueReturn;
         } catch (error) {
@@ -52,7 +51,7 @@ export default class UserRepository implements IUserRespository {
         try {
             const db = await this.database.getDataSource();
             const result = await db.getRepository(User).findOne({
-                relations: ["Role", "Role.Permissions", 'Tenant'],
+                relations: ["Role", 'Tenant'],
                 where: { Uuid: uuid, Tenant: { Uuid: tenantId } }
             });
             await this.database.closeConnection(db);
@@ -61,7 +60,6 @@ export default class UserRepository implements IUserRespository {
                 Email: result.EmailAddr, IsActive: result.IsActive,
                 Role: result.Role.Name,
                 Tenant: result.Tenant.Uuid,
-                Permissions: result.Role.Permissions.map(perm => perm.Action)
             };
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca por UUID.... [UserRespository]: ${error}`);
@@ -86,9 +84,9 @@ export default class UserRepository implements IUserRespository {
                 select: { 
                     Id: true, Uuid: true, 
                     EmailAddr: true, IsActive: true, 
-                    Role: { Name: true, Permissions: { Id: true, Action: true } }, 
+                    Role: { Name: true}, 
                     Tenant: {} },
-                relations: ['Tenant', 'Role', 'Role.Permissions'],
+                relations: ['Tenant', 'Role'],
                 where: { Tenant: { Uuid: tenantId } },
                 skip: pages,
                 take: limit
@@ -105,7 +103,6 @@ export default class UserRepository implements IUserRespository {
                         Email: user.EmailAddr,
                         IsActive: user.IsActive,
                         Role: user.Role.Name,
-                        Permissions: user.Role.Permissions.map(perm => perm.Action),
                     };
                     return userDto;
                 })

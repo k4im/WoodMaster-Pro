@@ -17,15 +17,17 @@ export default class AuthMiddleware implements CanActivate {
         const {Tenant} = await this.service.decodeJwt(authorization);
         
         if(Tenant !== request.params.tenantId)
-            return false;
+            throw new ExpectedHttpError('Cannot acess data from another tenant.', 
+            HttpStatus.FORBIDDEN);
         
         if(!authorization)
             throw new ExpectedHttpError('Token not informed.', 
             HttpStatus.UNAUTHORIZED);
             
         if(this.service.isExpire(authorization))
-            return false;
-
+            throw new ExpectedHttpError('Token expired.', 
+                HttpStatus.UNAUTHORIZED);
+    
         return true;
     } 
     

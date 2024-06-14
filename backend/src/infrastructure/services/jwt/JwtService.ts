@@ -49,15 +49,16 @@ export default class JwtCustomService implements IJwtService {
             const payload = {
                 Uuid: data.Uuid,
                 Role: data.Role,
-                Permissons: data.Permissions,
                 Tenant: data.Tenant,
-                UserAgent: data.UserAgent
+                UserAgent: data.UserAgent,
+                Email: data.Email
             }
             return payload;    
         }
         const payload = {
             Uuid: data.Uuid,
             Email: data.email,
+            Role: 'root',
             UserAgent: data.UserAgent,
         }
         return payload;

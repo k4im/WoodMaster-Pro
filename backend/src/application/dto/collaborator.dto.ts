@@ -23,7 +23,9 @@ export default class CollaboratorDto {
     readonly Cpf: Cpf
     @ApiProperty()
     readonly Rg: RgDocument
-    
+    @ApiProperty()
+    readonly Tenant?: string
+
     readonly IsCollaborator: boolean = true
 
     constructor(
@@ -35,6 +37,7 @@ export default class CollaboratorDto {
         mothersName: Name,
         cpf: Cpf,
         rg: RgDocument,
+        tenant?: string
     ) {
          this.Name = name;
          this.Email = email
@@ -44,6 +47,7 @@ export default class CollaboratorDto {
          this.MothersName = mothersName;
          this.Cpf = cpf
          this.Rg = rg
+         this.Tenant = tenant
     }
 
 }

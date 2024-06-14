@@ -32,6 +32,6 @@ export class RolesMiddleware implements CanActivate {
             return true;
 
         // verifica se os papeis do token possuem o papel repassado.
-        return requiredRoles.every((role) => Role.includes(role));
+        return requiredRoles.some((role) => Role.includes(role));
     }
 }

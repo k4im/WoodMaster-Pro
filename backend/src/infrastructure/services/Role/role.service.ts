@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { Permissions } from "src/infrastructure/database/models/Permissions.entity";
 import { Role } from "src/infrastructure/database/models/Role.entity";
 import RoleDomainEntity from "src/domain/entities/role.domain";
 import { EntityManager } from "typeorm";
@@ -19,10 +18,8 @@ export default class RoleService implements IRoleService  {
     async getOrCreateRole(manager: EntityManager, roleData: RoleDomainEntity): Promise<Role> {
         const roleFromDatabase = await manager.getRepository(Role).findOneBy({ Name: roleData.getName() }); 
         if (!roleFromDatabase) {
-            const permissions = await this.createPermissions(manager, roleData.getActionPermissions());
             const newRole = manager.getRepository(Role).create({
                 Name: roleData.getName(),
-                Permissions: permissions
             });
     
             await manager.getRepository(Role).save(newRole);
@@ -32,13 +29,4 @@ export default class RoleService implements IRoleService  {
         }
     }
 
-    private async createPermissions(manager: EntityManager, actionPermissions: string[]): Promise<Permissions[]> {
-        return await Promise.all(actionPermissions.map(async (action) => {
-            const perm = manager.getRepository(Permissions).create({
-                Action: action
-            });
-            const permSaved = await manager.getRepository(Permissions).save(perm);
-            return permSaved;
-        }));
-    }
 }

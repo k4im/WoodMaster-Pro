@@ -4,7 +4,7 @@ import RoleDomainEntity from "./role.domain";
 import Password from "../valueObjects/PasswordVo/password.value.object";
 
 export default class UserDomanEntity {
-    
+    name: string
     readonly IsActive: boolean = true;
     @ApiProperty({type: Email})
     readonly EmailAddr: Email;
@@ -20,7 +20,7 @@ export default class UserDomanEntity {
         password: string, 
         role: RoleDomainEntity,
         personId: string) {
-        
+            this.name = 'UserDomanEntity'
             this.EmailAddr = email;
             this.Role = role;
             this.Password = new Password(password)

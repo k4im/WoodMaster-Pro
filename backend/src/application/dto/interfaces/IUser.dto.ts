@@ -5,5 +5,4 @@ export interface IUserDto {
     Role: string,
     Hash?: string,
     Tenant?: string,
-    Permissions: string[]
 }
