@@ -5,16 +5,15 @@ import { Request } from "express";
 import AbilityFactory from "src/application/casl/providers/AbillityFactory.provider";
 import { PERMISSION_KEY, subject } from "src/application/decorators/permission.decorator";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
-import IUserRespository from "src/infrastructure/repository/abstraction/IUserRepository.interface";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";
 
 @Injectable()
-export class PermissionMiddleware implements CanActivate {
+export class PermissionGuard implements CanActivate {
     constructor(
         private readonly reflector: Reflector,
+        private readonly abillityFactory: AbilityFactory,        
         @Inject("IJwtService")
         private readonly service: IJwtService,
-        private readonly abillityFactory: AbilityFactory,        
     ) {}
     
     async canActivate(context: ExecutionContext):  Promise<boolean>  {

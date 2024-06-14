@@ -7,7 +7,7 @@ import SupplierDto from  'src/application/dto/supplier.dto';
 import { Request, Response } from "express";
 import {decode} from 'jsonwebtoken'
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import AuthMiddleware from "src/application/http/middlewares/auth.guard";
+import AuthGuard from "src/application/http/guards/auth.guard";
 
 
 @Controller('establishment')
@@ -24,7 +24,7 @@ export default class CreateSupplierController {
     ){}
 
     @Post('/:tenantId/supplier')
-    @UseGuards(AuthMiddleware)
+    @UseGuards(AuthGuard)
     @ApiOperation({
         summary: 'Rota utilizada para realizar a criação de um fornecedor.',
         description: `Rota poderá ser utilizada para realizar a operação de criação

@@ -4,9 +4,7 @@ import { Request, Response } from "express";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
-import {decode} from 'jsonwebtoken';
-import ExpectedHttpError from "src/application/types/expectedhttp.error";
-import AuthMiddleware from "src/application/http/middlewares/auth.guard";
+import AuthGuard from "src/application/http/guards/auth.guard";
 
 
 @Controller('establishment')
@@ -22,7 +20,7 @@ export default class UpdateCollaboratorController {
     ) {}
 
     @Put('collaborator/:tenantId/:uuid')
-    @UseGuards(AuthMiddleware)
+    @UseGuards(AuthGuard)
     @ApiOperation({
         summary: 'Rota utilizada para atualizar um colaborador.',
         description: `A rota poderá ser utilizada para efetuar

@@ -5,7 +5,7 @@ import TenantDomainEntity from "src/domain/entities/tenant.domain";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
-import AuthMiddleware from "src/application/http/middlewares/auth.guard";
+import AuthGuard from "src/application/http/guards/auth.guard";
 
 @Controller("admin")
 @ApiTags("admin")
@@ -19,7 +19,7 @@ export default class FindTenantController {
     private readonly Logger: LoggerGateway) {}
     
     @Get('tenant')
-    @UseGuards(AuthMiddleware)
+    @UseGuards(AuthGuard)
     @ApiOperation({
         summary: 
         'A rota poderá ser utilizada para efetuar a consulta de um tenant existente',

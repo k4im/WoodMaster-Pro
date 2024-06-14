@@ -6,7 +6,7 @@ import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandCreatePerson } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
-import AuthMiddleware from "src/application/http/middlewares/auth.guard";
+import AuthGuard from "src/application/http/guards/auth.guard";
 
 @Controller('establishment')
 @ApiTags('establishment')
@@ -22,7 +22,7 @@ export default class CreateCollaboratorController {
     ){}
     
     @Post('collaborator/:tenantId')
-    @UseGuards(AuthMiddleware)
+    @UseGuards(AuthGuard)
     @ApiOperation({
         summary: `Rota utilizada para realizar a criação de colaboradores.`,
         description: `Rota poderá ser utilizada para realizar a criação de novos colaboradores

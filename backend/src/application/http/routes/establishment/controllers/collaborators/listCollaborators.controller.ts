@@ -8,7 +8,7 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ResponseSwaggerDoc } from "src/domain/agregrators/usecases/administrator/docs/response.swagger.doc";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
-import AuthMiddleware from "src/application/http/middlewares/auth.guard";
+import AuthGuard from "src/application/http/guards/auth.guard";
 
 @Controller('establishment')
 @ApiTags('establishment')
@@ -24,7 +24,7 @@ export default class ListCollaboratorsController {
     ) {}
 
     @Get('collaborators')
-    @UseGuards(AuthMiddleware)
+    @UseGuards(AuthGuard)
     @ApiResponse({status: 200, description: 'Resposta de sucesso.', type: ResponseSwaggerDoc})
     @ApiResponse({status: 404, description: 'Resposta de lista de colaboradores vazia.'})
     @ApiResponse({status: 500, description: 'Resposta erro interno.'})

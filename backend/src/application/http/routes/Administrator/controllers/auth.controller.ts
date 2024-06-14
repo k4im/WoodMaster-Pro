@@ -1,7 +1,5 @@
 import { Body, Controller, HttpStatus, Inject, Post, Req, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Roles } from "src/application/decorators/role.decorator";
-import AuthMiddleware from "src/application/http/middlewares/auth.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
 import { IAuthCommand } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";

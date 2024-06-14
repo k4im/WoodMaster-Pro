@@ -5,7 +5,7 @@ import PersonDomainEntity from "src/domain/entities/person.domain";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
-import AuthMiddleware from "src/application/http/middlewares/auth.guard";
+import AuthGuard from "src/application/http/guards/auth.guard";
 
 @Controller('establishment')
 @ApiTags('establishment')
@@ -20,7 +20,7 @@ export default class FindCollaboratorController {
     ) {}
 
     @Get("collaborator/:tenantId/:uuid")
-    @UseGuards(AuthMiddleware)
+    @UseGuards(AuthGuard)
     @ApiOperation({
         summary: 'A rota poderá ser utilizada para busca de um colaborador.',
         description: `Poderá estar realizando acesso a determinado colaborador

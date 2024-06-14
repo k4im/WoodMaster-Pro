@@ -19,8 +19,10 @@ import createCollaboratorUseCase from "./commands/Collaborators/createCollaborat
 import findCollaboratorUseCase from "./commands/Collaborators/findCollaborator.usecase";
 import updateCollaboratorUseCase from "./commands/Collaborators/updateCollaborator.usecase";
 import deactivateCollaboratorUseCase from "./commands/Collaborators/deactivateCollaborator.usecase";
+import { CaslModule } from "nest-casl";
 
 @Module({
+    imports: [CaslModule],
     controllers: [
         EstablishmentLoginController, ListCollaboratorsController,
         CreateCollaboratorController, FindCollaboratorController,

@@ -3,7 +3,7 @@ import { Request } from "express";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
 @Injectable()
-export default class AuthMiddleware implements CanActivate {
+export default class AuthGuard implements CanActivate {
     
     constructor(
         @Inject("IJwtService")

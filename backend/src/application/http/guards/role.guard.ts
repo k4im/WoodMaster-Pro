@@ -7,7 +7,7 @@ import { Role } from "src/application/enum/roles.enum";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";
 
 @Injectable()
-export class RolesMiddleware implements CanActivate {
+export class RolesGuard implements CanActivate {
     
     constructor(
         private readonly reflector: Reflector,

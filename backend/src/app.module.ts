@@ -21,6 +21,7 @@ import EstablishmentModule from './domain/agregrators/usecases/establishment/est
   ],
   providers: [
     {provide: "DatabaseGateway", useClass: DatabaseMysqlAdapter}, 
-    {provide: "LoggerGateway", useClass: CustomLogger}],
+    {provide: "LoggerGateway", useClass: CustomLogger},
+  ],
 })
 export class AppModule {}
