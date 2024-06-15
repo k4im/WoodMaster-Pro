@@ -3,17 +3,17 @@ version: '3.8'
 services:
 
   database:
-    image: mysql
+    image: mariadb
     container_name: container_db
     restart: on-failure
     environment:
-      - MYSQL_USER=$USER_DB
-      - MYSQL_PASSWORD=$PWD_DB
-      - MYSQL_ROOT_PASSWORD=$PWD_DB
+      - MARIADB_USER=$USER_DB
+      - MARIADB_PASSWORD=$PWD_DB
+      - MARIADB_ROOT_PASSWORD=$PWD_DB
     ports:
       - 3306:3306
     volumes:
-      - database:/var/lib/mysql
+      - database:/var/lib/mysql/data
     deploy:
       resources:
         limits:

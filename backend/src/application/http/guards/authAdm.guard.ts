@@ -14,11 +14,12 @@ export default class AuthAdmGuard implements CanActivate {
         // busca a request
         const request = context.switchToHttp().getRequest<Request>();
         const { authorization } = request.headers;
-        const cleanToken = authorization.replace("Bearer", '').trim();
-        
         if(!authorization)
             throw new ExpectedHttpError('Token not informed', 
             HttpStatus.UNAUTHORIZED);
+        const cleanToken = authorization.replace("Bearer", '').trim();
+        
+
 
         const {UserAgent} = await this.service.decodeJwt(cleanToken);
         
