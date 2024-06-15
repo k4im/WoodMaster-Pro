@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+
+  database:
+    image: mysql
+    container_name: container_db
+    restart: on-failure
+    environment:
+      - MYSQL_USER=$USER_DB
+      - MYSQL_PASSWORD=$PWD_DB
+      - MYSQL_ROOT_PASSWORD=$PWD_DB
+    ports:
+      - 3306:3306
+    volumes:
+      - database:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 512M
+        reservations:
+          memory: 512M
+volumes:
+  database:
