@@ -14,6 +14,7 @@ import * as bcrypt from 'bcrypt';
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import IUserRespository from "src/infrastructure/repository/abstraction/IUserRepository.interface";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
+import { UserPayloadToken } from "src/application/dto/interfaces/IPayloadToken.dto";
 
 
 @Injectable()
@@ -32,12 +33,17 @@ export default class AuthService implements AuthAbstraction {
      * @param pwd senha para verificação.
      * @returns Token
      */
-    async login(email: string, pwd: string): Promise<string> {
+    async login(email: string, pwd: string, useragent: string): Promise<string> {
             const user = await this._repository.findUserByEmail(email);
             const tenant  = await this._repositoryTenant.findTenantByUuid(user.Tenant);
             if(tenant.IsActive) {
                 if(await this.checkPassword(pwd, user.Hash)) {
-                    return this.jwt.encodeJwt(user);
+                    const payload: UserPayloadToken = {
+                        Email: user.Email, Role: user.Role, 
+                        Tenant: user.Tenant, Uuid: user.Uuid, 
+                        UserAgent: useragent}
+                    
+                    return this.jwt.encodeJwt(payload);
                 };
             }
             throw new Error("Senha ou usuário incorretos.");

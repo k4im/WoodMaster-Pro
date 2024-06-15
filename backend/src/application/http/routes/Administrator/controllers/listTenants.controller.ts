@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject, Query, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { ICommandInterfacePaginate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
@@ -8,6 +8,14 @@ import { ResponseSwaggerDoc } from "src/domain/agregrators/usecases/administrato
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
 import AuthGuard from "src/application/http/guards/auth.guard";
+import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
+import { PermissionGuard } from "src/application/http/guards/permissions.guard";
+import { PermissionRequired } from "src/application/decorators/permission.decorator";
+import { Actions } from "src/application/enum/permissoes.enum";
+import { TenantDto } from "src/application/dto/tenant.dto";
+import { Roles } from "src/application/decorators/role.decorator";
+import { Role } from "src/application/enum/roles.enum";
+import { RolesGuard } from "src/application/http/guards/role.guard";
 
 @Controller('admin')
 @ApiTags('admin')
@@ -24,7 +32,9 @@ export default class ListTenantsController {
     ) {}
     
     @Get('tenants')
-    @UseGuards(AuthGuard)
+    @Roles(Role.root)
+    @PermissionRequired({Action: [Actions.manage], Subject: 'all'})
+    @UseGuards(AuthAdmGuard, PermissionGuard, RolesGuard)
     @ApiOperation({
         summary: `Efetua a busca de tenants que encontram-se cadastrados no banco de dados.`,
         description: `Estará realizando a busca de tenants que encontram-se presente no banco
@@ -53,7 +63,7 @@ export default class ListTenantsController {
         status: 404,
         description: 'Nenhum tenant encontrado.'
     })
-    async handle(@Query() { page, limit }: ParamsPaginate, res: Response) { 
+    async handle(@Query() { page, limit }: ParamsPaginate, @Res() res: Response) { 
         try {
             const tenantResults = await this.listTenantUseCase.execute({page, limit});
             return tenantResults.resultados.length <= 0 ? 

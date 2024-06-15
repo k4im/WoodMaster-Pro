@@ -1,4 +1,4 @@
-import { Controller, Inject, Param, Post, UseGuards } from "@nestjs/common";
+import { Controller, Inject, Param, Post, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import AuthGuard from "src/application/http/guards/auth.guard";
@@ -30,7 +30,7 @@ export default class DeactiveCollaboratorController {
     @ApiResponse({status: 200, description: 'Resposta de sucesso.'})
     @ApiResponse({status: 404, description: 'Colaborador não encontrado.'})
     @ApiResponse({status: 500, description: 'Resposta de erro interno.'})
-    async handle(@Param() {uuid, tenantId}: any, res: Response) {
+    async handle(@Param() {uuid, tenantId}: any, @Res() res: Response) {
         try {
             const result = await this.deactivateCollabUseCase.execute(uuid, tenantId)
             result ? 

@@ -5,6 +5,7 @@ import { Request } from "express";
 import AbilityFactory from "src/application/casl/providers/AbillityFactory.provider";
 import { PERMISSION_KEY, subject } from "src/application/decorators/permission.decorator";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
+import { TenantDto } from "src/application/dto/tenant.dto";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";
 
@@ -24,31 +25,32 @@ export class PermissionGuard implements CanActivate {
         
         // puxa o token do authorization.
         const {authorization} = request.headers;
-        
+        const cleanToken = authorization.replace("Bearer", '').trim();
+
         // Puxa as permissões dentro do token.
-        const token = await this.service.decodeJwt(authorization);
+        const token = await this.service.decodeJwt(cleanToken);
         const abillity = this.abillityFactory.defineAbality(token);
         
         // busca os valores repassados no decorador.  
-        const requiredPermissions = this.reflector
+        const {Action, Subject} = this.reflector
         .getAllAndOverride<subject>(PERMISSION_KEY, [
             context.getHandler(), context.getClass()]);
         
         // caso a rota nao tenha permissions
         // podera efetuar acesso normalmente.
-        if(!requiredPermissions)
+        if(!Action)
             return true;
         
         // Verifica se o usuario pode efetuar todas as ações
         // presentes dentro do decorator.
         try {
-            requiredPermissions.Action.forEach((perm, subject: any) => {
-                ForbiddenError.from(abillity).throwUnlessCan(perm, subject);
+            Action.forEach(perm => {
+                ForbiddenError.from(abillity).throwUnlessCan(perm, Subject)
             })
+            return true
         } catch (error) {
-            if (error instanceof ForbiddenError)
-                throw new ExpectedHttpError('Operation Forbidden.', 
-                    HttpStatus.FORBIDDEN);
+            if(error instanceof ForbiddenError)
+                throw new ExpectedHttpError("Forbidden.", HttpStatus.FORBIDDEN);
         }
     }
     

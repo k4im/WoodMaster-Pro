@@ -1,5 +1,7 @@
-import { Body, Controller, HttpStatus, Inject, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, HttpStatus, Inject, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Response } from "express";
+import { LoginDTO } from "src/application/dto/interfaces/login.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
 import { IAuthCommand } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
@@ -26,7 +28,7 @@ export default class AuthAdminController  {
     })
     @ApiResponse({status: 500, description: 'Erro interno.'})
     @ApiResponse({status: 200, description: 'Resposta de sucesso.'})
-    async handle(@Req() {headers}: Request, @Body() {email, password}: any) {
+    async handle(@Req() {headers}: Request, @Body() {email, password}: LoginDTO, @Res() res: Response) {
         try {
             const userAgent = headers['user-agent'];
             const authAdmTokenResult = await this.authAdmService
@@ -34,6 +36,7 @@ export default class AuthAdminController  {
             if(!authAdmTokenResult) 
                 throw new ExpectedHttpError('token not created.', 
                 HttpStatus.INTERNAL_SERVER_ERROR);
+            return res.status(200).send({token: authAdmTokenResult})
         } catch (error) {
             if(error instanceof ExpectedHttpError) 
                 this.logger.error(`Expected controller adm login error: ${error}`);

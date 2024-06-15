@@ -20,14 +20,16 @@ export class RolesGuard implements CanActivate {
         const request = context.switchToHttp().getRequest<Request>();
         // extrai apenas os dados de authorization.
         const {authorization} = request.headers;
+        const cleanToken = authorization.replace("Bearer", '').trim();
+
         // decodifica o jwt.
-        const {Role} = await this.service.decodeJwt(authorization);
+        const {Role} = await this.service.decodeJwt(cleanToken);
         
         // busca no decorator todos os valores repassados.
         const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
             context.getHandler(), context.getClass()]);
-        
-            // caso não exista papeis utilizados ele segue a request.
+            
+        // caso não exista papeis utilizados ele segue a request.
         if(!requiredRoles) 
             return true;
 

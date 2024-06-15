@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject, Query, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 import { Response } from "express";
@@ -36,7 +36,7 @@ export default class ListCollaboratorsController {
     @ApiQuery({name: 'page',description: 'parametro que sera realizado para navegação das paginas.'})
     @ApiQuery({name:'limit',description: 'parametro que será utilizado para quantidade resultado por pagina.'})
     @ApiQuery({name: 'tenantId',description: 'uuid de identificação do tenant.'})
-    async handle(@Query() {page, limit, tenantId}: ParamsPaginate, res: Response) {
+    async handle(@Query() {page, limit, tenantId}: ParamsPaginate, @Res() res: Response) {
         try {
             const result = await this.listcollaboratorsUseCase.execute({page, limit, tenantId})
             result.resultados.length <= 0 ? 

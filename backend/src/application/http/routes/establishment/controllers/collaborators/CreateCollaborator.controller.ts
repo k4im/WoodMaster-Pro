@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Inject, Param, Post, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
@@ -36,7 +36,7 @@ export default class CreateCollaboratorController {
     @ApiBody({type: CollaboratorDto})
     @ApiResponse({status: 200, description: 'resposta de sucesso.'})
     @ApiResponse({status: 500, description: 'resposta de erro internal.'})
-    async handle(@Param() tenantId: string, @Body() collaborator: CollaboratorDto, res: Response) {
+    async handle(@Param() tenantId: string, @Body() collaborator: CollaboratorDto, @Res() res: Response) {
         try {
             const tenant = await this.tenantRepository.findTenantByUuid(tenantId);
             const result = await this.createCollaboratorUseCase.execute(collaborator, tenant)

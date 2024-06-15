@@ -3,7 +3,7 @@ import { Request } from "express";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
 @Injectable()
-export default class AuthGuard implements CanActivate {
+export default class AuthAdmGuard implements CanActivate {
     
     constructor(
         @Inject("IJwtService")
@@ -20,15 +20,11 @@ export default class AuthGuard implements CanActivate {
             throw new ExpectedHttpError('Token not informed', 
             HttpStatus.UNAUTHORIZED);
 
-        const {Tenant, UserAgent} = await this.service.decodeJwt(cleanToken);
-        
-        if(Tenant !== request.params.tenantId)
-            throw new ExpectedHttpError('Cannot access data from another tenant.', 
-            HttpStatus.FORBIDDEN);
+        const {UserAgent} = await this.service.decodeJwt(cleanToken);
         
         if(UserAgent !== request.headers["user-agent"])
-                throw new ExpectedHttpError('Invalid Token.', 
-                    HttpStatus.FORBIDDEN);
+            throw new ExpectedHttpError('Invalid Token.', 
+                HttpStatus.FORBIDDEN);
         
         if(!authorization)
             throw new ExpectedHttpError('Token not informed.', 

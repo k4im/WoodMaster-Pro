@@ -10,11 +10,10 @@
 import { Inject, Injectable } from "@nestjs/common";
 import * as bcrypt from 'bcrypt';
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import IUserRespository from "src/infrastructure/repository/abstraction/IUserRepository.interface";
-import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 import AuthAbstraction from "../abstrations/AuthAbstrancion";
 import IJwtService from "../../jwt/IJwtService";
 import { IAdministratorRepository } from "src/infrastructure/repository/abstraction/IAdministratorRepository.interface";
+import { AdmPayloadToken } from "src/application/dto/interfaces/IPayloadToken.dto";
 
 
 @Injectable()
@@ -38,7 +37,8 @@ export default class AdmAuthService implements AuthAbstraction {
             throw new Error("Administrator not founded.")
         
         if(await this.checkPassword(pwd, admin.Password)) {
-            const payload = {email: admin.Email, userAgent: userAgent}
+            const agent = userAgent;
+            const payload: AdmPayloadToken = {Uuid: admin.Uuid, Email: admin.Email, UserAgent: agent, Role: 'root'}
             return this.jwt.encodeJwt(payload);
         }
         

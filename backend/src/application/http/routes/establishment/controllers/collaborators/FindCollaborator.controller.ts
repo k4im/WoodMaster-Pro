@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject, Param, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import PersonDomainEntity from "src/domain/entities/person.domain";
@@ -39,7 +39,7 @@ export default class FindCollaboratorController {
     @ApiResponse({status: 200, description: 'Resposta de sucesso.', type: PersonDomainEntity})
     @ApiResponse({status: 404, description: 'Resposta caso o colaborador nao foi encontrado.'})
     @ApiResponse({status: 500, description: 'Resposta caso ocorra um erro interno.'})
-    async handle(@Param() {uuid, tenantId}: any, res: Response) {
+    async handle(@Param() {uuid, tenantId}: any, @Res() res: Response) {
         try {
             const collaborator = await this.findCollaboratorUseCase.execute(uuid, tenantId);
             if(!collaborator) 

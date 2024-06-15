@@ -14,7 +14,9 @@ export default class AuthAdministratorUseCase implements IAuthCommand {
     async execute(email: string, senha: string, userAgent: string): Promise<string> {
         try {
             const authResult = await this.authService.login(email, senha, userAgent);
-            if(!authResult) return authResult;
+            if(authResult) 
+                return authResult;
+            
             throw new ExpectedHttpError('Token not created.',
                 HttpStatus.NOT_FOUND);
         } catch (error) {

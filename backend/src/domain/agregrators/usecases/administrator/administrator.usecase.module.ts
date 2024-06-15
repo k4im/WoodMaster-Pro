@@ -17,6 +17,7 @@ import DeactivateTenantController from "src/application/http/routes/Administrato
 import { CreateTenantController } from "src/application/http/routes/Administrator/controllers/createTenant.controller";
 import CaslModule from "src/application/casl/casl.module";
 import { AbilityFactory } from "nest-casl/dist/factories/ability.factory";
+import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
 
 @Module({
   imports: [CaslModule],
@@ -35,7 +36,7 @@ import { AbilityFactory } from "nest-casl/dist/factories/ability.factory";
     {provide: 'DeactivateTenant', useClass: deactiveTenantUsecase},
     {provide: "ITenantRepository", useClass: TenantRepository},
     {provide: 'AuthAbstracion', useClass: AdmAuthService},
-    {provide: 'IJwtService', useClass: JwtService},
+    {provide: 'IJwtService', useClass: JwtCustomService},
     {provide: 'IAdministratorRepository', useClass: AdministratorRepository},
     {provide: 'AuthUseCase', useClass: AuthAdministratorUseCase},
     {provide: 'AuthAbstraction', useClass: AdmAuthService},

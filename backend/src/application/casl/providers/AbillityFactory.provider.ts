@@ -30,7 +30,6 @@ typeof TenantDto |
 export default class AbilityFactory { 
     defineAbality(Token: jwtDecoded) {
         const {can, cannot, build} = new AbilityBuilder(createMongoAbility);
-        
         if(Token.Role === Roles.root) 
             can(Actions.manage, 'all');
         

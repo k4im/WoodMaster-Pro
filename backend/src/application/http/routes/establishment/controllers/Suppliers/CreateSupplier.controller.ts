@@ -1,13 +1,12 @@
-import { Body, Controller, Inject, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Inject, Param, Post, Res, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ICommandCreatePerson } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 import SupplierDto from  'src/application/dto/supplier.dto';
-import { Request, Response } from "express";
-import {decode} from 'jsonwebtoken'
+import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import AuthGuard from "src/application/http/guards/auth.guard";
+import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
 
 
 @Controller('establishment')
@@ -24,7 +23,7 @@ export default class CreateSupplierController {
     ){}
 
     @Post('/:tenantId/supplier')
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthAdmGuard)
     @ApiOperation({
         summary: 'Rota utilizada para realizar a criação de um fornecedor.',
         description: `Rota poderá ser utilizada para realizar a operação de criação
@@ -33,7 +32,7 @@ export default class CreateSupplierController {
     @ApiResponse({status: 200, description: 'Resposta de sucesso ao realizar a criação do fornecedor.'})
     @ApiResponse({status: 500, description: 'Informa que houve um erro interno ao tentar realizar o processamento.'})
     @ApiResponse({status: 401, description: 'Caso o token nao seja informado.'})
-    async handle(@Param() {tenantId}: any, res: Response, @Body() supplier: SupplierDto) {
+    async handle(@Param() {tenantId}: any, @Body() supplier: SupplierDto, @Res() res: Response) {
         try {
             const tenant = await this.tenantRepo.findTenantByUuid(tenantId);
             const result = this.createSupplierUsecase.execute(supplier, tenant);
