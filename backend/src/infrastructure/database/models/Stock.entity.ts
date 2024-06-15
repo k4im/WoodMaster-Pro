@@ -6,7 +6,7 @@ import { Tenant } from "./Tenant.entity";
 export class Stock {
     @PrimaryGeneratedColumn()
     Id: number;
-    @Column({type: 'uuid', nullable: true})
+    @Column({collation: 'utf8_general_ci', unique: true, nullable: true})
     @Generated('uuid')
     Uuid: string
     

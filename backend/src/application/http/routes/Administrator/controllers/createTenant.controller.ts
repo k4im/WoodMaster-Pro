@@ -27,7 +27,7 @@ export class CreateTenantController  {
 
     @Post('tenant')
     @Roles(roles.root)
-    @PermissionRequired({Action: [Actions.manage, Actions.manage], Subject: TenantDto})
+    @PermissionRequired({Action: [Actions.create], Subject: TenantDto})
     @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: 'Rota utilizada para criação de um novo tenant.',

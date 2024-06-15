@@ -6,6 +6,13 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import AuthGuard from "src/application/http/guards/auth.guard";
+import { Roles } from "src/application/decorators/role.decorator";
+import { Role } from "src/application/enum/roles.enum";
+import { PermissionRequired } from "src/application/decorators/permission.decorator";
+import { Actions } from "src/application/enum/permissoes.enum";
+import CollaboratorDto from "src/application/dto/collaborator.dto";
+import { RolesGuard } from "src/application/http/guards/role.guard";
+import { PermissionGuard } from "src/application/http/guards/permissions.guard";
 
 @Controller('establishment')
 @ApiTags('establishment')
@@ -20,7 +27,9 @@ export default class FindCollaboratorController {
     ) {}
 
     @Get("collaborator/:tenantId/:uuid")
-    @UseGuards(AuthGuard)
+    @Roles(Role.admin, Role.root)
+    @PermissionRequired({Action: [Actions.remove], Subject: CollaboratorDto})
+    @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: 'A rota poderá ser utilizada para busca de um colaborador.',
         description: `Poderá estar realizando acesso a determinado colaborador

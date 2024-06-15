@@ -31,7 +31,7 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             const repository = db.getRepository(Person);
             this.logger.log("Efetuado busca de pessoa por uuid... [PersonRepository]")
-            const result = await repository.findOne({relations: ['Tenant'], where: {Uuid: uuid, Tenant: {Uuid: tenantId}}});
+            const result = await repository.findOne({relations: ['Tenant'], where: {Uuid: uuid.toString(), Tenant: {Uuid: tenantId.toString()}}});
             return {Name: result.Name, isActive: result.isActive, Uuid: result.Uuid, Tenant: result.Tenant.Uuid};
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar buscar pessoa... [PersonRepository]: ${error}`)
@@ -160,7 +160,7 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             await db.transaction(async (entityManager) =>  {
                 const repo = entityManager.getRepository(Person);
-                const person = await repo.findOneBy({Uuid: uuid});
+                const person = await repo.findOneBy({Uuid: uuid.toString()});
                 if(!person) {
                     this.logger.error(`Não foi possivel localizar a pessoa com este uuid... [PersonRepository]`);
                     return false;
@@ -213,7 +213,7 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             await db.transaction(async (entityManager) =>  {
                 const repo = entityManager.getRepository(Person);
-                await repo.update({Uuid: uuid}, {isActive: false});
+                await repo.update({Uuid: uuid.toString()}, {isActive: false});
             });
             this.logger.log("Efetuado desativação de pessoa.... [PersonRepository]");
             await this.database.closeConnection(db);

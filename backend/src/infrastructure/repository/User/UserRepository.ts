@@ -25,7 +25,7 @@ export default class UserRepository implements IUserRespository {
             const db = await this.database.getDataSource();
             const result = await db.getRepository(User).findOne({
                 relations: ["Role", "Tenant"],
-                where: { EmailAddr: email }
+                where: { EmailAddr: email.toString() }
             });
             await this.database.closeConnection(db);
             const valueReturn: IUserDto = {
@@ -52,7 +52,7 @@ export default class UserRepository implements IUserRespository {
             const db = await this.database.getDataSource();
             const result = await db.getRepository(User).findOne({
                 relations: ["Role", 'Tenant'],
-                where: { Uuid: uuid, Tenant: { Uuid: tenantId } }
+                where: { Uuid: uuid.toString(), Tenant: { Uuid: tenantId.toString() } }
             });
             await this.database.closeConnection(db);
             return {
@@ -156,7 +156,7 @@ export default class UserRepository implements IUserRespository {
         try {
             const db = await this.database.getDataSource();
             const repo = db.getRepository(User);
-            const user = await repo.findOneBy({ Uuid: uuid });
+            const user = await repo.findOneBy({ Uuid: uuid.toString() });
             user.EmailAddr = data.EmailAddr.email;
             user.HashPassword = data.Password.value;
             await repo.save(user);
@@ -176,7 +176,7 @@ export default class UserRepository implements IUserRespository {
     async deactiveUser(uuid: string): Promise<boolean> {
         try {
             const db = await this.database.getDataSource();
-            await db.getRepository(User).update({ Uuid: uuid }, { IsActive: false });
+            await db.getRepository(User).update({ Uuid: uuid.toString() }, { IsActive: false });
             await this.database.closeConnection(db);
             return true;
         } catch (error) {

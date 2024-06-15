@@ -46,7 +46,7 @@ export default class TenantRepository implements ITenantRepository {
                 })
             }
         } catch (error) {
-            this.logger.log(`Houve um erro ao efetuar o processo de paginação:  [TenantRepository] ${error}`);
+            this.logger.error(`Houve um erro ao efetuar o processo de paginação:  [TenantRepository] ${error}`);
             return null;
         }
     }
@@ -64,7 +64,7 @@ export default class TenantRepository implements ITenantRepository {
             await this.database.closeConnection(db);
             return {Uuid: result.Uuid, Name: result.Name, IsActive: result.IsActive};
         } catch (error) {
-            this.logger.log(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
+            this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
         }
     }
     
@@ -77,11 +77,11 @@ export default class TenantRepository implements ITenantRepository {
         try {
             const db = await this.database.getDataSource();
             const repo = db.getRepository(Tenant);
-            const result = await repo.findOneBy({ Uuid: uuid });
+            const result = await repo.findOneBy({Uuid: uuid});
             await this.database.closeConnection(db);
             return result;
         } catch (error) {
-            this.logger.log(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
+            this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
             return null;
         }
     }
@@ -109,7 +109,7 @@ export default class TenantRepository implements ITenantRepository {
             await this.database.closeConnection(db);
             return true;
         } catch (error) {
-            this.logger.log(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
+            this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
             return false;
         }
     }
@@ -127,7 +127,7 @@ export default class TenantRepository implements ITenantRepository {
             await this.database.closeConnection(db);
             return true;
         } catch (error) {
-            this.logger.log(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
+            this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
             return false;
         }
     }

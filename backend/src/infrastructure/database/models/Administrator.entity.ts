@@ -4,7 +4,7 @@ import { Column, CreateDateColumn, Entity, Generated, Index, PrimaryGeneratedCol
 export class Administrator {
     @PrimaryGeneratedColumn()
     Id: number;
-    @Column({nullable: true, type: "uuid", unique: true})
+    @Column({nullable: true, collation: 'utf8_general_ci', unique: true})
     @Generated("uuid")
     Uuid: string
     @Column({nullable: true, default: true})

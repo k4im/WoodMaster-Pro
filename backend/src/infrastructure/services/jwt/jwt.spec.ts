@@ -1,6 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import JwtCustomService from "./JwtService";
 import { JwtModule} from "@nestjs/jwt";
+import { UserPayloadToken } from "src/application/dto/interfaces/IPayloadToken.dto";
 
 describe("jwt", () => {
     let service: JwtCustomService;
@@ -21,20 +22,20 @@ describe("jwt", () => {
     });
     
     it("Deve criar um jwt valido", async () => {
-        const data = {Uuid: 'asdasd', Role: 'admin'};
+        const data: UserPayloadToken = {Uuid: 'asdasd', Role: 'admin',Email: '', Tenant: '', UserAgent: ''};
         const token = await service.encodeJwt(data);
         expect(typeof(token)).toBe('string')
     });
 
-    it("Deve retornar false para um token expirado", async() => {
-        const data = {Uuid: 'asdasd', Role: 'admin'};
+    it("Deve retornar true para um token expirado", async() => {
+        const data: UserPayloadToken = {Uuid: 'asdasd', Role: 'admin',Email: '', Tenant: '', UserAgent: ''};
         const token = await service.encodeJwt(data);
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise(resolve => setTimeout(resolve, 2000));
         expect(await service.isExpire(token)).toBe(true);
     });
     
-    it("Deve retornar true para um token valido", async() => {
-        const data = {Uuid: 'asdasd', Role: 'admin'};
+    it("Deve retornar false para um token valido", async() => {
+        const data: UserPayloadToken = {Uuid: 'asdasd', Role: 'admin',Email: '', Tenant: '', UserAgent: ''};
         const token = await service.encodeJwt(data);
         expect(await service.isExpire(token)).toBe(false);
     });

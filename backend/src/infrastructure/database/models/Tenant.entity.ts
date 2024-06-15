@@ -8,7 +8,7 @@ import Order from "./Order.entity";
 export class Tenant { 
     @PrimaryGeneratedColumn()
     Id: number;
-    @Column({nullable: true, type: "uuid", unique: true})
+    @Column({nullable: true, unique: true, collation: 'utf8_general_ci'})
     @Generated("uuid")
     Uuid: string;
     @Column({nullable: false})

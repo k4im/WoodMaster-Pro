@@ -20,29 +20,29 @@ export class CustomLogger implements LoggerService, LoggerGateway {
 
     log(message: any, ...optionalParams: any[]) {
         signale.info(`${new Date()} - ${message}`)
-        this.logger.info(`${LogLevel.INFO}INFO: ${LogLevel.RESET}${message}`)
+        this.logger.info(`${message}`)
     }
 
     error(message: any, ...optionalParams: any[]) {
         signale.error(`${new Date()} - ${message}`)
-        this.logger.error(`${LogLevel.ERROR}ERROR: ${LogLevel.RESET}${message}`)
+        this.logger.error(`${message}`)
 
     }
     warn(message: any, ...optionalParams: any[]) {
         signale.warn(`${new Date()} - ${message}`)
-        this.logger.warn(`${LogLevel.WARNING}WARN: ${LogLevel.RESET}${message}`)
+        this.logger.warn(`{message}`)
     }
     debug?(message: any, ...optionalParams: any[]) {
         signale.debug(`${new Date()} - ${message}`)
-        this.logger.debug(`${LogLevel.DEBUG}DEBUG: ${LogLevel.RESET}${message}`)
+        this.logger.debug(`${message}`)
     }
     verbose?(message: any, ...optionalParams: any[]) {
         signale.info(`${new Date()} - ${message}`)
-        this.logger.info(`${LogLevel.RESET}${message}`)
+        this.logger.info(`${message}`)
     }
     fatal?(message: any, ...optionalParams: any[]) {
         signale.fatal(`${new Date()} - ${message}`)
-        this.logger.error(`${LogLevel.RESET}${message}`)
+        this.logger.error(`${message}`)
     }
 
 }

@@ -67,7 +67,7 @@ export default class AdministratorRepository implements IAdministratorRepository
         try {
             const db = await this.database.getDataSource();
             const repo = db.getRepository(adm.Administrator);
-            const result = await repo.findOneBy({Uuid: uuid});
+            const result = await repo.findOneBy({Uuid: uuid.toString()});
             if(!result) {
                 await this.database.closeConnection(db);
                 throw new ExpectedHttpError('Administrator not founded.', 
@@ -95,7 +95,7 @@ export default class AdministratorRepository implements IAdministratorRepository
         try {
             const db = await this.database.getDataSource();
             const repo = db.getRepository(adm.Administrator);
-            const administrator = await repo.findOneBy({EmailAddr: email});
+            const administrator = await repo.findOneBy({EmailAddr: email.toString()});
             if(!administrator){
                 await this.database.closeConnection(db);
                 throw new ExpectedHttpError('Administrator not founded.', 
@@ -150,7 +150,7 @@ export default class AdministratorRepository implements IAdministratorRepository
             const db = await this.database.getDataSource();
             db.manager.transaction(async (transcation) => {
                 await transcation.getRepository(adm.Administrator)
-                .update({Uuid: uuid}, {IsActive: false});
+                .update({Uuid: uuid.toString()}, {IsActive: false});
             });
             await this.database.closeConnection(db);
             return true; 

@@ -19,7 +19,7 @@ export default class FindTenantController {
     private readonly Logger: LoggerGateway) {}
     
     @Get('tenant')
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     @ApiOperation({
         summary: 
         'A rota poderá ser utilizada para efetuar a consulta de um tenant existente',
@@ -47,8 +47,8 @@ export default class FindTenantController {
             if(!uuid) 
                 res.status(404).send({message: 'uuid param not found.'});
             const tenantResult = await this.findTenantUseCase.execute(uuid)
-            if(!tenantResult) res.status(404).send({message: 'Tenant Not Found.'});
-            res.status(200).send(tenantResult);
+            if(!tenantResult) return res.status(404).send({message: 'Tenant Not Found.'});
+            return res.status(200).send(tenantResult);
         } catch (error) {
             this.Logger.error(`Houve um erro ao tentar realizar a 
                 chamada dentro do controller. ${error}`)

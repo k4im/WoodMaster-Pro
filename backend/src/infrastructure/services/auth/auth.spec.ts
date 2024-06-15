@@ -108,18 +108,18 @@ describe("Auth", () => {
     });
 
     test("Ao logar o usuario com as credenciais corretas, deverá estar emitindo um token de acesso.", async () => {
-        const token = await service.login("auth@exemplo.com.br", "Gn$5P4gs23@$%");
+        const token = await service.login("auth@exemplo.com.br", "Gn$5P4gs23@$%", '');
         expect(typeof(token)).toBe('string')
     });
 
     test("Ao tentar logar o usuario com credenciais erradas, deverá gerar uma exceção", async () => {
-        await expect(service.login("auth@exemplo.com.br", "asdasdassd")).rejects.toThrow("Senha ou usuário incorretos.")        
+        await expect(service.login("auth@exemplo.com.br", "asdasdassd", '')).rejects.toThrow("Senha ou usuário incorretos.")        
     });
     test("Ao tentar logar o usuario de um tenant desativado, deverá gerar uma exceção", async () => {
         const db = await database.getDataSource();
         await db.getRepository(Tenant).update({Uuid: tenant.Uuid}, {IsActive: false});
         database.closeConnection(db);
-        await expect(service.login("auth@exemplo.com.br", "Gn$5P4gs23@$%")).rejects.toThrow("Senha ou usuário incorretos.")        
+        await expect(service.login("auth@exemplo.com.br", "Gn$5P4gs23@$%", '')).rejects.toThrow("Senha ou usuário incorretos.")        
     });
 
     /**O METODO DEVERÁ SER ATIVADO CASO QUEIRA RODAR O TESTE DE FORMA UNITÁRIA PARA VALIDAÇÃO */

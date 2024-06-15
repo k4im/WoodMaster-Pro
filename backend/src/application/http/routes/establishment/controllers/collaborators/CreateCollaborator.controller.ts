@@ -7,6 +7,12 @@ import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandCreatePerson } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import AuthGuard from "src/application/http/guards/auth.guard";
+import { Roles } from "src/application/decorators/role.decorator";
+import { Role } from "src/application/enum/roles.enum";
+import { PermissionRequired } from "src/application/decorators/permission.decorator";
+import { Actions } from "src/application/enum/permissoes.enum";
+import { RolesGuard } from "src/application/http/guards/role.guard";
+import { PermissionGuard } from "src/application/http/guards/permissions.guard";
 
 @Controller('establishment')
 @ApiTags('establishment')
@@ -22,7 +28,9 @@ export default class CreateCollaboratorController {
     ){}
     
     @Post('collaborator/:tenantId')
-    @UseGuards(AuthGuard)
+    @Roles(Role.admin, Role.root)
+    @PermissionRequired({Action: [Actions.manage], Subject: CollaboratorDto})
+    @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: `Rota utilizada para realizar a criação de colaboradores.`,
         description: `Rota poderá ser utilizada para realizar a criação de novos colaboradores

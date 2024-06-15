@@ -5,7 +5,7 @@ import Order from "./Order.entity";
 export default class OrderItem {
     @PrimaryGeneratedColumn()
     Id: number
-    @Column({type: 'uuid', nullable: true})
+    @Column({collation: 'utf8_general_ci', unique: true, nullable: true})
     @Generated("uuid")
     Uuid: string
     @Column({nullable: false})
