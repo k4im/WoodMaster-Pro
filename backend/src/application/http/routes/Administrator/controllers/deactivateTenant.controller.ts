@@ -1,6 +1,6 @@
-import { Controller, Inject, Param, Post, Query, Res, UseGuards } from "@nestjs/common";
+import { Controller, Inject, Param, Post, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { Roles } from "src/application/decorators/role.decorator";
 import AuthMiddleware from "src/application/http/guards/auth.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
@@ -40,9 +40,9 @@ export default class DeactivateTenantController  {
         encontra-se presente na base de dados. Após o tenant ser desativado o mesmo
         não poderá mais efetuar login no sistema.`
     })
-    async handle(@Query() uuid: string, @Res() res: Response) { 
+    async handle(@Req() {query: {uuid}}: Request, @Res() @Res() res: Response) { 
         try {
-            const result = await this.deactivateTenantUseCase.execute(uuid);
+            const result = await this.deactivateTenantUseCase.execute(`${uuid}`);
             result ? 
             res.status(200).send({message: 'tenant deactivated'}) :
             res.status(500).send({message: 'An internal error has ocurred.'});

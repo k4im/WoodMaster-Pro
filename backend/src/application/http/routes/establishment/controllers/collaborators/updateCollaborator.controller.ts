@@ -1,9 +1,9 @@
-import { Body, Controller, HttpStatus, Inject, Param, Put, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, HttpStatus, Inject, Param, Put, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ICommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ICommandInterfaceUpdate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 import AuthGuard from "src/application/http/guards/auth.guard";
 
 
@@ -14,7 +14,7 @@ export default class UpdateCollaboratorController {
     constructor(
         @Inject('updateCollaborator')
         private readonly updateCollaboratorUseCase: 
-        ICommandInterface<CollaboratorDto>,
+        ICommandInterfaceUpdate<CollaboratorDto>,
         @Inject('LoggerGateway')
         private readonly logger: LoggerGateway
     ) {}
@@ -31,11 +31,11 @@ export default class UpdateCollaboratorController {
     @ApiParam({name: 'uuid', description: 'UUID de identificação do colaborador.'})
     @ApiResponse({status: 200, description: 'Resposta de sucesso.'})
     @ApiResponse({status: 500, description: 'Resposta erro interno.'})
-    async handle(@Param() {uuid}: any, @Body() updateCollaborator: CollaboratorDto, @Res() res: Response) {
+    async handle(@Req() {params: {uuid}}: Request, @Body() updateCollaborator: CollaboratorDto, @Res() res: Response) {
         try {    
             const updatedCollab = await this
             .updateCollaboratorUseCase
-            .execute(updateCollaborator);
+            .execute(updateCollaborator, uuid);
 
             updatedCollab ? 
             res.status(200).send({message: 'collaborator updated.'}) : 

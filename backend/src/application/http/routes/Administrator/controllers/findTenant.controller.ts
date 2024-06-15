@@ -1,5 +1,5 @@
-import {Controller, Get, Inject, Query, Res, UseGuards } from "@nestjs/common";
-import { Response } from "express";
+import {Controller, Get, Inject, Query, Req, Res, UseGuards } from "@nestjs/common";
+import { Request, Response } from "express";
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import TenantDomainEntity from "src/domain/entities/tenant.domain";
 import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
@@ -42,11 +42,12 @@ export default class FindTenantController {
     })
     @ApiResponse({status: 200, description: 'Resposta de sucesso', type: TenantDomainEntity})
     @ApiResponse({status: 404, description: 'uuid not found ou  Tenant Not Found'})
-    async handle(@Query() uuid: string, @Res() res: Response) { 
+    async handle(@Req() {query: {uuid}}: Request, @Res() res: Response) { 
         try {
             if(!uuid) 
                 res.status(404).send({message: 'uuid param not found.'});
-            const tenantResult = await this.findTenantUseCase.execute(uuid)
+            console.log(uuid)
+            const tenantResult = await this.findTenantUseCase.execute(`${uuid.toString()}`)
             if(!tenantResult) return res.status(404).send({message: 'Tenant Not Found.'});
             return res.status(200).send(tenantResult);
         } catch (error) {

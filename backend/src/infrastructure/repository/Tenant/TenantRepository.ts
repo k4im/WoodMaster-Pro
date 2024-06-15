@@ -76,8 +76,7 @@ export default class TenantRepository implements ITenantRepository {
     async findTenantByUuid(uuid: string): Promise<Tenant> {
         try {
             const db = await this.database.getDataSource();
-            const repo = db.getRepository(Tenant);
-            const result = await repo.findOneBy({Uuid: uuid.toString()});
+            const result = await db.getRepository(Tenant).findOne({where: {Uuid: uuid}})
             await this.database.closeConnection(db);
             return result;
         } catch (error) {
