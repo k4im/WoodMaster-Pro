@@ -8,7 +8,7 @@ export class User {
 
     @PrimaryGeneratedColumn()
     Id: number;
-    @Column({nullable: true, collation: 'utf8_general_ci', unique: true})
+    @Column({nullable: true, unique: true})
     @Generated("uuid")
     Uuid: string
     @Column({nullable: true, default: true})

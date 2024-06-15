@@ -5,7 +5,7 @@ import { Stock } from "./Stock.entity";
 export class Product { 
     @PrimaryGeneratedColumn()
     Id: number;
-    @Column({collation: 'utf8_general_ci', unique: true, nullable: true})
+    @Column({unique: true, nullable: true})
     @Generated('uuid')
     Uuid: string
     @Column({nullable: false})
