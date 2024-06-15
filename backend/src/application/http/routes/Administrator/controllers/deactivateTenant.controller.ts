@@ -25,7 +25,7 @@ export default class DeactivateTenantController  {
         private readonly logger: LoggerGateway
     ) {}
 
-    @Post('deactivate')
+    @Post('tenant/deactivate')
     @Roles(roles.root)
     @PermissionRequired({Action: [Actions.manage], Subject: TenantDto})
     @UseGuards(AuthGuard, RolesGuard, PermissionGuard)

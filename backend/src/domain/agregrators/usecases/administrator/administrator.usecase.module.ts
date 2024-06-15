@@ -18,6 +18,8 @@ import { CreateTenantController } from "src/application/http/routes/Administrato
 import CaslModule from "src/application/casl/casl.module";
 import { AbilityFactory } from "nest-casl/dist/factories/ability.factory";
 import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
+import CreateAdministratorController from "src/application/http/routes/Administrator/controllers/createAdministrator.controller";
+import CreateAdministratorUseCase from "./commands/createAdm.usecase";
 
 @Module({
   imports: [CaslModule],
@@ -26,7 +28,8 @@ import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
     FindTenantController, 
     ListTenantsController, 
     DeactivateTenantController, 
-    CreateTenantController,],
+    CreateTenantController,
+    CreateAdministratorController],
   providers: [
     {provide: "IFindTenant", useClass: findTenantByUuidUsecase},
     {provide: 'LoggerGateway', useClass: CustomLogger},
@@ -40,6 +43,8 @@ import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
     {provide: 'IAdministratorRepository', useClass: AdministratorRepository},
     {provide: 'AuthUseCase', useClass: AuthAdministratorUseCase},
     {provide: 'AuthAbstraction', useClass: AdmAuthService},
+    {provide: 'ICreateAdmUseCase', useClass: CreateAdministratorUseCase},
+    {provide: 'IAdminRepository', useClass: AdministratorRepository},
 ]
 })
 export class AdministrativeUseCaseModule {}
