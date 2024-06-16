@@ -1,8 +1,14 @@
-import { Body, Controller, Get, Inject, Post, Req, Res } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Request, Response } from "express";
+import { Response } from "express";
+import { PermissionRequired } from "src/application/decorators/permission.decorator";
+import { Roles } from "src/application/decorators/role.decorator";
 import AdminDto from "src/application/dto/adm.dto";
-import { IAdmin } from "src/application/dto/interfaces/IAdm.dto";
+import { Actions } from "src/application/enum/permissoes.enum";
+import { Role } from "src/application/enum/roles.enum";
+import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
+import { PermissionGuard } from "src/application/http/guards/permissions.guard";
+import { RolesGuard } from "src/application/http/guards/role.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
 
@@ -16,6 +22,9 @@ export default class CreateAdministratorController {
         private readonly createAdmUseCase: ICommandInterface<AdminDto> 
     ) {}
     @Post('administrator')
+    @Roles(Role.root)
+    @PermissionRequired({Action: [Actions.manage], Subject: 'all'})
+    @UseGuards(AuthAdmGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: 'Rota utilizada para efetuar a criação de um novo administrador.',
         description: `A rota poderá ser utilizada para realizar a criação de um administrador.

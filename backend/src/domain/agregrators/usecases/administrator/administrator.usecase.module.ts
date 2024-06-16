@@ -7,19 +7,17 @@ import listTenantsUseCase from "./commands/listTenants.usecase";
 import createNewTenantUsecase from "./commands/createNewTenant.usecase";
 import deactiveTenantUsecase from "./commands/deactivateTenant.usecase";
 import AdmAuthService from "src/infrastructure/services/auth/admin/admin.auth.service";
-import { JwtService } from "@nestjs/jwt";
 import AdministratorRepository from "src/infrastructure/repository/Administrator/AdministratorRepository";
 import AuthAdministratorUseCase from "./commands/authAdm.usecase";
 import AuthAdminController from "src/application/http/routes/Administrator/controllers/auth.controller";
-import FindTenantController from "src/application/http/routes/Administrator/controllers/findTenant.controller";
-import ListTenantsController from "src/application/http/routes/Administrator/controllers/listTenants.controller";
-import DeactivateTenantController from "src/application/http/routes/Administrator/controllers/deactivateTenant.controller";
-import { CreateTenantController } from "src/application/http/routes/Administrator/controllers/createTenant.controller";
 import CaslModule from "src/application/casl/casl.module";
-import { AbilityFactory } from "nest-casl/dist/factories/ability.factory";
 import JwtCustomService from "src/infrastructure/services/jwt/JwtService";
-import CreateAdministratorController from "src/application/http/routes/Administrator/controllers/createAdministrator.controller";
 import CreateAdministratorUseCase from "./commands/createAdm.usecase";
+import FindTenantController from "src/application/http/routes/Administrator/controllers/Tenants/findTenant.controller";
+import ListTenantsController from "src/application/http/routes/Administrator/controllers/Tenants/listTenants.controller";
+import DeactivateTenantController from "src/application/http/routes/Administrator/controllers/Tenants/deactivateTenant.controller";
+import { CreateTenantController } from "src/application/http/routes/Administrator/controllers/Tenants/createTenant.controller";
+import CreateAdministratorController from "src/application/http/routes/Administrator/controllers/Administrator/createAdministrator.controller";
 
 @Module({
   imports: [CaslModule],
