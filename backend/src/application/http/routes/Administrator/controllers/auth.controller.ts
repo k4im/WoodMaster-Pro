@@ -1,6 +1,6 @@
 import { Body, Controller, HttpStatus, Inject, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { LoginDTO } from "src/application/dto/interfaces/login.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
@@ -41,6 +41,7 @@ export default class AuthAdminController  {
             if(error instanceof ExpectedHttpError) 
                 this.logger.error(`Expected controller adm login error: ${error}`);
             this.logger.error(`Houve um erro no controlador de login ADM: ${error}`)
+            return res.status(error.getStatus()).send({message: error.message})
         }
     }
 }

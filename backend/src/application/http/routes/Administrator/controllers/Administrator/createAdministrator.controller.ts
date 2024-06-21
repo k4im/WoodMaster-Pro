@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Inject, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { PermissionRequired } from "src/application/decorators/permission.decorator";
@@ -40,7 +40,10 @@ export default class CreateAdministratorController {
             res.status(200).send({message: 'Administrator added.'}) : 
             res.status(500).send({message: 'An internal error has ocurred.'})
         } catch (error) {
-            this.logger.error(`Houve um error no controller [create admin]: ${error}`)
+            this.logger.error(`Houve um error no controller [create admin]: ${error}`);
+            
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .send({message: error.message});
         }
 
     }

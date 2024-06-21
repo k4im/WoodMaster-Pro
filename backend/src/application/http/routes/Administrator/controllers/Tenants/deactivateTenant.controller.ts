@@ -1,4 +1,4 @@
-import { Controller, Inject, Param, Post, Query, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, HttpStatus, Inject, Param, Post, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import { Roles } from "src/application/decorators/role.decorator";
@@ -46,6 +46,10 @@ export default class DeactivateTenantController  {
             result ? 
             res.status(200).send({message: 'tenant deactivated'}) :
             res.status(500).send({message: 'An internal error has ocurred.'});
-        } catch (error) {this.logger.error(error)}
+        } catch (error) {
+            this.logger.error(error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .send({message: error.message});
+        }
     }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post, Query, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Inject, Post, Query, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { Roles } from "src/application/decorators/role.decorator";
@@ -43,6 +43,10 @@ export class CreateTenantController  {
             result ? 
             res.status(201).send({message: 'new Tenant has been created.'}) : 
             res.status(500).send({message: 'An internal error has occurred.'})
-        } catch (error) {this.logger.error(error)}
+        } catch (error) {
+            this.logger.error(error)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .send({message: error.message});
+        }
     }
 }

@@ -1,4 +1,4 @@
-import {Controller, Get, Inject, Query, Req, Res, UseGuards } from "@nestjs/common";
+import {Controller, Get, HttpStatus, Inject, Query, Req, Res, UseGuards } from "@nestjs/common";
 import { Request, Response } from "express";
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import TenantDomainEntity from "src/domain/entities/tenant.domain";
@@ -53,6 +53,8 @@ export default class FindTenantController {
         } catch (error) {
             this.Logger.error(`Houve um erro ao tentar realizar a 
                 chamada dentro do controller. ${error}`)
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .send({message: error.message});
         }
     }
 }

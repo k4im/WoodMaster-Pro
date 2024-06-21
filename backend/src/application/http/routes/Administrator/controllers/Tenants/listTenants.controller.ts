@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, HttpStatus, Inject, Query, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { ICommandInterfacePaginate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
@@ -70,7 +70,11 @@ export default class ListTenantsController {
                 res.status(404).send({message: 'No Tenants found.'}): 
                 res.status(200).send(tenantResults);
          
-        } catch (error) {this.logger.error(error);}
+        } catch (error) {
+            this.logger.error(error);
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .send({message: error.message});
+        }
     }
 
 }
