@@ -1,7 +1,6 @@
 import { CanActivate, ExecutionContext, Inject, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { Request } from "express";
-import { Observable } from "rxjs";
 import { ROLES_KEY } from "src/application/decorators/role.decorator";
 import { Role } from "src/application/enum/roles.enum";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";

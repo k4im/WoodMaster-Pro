@@ -2,11 +2,9 @@ import { InferSubjects } from "nest-casl";
 import UserDomanEntity from "src/domain/entities/user.domain";
 import { 
     AbilityBuilder, 
-    AbilityClass, 
-    buildMongoQueryMatcher, 
     createMongoAbility,
-    ExtractSubjectType, 
-    PureAbility } 
+    ExtractSubjectType
+} 
 from "@casl/ability";
 import { UserFindDto } from "src/application/dto/userFind.dto";
 import { jwtDecoded } from "src/application/dto/interfaces/jwtDecoded.dto";
@@ -24,8 +22,6 @@ typeof CollaboratorDto |
 typeof OrderDto | 
 typeof TenantDto |
 'all';
-
-
 @Injectable()
 export default class AbilityFactory { 
     defineAbality(Token: jwtDecoded) {
@@ -51,7 +47,6 @@ export default class AbilityFactory {
                 'OrderItens'], {Tenant: {$eq: Token.Tenant}})
             
         }
-
         
         return build({
             detectSubjectType: (item) => 

@@ -4,7 +4,7 @@ import Administrator  from "src/domain/entities/admin.domain.entity";
 import * as adm from 'src/infrastructure/database/models/Administrator.entity';
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import ExpectedHttpError from "src/application/types/expectedhttp.error";
+import ExpectedHttpError from "src/domain/types/expectedhttp.error";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { IAdmin } from "src/application/dto/interfaces/IAdm.dto";
 

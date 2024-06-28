@@ -1,6 +1,6 @@
 import { HttpStatus, Inject } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import ExpectedHttpError from "src/application/types/expectedhttp.error";
+import ExpectedHttpError from "src/domain/types/expectedhttp.error";
 import AuthAbstraction from "src/infrastructure/services/auth/abstrations/AuthAbstrancion";
 import { ILoginCommand } from "../../Abstrations/ICoomands.interface";
 import { LoginDTO } from "src/application/dto/interfaces/login.dto";
