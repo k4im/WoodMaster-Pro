@@ -2,7 +2,7 @@ import { Body, Controller, Inject, Post, Req } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { Request, Response } from "express";
-import { IAuthCommand } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { IAuthCommand } from "src/application/usecases/Abstrations/ICoomands.interface";
 import { LoginDTO } from "src/application/dto/interfaces/login.dto";
 
 @Controller('establishment')

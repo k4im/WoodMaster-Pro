@@ -8,7 +8,7 @@ import { Actions } from "src/application/enum/permissoes.enum";
 import { Role } from "src/application/enum/roles.enum";
 import AuthGuard from "src/application/http/guards/auth.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ISingleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
 @ApiTags('establishment')

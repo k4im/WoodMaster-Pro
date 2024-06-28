@@ -5,7 +5,7 @@ import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ICommandCreatePerson } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ICommandCreatePerson } from "src/application/usecases/Abstrations/ICoomands.interface";
 import AuthGuard from "src/application/http/guards/auth.guard";
 import { Roles } from "src/application/decorators/role.decorator";
 import { Role } from "src/application/enum/roles.enum";

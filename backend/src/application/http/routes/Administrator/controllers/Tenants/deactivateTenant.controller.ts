@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { Roles } from "src/application/decorators/role.decorator";
 import AuthMiddleware from "src/application/http/guards/auth.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ISimpleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ISimpleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 import {Role as roles} from 'src/application/enum/roles.enum';
 import { PermissionRequired } from "src/application/decorators/permission.decorator";
 import { Actions } from "src/application/enum/permissoes.enum";

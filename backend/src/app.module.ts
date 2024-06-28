@@ -3,8 +3,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { DatabaseMysqlAdapter } from './infrastructure/database/database.service';
 import { CustomLogger } from './infrastructure/logger/logger.service';
 import { ConfigModule } from '@nestjs/config';
-import { AdministrativeUseCaseModule } from './domain/agregrators/usecases/administrator/administrator.usecase.module';
-import EstablishmentModule from './domain/agregrators/usecases/establishment/estabilishment.usecase.module';
+import { AdministrativeUseCaseModule } from './application/usecases/administrator/administrator.usecase.module';
+import EstablishmentModule from './application/usecases/establishment/estabilishment.usecase.module';
 import { APP_FILTER } from '@nestjs/core';
 import GlobalFilter from './application/filters/errors.filters';
 

@@ -10,7 +10,7 @@ import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
 import { PermissionGuard } from "src/application/http/guards/permissions.guard";
 import { RolesGuard } from "src/application/http/guards/role.guard";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ICommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ICommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 
 @Controller('admin')
 @ApiTags('admin')

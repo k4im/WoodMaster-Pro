@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 import { LoginDTO } from "src/application/dto/interfaces/login.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import ExpectedHttpError from "src/application/types/expectedhttp.error";
-import { IAuthCommand } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { IAuthCommand } from "src/application/usecases/Abstrations/ICoomands.interface";
 
 @Controller('admin')
 @ApiTags('admin')

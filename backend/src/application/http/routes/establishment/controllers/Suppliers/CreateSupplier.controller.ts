@@ -1,6 +1,6 @@
 import { Body, Controller, Inject, Param, Post, Res, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { ICommandCreatePerson } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ICommandCreatePerson } from "src/application/usecases/Abstrations/ICoomands.interface";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 import SupplierDto from  'src/application/dto/supplier.dto';

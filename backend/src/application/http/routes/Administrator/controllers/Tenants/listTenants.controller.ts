@@ -1,10 +1,10 @@
 import { Controller, Get, HttpStatus, Inject, Query, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
-import { ICommandInterfacePaginate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
-import { ParamsPaginate } from "src/domain/agregrators/usecases/Abstrations/ParamsPaginate.interface";
+import { ICommandInterfacePaginate } from "src/application/usecases/Abstrations/ICoomands.interface";
+import { ParamsPaginate } from "src/application/usecases/Abstrations/ParamsPaginate.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ResponseSwaggerDoc } from "src/domain/agregrators/usecases/administrator/docs/response.swagger.doc";
+import { ResponseSwaggerDoc } from "src/application/usecases/administrator/docs/response.swagger.doc";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
 import AuthGuard from "src/application/http/guards/auth.guard";

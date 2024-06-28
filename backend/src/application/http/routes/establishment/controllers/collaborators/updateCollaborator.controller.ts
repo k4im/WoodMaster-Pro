@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@ne
 import { Request, Response } from "express";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ICommandInterfaceUpdate } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ICommandInterfaceUpdate } from "src/application/usecases/Abstrations/ICoomands.interface";
 import AuthGuard from "src/application/http/guards/auth.guard";
 
 

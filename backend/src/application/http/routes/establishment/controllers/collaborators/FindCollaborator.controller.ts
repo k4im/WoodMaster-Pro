@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@ne
 import { Request, Response } from "express";
 import PersonDomainEntity from "src/domain/entities/person.domain";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import { ISingleCommandInterface } from "src/domain/agregrators/usecases/Abstrations/ICoomands.interface";
+import { ISingleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import AuthGuard from "src/application/http/guards/auth.guard";
 import { Roles } from "src/application/decorators/role.decorator";
