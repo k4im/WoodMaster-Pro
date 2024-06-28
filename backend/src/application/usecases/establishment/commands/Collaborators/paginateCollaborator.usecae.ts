@@ -12,7 +12,7 @@ export default class PaginateCollaboratorsUseCase implements ICommandInterfacePa
         @Inject("IPersonRepository") private readonly personRepository: IPersonRepository) { }
 
     async execute(data: ParamsPaginate): Promise<IResponse<IPersonDto>> {
-        const result = await this.personRepository.paginateResults(data.page, data.limit, 
+        const result = await this.personRepository.paginateResults(data.page, data.limit,
             data.tenantId, filter.collaborator);
         return result;
     }

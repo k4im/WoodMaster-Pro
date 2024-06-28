@@ -45,6 +45,5 @@ export default class DeactivateTenantController {
         result ?
             res.status(200).send({ message: 'tenant deactivated' }) :
             res.status(500).send({ message: 'An internal error has ocurred.' });
-
     }
 }
