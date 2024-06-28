@@ -1,14 +1,20 @@
 import { Controller, Get, Inject, Query, Req, Res, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 import { Request, Response } from "express";
 import { ICommandInterfacePaginate } from "src/application/usecases/Abstrations/ICoomands.interface";
 import { ParamsPaginate } from "src/application/usecases/Abstrations/ParamsPaginate.interface";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ResponseSwaggerDoc } from "src/application/usecases/administrator/docs/response.swagger.doc";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import AuthGuard from "src/application/http/guards/auth.guard";
+import { PermissionRequired } from "src/application/decorators/permission.decorator";
+import { RolesGuard } from "src/application/http/guards/role.guard";
+import { PermissionGuard } from "src/application/http/guards/permissions.guard";
+import { Roles } from "src/application/decorators/role.decorator";
+import { Role } from "src/application/enum/roles.enum";
+import { Actions } from "src/application/enum/permissoes.enum";
+import CollaboratorDto from "src/application/dto/collaborator.dto";
 
 @Controller('establishment')
 @ApiTags('collaborators')
@@ -19,12 +25,12 @@ export default class ListCollaboratorsController {
         @Inject('listCollaborators')
         private readonly listcollaboratorsUseCase:
             ICommandInterfacePaginate<ParamsPaginate, IResponse<IPersonDto>>,
-        @Inject('LoggerGateway')
-        private readonly logger: LoggerGateway
     ) { }
 
-    @Get('collaborators')
-    @UseGuards(AuthGuard)
+    @Get('collaborators/:tenantId')
+    @Roles(Role.admin, Role.root)
+    @PermissionRequired({Action: [Actions.read], Subject: CollaboratorDto})
+    @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiResponse({ status: 200, description: 'Resposta de sucesso.', type: ResponseSwaggerDoc })
     @ApiResponse({ status: 404, description: 'Resposta de lista de colaboradores vazia.' })
     @ApiResponse({ status: 500, description: 'Resposta erro interno.' })
@@ -35,8 +41,8 @@ export default class ListCollaboratorsController {
     })
     @ApiQuery({ name: 'page', description: 'parametro que sera realizado para navegação das paginas.' })
     @ApiQuery({ name: 'limit', description: 'parametro que será utilizado para quantidade resultado por pagina.' })
-    @ApiQuery({ name: 'tenantId', description: 'uuid de identificação do tenant.' })
-    async handle(@Req() { query: { page, limit, tenantId } }: Request, @Res() res: Response) {
+    @ApiParam({ name: 'tenantId', description: 'uuid de identificação do tenant.' })
+    async handle(@Req() { params: {tenantId}, query: { page, limit } }: Request, @Res() res: Response) {
         const pageInt = parseInt(page.toString());
         const limitInt = parseInt(limit.toString());
         const tenant = tenantId.toString();

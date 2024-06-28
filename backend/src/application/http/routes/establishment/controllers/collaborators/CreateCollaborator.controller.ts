@@ -4,7 +4,6 @@ import ITenantRepository from "src/infrastructure/repository/abstraction/ITenant
 import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { Request, Response } from "express";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandCreatePerson } from "src/application/usecases/Abstrations/ICoomands.interface";
 import AuthGuard from "src/application/http/guards/auth.guard";
 import { Roles } from "src/application/decorators/role.decorator";
@@ -23,13 +22,12 @@ export default class CreateCollaboratorController {
         private readonly tenantRepository: ITenantRepository,
         @Inject("CreateCollaborator")
         private readonly createCollaboratorUseCase: ICommandCreatePerson<CollaboratorDto, Tenant>,
-        @Inject("LoggerGateway")
-        private readonly logger: LoggerGateway
+
     ) { }
 
     @Post('collaborator/:tenantId')
     @Roles(Role.admin, Role.root)
-    @PermissionRequired({ Action: [Actions.manage], Subject: CollaboratorDto })
+    @PermissionRequired({ Action: [Actions.create], Subject: CollaboratorDto })
     @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: `Rota utilizada para realizar a criação de colaboradores.`,

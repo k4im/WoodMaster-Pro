@@ -23,11 +23,11 @@ export default class AuthGuard implements CanActivate {
 
         if(Role === 'root' && UserAgent == request.headers["user-agent"] && !await this.service.isExpire(cleanToken))
             return true;
-
-        if(Tenant !== request.query.tenantId)
+        
+        if(Tenant !== request.params.tenantId)
             throw new ExpectedHttpError('Cannot access data from another tenant.', 
             HttpStatus.FORBIDDEN);
-        
+                
         if(UserAgent !== request.headers["user-agent"])
                 throw new ExpectedHttpError('Invalid Token.', 
                     HttpStatus.FORBIDDEN);

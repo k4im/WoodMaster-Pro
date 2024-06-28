@@ -2,7 +2,6 @@ import { Controller, Get, Inject, Param, Req, Res, UseGuards } from "@nestjs/com
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import PersonDomainEntity from "src/domain/entities/person.domain";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISingleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import AuthGuard from "src/application/http/guards/auth.guard";
@@ -22,13 +21,11 @@ export default class FindCollaboratorController {
         @Inject("FindCollaborator")
         private readonly findCollaboratorUseCase:
             ISingleCommandInterface<IPersonDto>,
-        @Inject('LoggerGateway')
-        private readonly logger: LoggerGateway
     ) { }
 
     @Get("collaborator/:tenantId/:uuid")
     @Roles(Role.admin, Role.root)
-    @PermissionRequired({ Action: [Actions.remove], Subject: CollaboratorDto })
+    @PermissionRequired({ Action: [Actions.read], Subject: CollaboratorDto })
     @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: 'A rota poderá ser utilizada para busca de um colaborador.',

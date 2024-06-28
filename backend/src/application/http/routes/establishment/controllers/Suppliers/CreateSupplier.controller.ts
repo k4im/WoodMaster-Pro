@@ -7,6 +7,12 @@ import SupplierDto from 'src/application/dto/supplier.dto';
 import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
+import { RolesGuard } from "src/application/http/guards/role.guard";
+import { PermissionGuard } from "src/application/http/guards/permissions.guard";
+import { Roles } from "src/application/decorators/role.decorator";
+import { Role } from "src/application/enum/roles.enum";
+import { PermissionRequired } from "src/application/decorators/permission.decorator";
+import { Actions } from "src/application/enum/permissoes.enum";
 
 
 @Controller('establishment')
@@ -21,7 +27,9 @@ export default class CreateSupplierController {
     ) { }
 
     @Post('/:tenantId/supplier')
-    @UseGuards(AuthAdmGuard)
+    @Roles(Role.admin, Role.root)
+    @PermissionRequired({Action: [Actions.create], Subject: SupplierDto})
+    @UseGuards(AuthAdmGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: 'Rota utilizada para realizar a criação de um fornecedor.',
         description: `Rota poderá ser utilizada para realizar a operação de criação

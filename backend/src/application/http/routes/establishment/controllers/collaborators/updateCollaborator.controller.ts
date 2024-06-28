@@ -2,9 +2,14 @@ import { Body, Controller, HttpStatus, Inject, Param, Put, Req, Res, UseGuards }
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandInterfaceUpdate } from "src/application/usecases/Abstrations/ICoomands.interface";
 import AuthGuard from "src/application/http/guards/auth.guard";
+import { Roles } from "src/application/decorators/role.decorator";
+import { Role } from "src/application/enum/roles.enum";
+import { Actions } from "src/application/enum/permissoes.enum";
+import { PermissionRequired } from "src/application/decorators/permission.decorator";
+import { RolesGuard } from "src/application/http/guards/role.guard";
+import { PermissionGuard } from "src/application/http/guards/permissions.guard";
 
 
 @Controller('establishment')
@@ -15,12 +20,12 @@ export default class UpdateCollaboratorController {
         @Inject('updateCollaborator')
         private readonly updateCollaboratorUseCase:
             ICommandInterfaceUpdate<CollaboratorDto>,
-        @Inject('LoggerGateway')
-        private readonly logger: LoggerGateway
     ) { }
 
     @Put('collaborator/:tenantId/:uuid')
-    @UseGuards(AuthGuard)
+    @Roles(Role.admin, Role.root)
+    @PermissionRequired({Action: [Actions.update], Subject: CollaboratorDto})
+    @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: 'Rota utilizada para atualizar um colaborador.',
         description: `A rota poderá ser utilizada para efetuar

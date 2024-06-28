@@ -7,7 +7,8 @@ import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { Actions } from "src/application/enum/permissoes.enum";
 import { Role } from "src/application/enum/roles.enum";
 import AuthGuard from "src/application/http/guards/auth.guard";
-import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
+import { PermissionGuard } from "src/application/http/guards/permissions.guard";
+import { RolesGuard } from "src/application/http/guards/role.guard";
 import { ISingleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
@@ -17,14 +18,12 @@ export default class DeactiveCollaboratorController {
     constructor(
         @Inject('deactivateCollab')
         private readonly deactivateCollabUseCase: ISingleCommandInterface<boolean>,
-        @Inject("LoggerGateway")
-        private readonly logger: LoggerGateway
     ) { }
 
     @Post('collaborator/:tenantId/deactivate/:uuid')
     @Roles(Role.admin, Role.root)
     @PermissionRequired({ Action: [Actions.remove], Subject: CollaboratorDto })
-    @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiParam({
         name: 'uuid',
         description: `UUID do colaborador que deseja desativar.`

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ICommandCreatePerson, ICommandInterface } from "../../../Abstrations/ICoomands.interface";
+import { ICommandCreatePerson } from "../../../Abstrations/ICoomands.interface";
 import SupllierDto from "src/application/dto/supplier.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import IPersonRepository from "src/infrastructure/repository/abstraction/IPersonRepository.interface";

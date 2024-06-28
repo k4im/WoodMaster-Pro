@@ -14,6 +14,7 @@ import { Injectable } from "@nestjs/common";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { OrderDto } from "src/application/dto/order.dto";
 import { TenantDto } from "src/application/dto/tenant.dto";
+import SupplierDto from "src/application/dto/supplier.dto";
 
 
 export type Subjects = InferSubjects<typeof UserFindDto> | 
@@ -21,6 +22,7 @@ typeof UserDomanEntity |
 typeof CollaboratorDto | 
 typeof OrderDto | 
 typeof TenantDto |
+typeof SupplierDto |
 'all';
 @Injectable()
 export default class AbilityFactory { 
