@@ -15,7 +15,7 @@ import { RolesGuard } from "src/application/http/guards/role.guard";
 import { PermissionGuard } from "src/application/http/guards/permissions.guard";
 
 @Controller('establishment')
-@ApiTags('establishment')
+@ApiTags('collaborators')
 @ApiBearerAuth()
 export default class FindCollaboratorController {
     constructor(

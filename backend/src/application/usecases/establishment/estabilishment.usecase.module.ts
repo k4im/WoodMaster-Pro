@@ -20,13 +20,15 @@ import findCollaboratorUseCase from "./commands/Collaborators/findCollaborator.u
 import updateCollaboratorUseCase from "./commands/Collaborators/updateCollaborator.usecase";
 import deactivateCollaboratorUseCase from "./commands/Collaborators/deactivateCollaborator.usecase";
 import CaslModule from "src/application/casl/casl.module";
+import CreateSupplierController from "src/application/http/routes/establishment/controllers/Suppliers/CreateSupplier.controller";
+import CreateSupplierUseCase from "./commands/Supplier/createSupplier.usecase";
 
 @Module({
     imports: [CaslModule],
     controllers: [
         EstablishmentLoginController, ListCollaboratorsController,
         CreateCollaboratorController, FindCollaboratorController,
-        UpdateCollaboratorController, DeactiveCollaboratorController],
+        UpdateCollaboratorController, DeactiveCollaboratorController, CreateSupplierController],
     providers: [        
         {provide: 'LoggerGateway', useClass: CustomLogger},
         {provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter},
@@ -42,7 +44,8 @@ import CaslModule from "src/application/casl/casl.module";
         {provide: 'FindCollaborator', useClass: findCollaboratorUseCase},
         {provide: 'updateCollaborator', useClass: updateCollaboratorUseCase},
         {provide: 'deactivateCollab', useClass: deactivateCollaboratorUseCase},
-        {provide: 'IRoleService', useClass: RoleService}
+        {provide: 'IRoleService', useClass: RoleService},
+        {provide: 'ICreateSupplierUseCase', useClass: CreateSupplierUseCase}
         
     ]
 })

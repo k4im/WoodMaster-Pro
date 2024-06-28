@@ -8,7 +8,7 @@ import AuthGuard from "src/application/http/guards/auth.guard";
 
 
 @Controller('establishment')
-@ApiTags('establishment')
+@ApiTags('collaborators')
 @ApiBearerAuth()
 export default class UpdateCollaboratorController {
     constructor(

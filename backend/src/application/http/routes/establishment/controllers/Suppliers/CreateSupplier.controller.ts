@@ -10,7 +10,7 @@ import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
 
 
 @Controller('establishment')
-@ApiTags('establishment')
+@ApiTags('supplier')
 export default class CreateSupplierController {
 
     constructor(
@@ -18,8 +18,6 @@ export default class CreateSupplierController {
         private readonly tenantRepo: ITenantRepository,
         @Inject("ICreateSupplierUseCase")
         private readonly createSupplierUsecase: ICommandCreatePerson<SupplierDto, Tenant>,
-        @Inject("LoggerGateway")
-        private readonly logger: LoggerGateway
     ) { }
 
     @Post('/:tenantId/supplier')

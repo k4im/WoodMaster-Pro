@@ -11,7 +11,7 @@ import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import AuthGuard from "src/application/http/guards/auth.guard";
 
 @Controller('establishment')
-@ApiTags('establishment')
+@ApiTags('collaborators')
 @ApiBearerAuth()
 export default class ListCollaboratorsController {
 

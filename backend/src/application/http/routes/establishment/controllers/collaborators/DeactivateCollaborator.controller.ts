@@ -11,7 +11,7 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ISingleCommandInterface } from "src/application/usecases/Abstrations/ICoomands.interface";
 
 @Controller('establishment')
-@ApiTags('establishment')
+@ApiTags('collaborators')
 @ApiBearerAuth()
 export default class DeactiveCollaboratorController {
     constructor(
