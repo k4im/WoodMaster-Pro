@@ -92,7 +92,7 @@ describe("UserRepository", () =>  {
         const user = new UserDomanEntity(
             new Email("exemplo@exemplo.com.br"),
             'Gn$5P4gs23@$%',
-            new RoleDomainEntity(Role.root, [Actions.manage]),
+            new RoleDomainEntity(Role.root),
             person.Uuid,
         );
         const result = await repository.createNewUser(user);

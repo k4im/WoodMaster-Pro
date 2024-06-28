@@ -1,5 +1,4 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ExceptionMsgs } from "src/application/enum/exceptions.enum";
 
 export class Email { 
 
@@ -18,6 +17,6 @@ export class Email {
     private validacaoEmail(email: string) {
         const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if(regexEmail.test(email)) return email;
-        throw new Error(ExceptionMsgs.email);
+        throw new Error("Email invalido, por favor insira um valor valido.");
     }
 }

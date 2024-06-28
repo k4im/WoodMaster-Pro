@@ -5,6 +5,9 @@ import { FakeLogger } from "src/infrastructure/logger/Fakelogger.service";
 import * as fs from 'fs';
 import * as path from 'path';
 import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
+import RoleService from "src/infrastructure/services/Role/role.service";
+import { Email } from "src/domain/valueObjects/emailVo/email.value.object";
+import Password from "src/domain/valueObjects/PasswordVo/password.value.object";
 
 
 describe("tenant", () => {
@@ -16,6 +19,8 @@ describe("tenant", () => {
                 TenantRepository,
                 { provide: "LoggerGateway", useClass: FakeLogger },
                 { provide: "DatabaseGateway", useClass: DatabaseInMemory },
+                { provide: "DatabaseGateway", useClass: DatabaseInMemory },
+                {provide: 'IRoleService', useClass: RoleService}
             ]
 
         }).compile();
@@ -23,7 +28,7 @@ describe("tenant", () => {
     });
     
     test("Deve criar um novo registro em banco e retornar true", async () => {
-        const tenant = { Name: 'Tenant Geraldo' };
+        const tenant = { Name: 'Tenant Geraldo', Email: new Email('teste@exemplo.com.br'), Password: new Password('Gn$5P4gs23@$%') };
         const result = await repository.createTenant(tenant);
         expect(result).toBe(true)
     });

@@ -1,7 +1,7 @@
 import {Injectable, LoggerService } from '@nestjs/common';
 import { LogLevel } from 'src/application/enum/logger.enum';
 import { LoggerGateway } from 'src/application/ports/out-ports/logger.gateway';
-import signale from 'signale';
+import * as signale from 'signale';
 
 @Injectable()
 export class FakeLogger implements LoggerService, LoggerGateway {

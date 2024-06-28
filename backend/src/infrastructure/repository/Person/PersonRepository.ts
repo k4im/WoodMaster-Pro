@@ -124,7 +124,6 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             await db.manager.transaction(async (entityManager) => {
                 const repo = entityManager.getRepository(Person)
-                console.log(data)
                 this.logger.log("Criando pessoa... [PersonRepository]")
                 const person = repo.create({
                     ...data,
