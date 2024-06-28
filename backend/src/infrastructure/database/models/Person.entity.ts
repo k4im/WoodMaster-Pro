@@ -1,10 +1,11 @@
-import { Column, CreateDateColumn, Entity, Generated, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, Index, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User.entity";
 import { Address } from "./Addresses.entity";
 import { Phone } from "./Phone.entty";
 import { Tenant } from "./Tenant.entity";
 
 @Entity()
+@Index(['Tenant', 'Cpf', 'Rg', 'Email'],{unique: true})
 export class Person { 
 
     @PrimaryGeneratedColumn()
@@ -14,15 +15,15 @@ export class Person {
     Uuid: string
     @Column({nullable: true})
     Name: string
-    @Column({nullable: false, unique: true})
+    @Column({nullable: false})
     Email: string
     @Column({nullable: true})
     FathersName: string
     @Column({nullable: true})
     MothersName: string
-    @Column({nullable: true, unique: true})
+    @Column({nullable: true})
     Cpf: string
-    @Column({nullable: true, unique: true})
+    @Column({nullable: true})
     Rg: string
     @Column({nullable: false, default: true})
     isActive: boolean
