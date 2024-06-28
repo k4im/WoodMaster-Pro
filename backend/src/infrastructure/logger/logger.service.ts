@@ -1,6 +1,5 @@
 import { Injectable, LoggerService } from '@nestjs/common';
 import { createLogger, format, transports } from 'winston';
-import { LogLevel } from 'src/application/enum/logger.enum';
 import { LoggerGateway } from 'src/application/ports/out-ports/logger.gateway';
 const signale = require('signale');
 

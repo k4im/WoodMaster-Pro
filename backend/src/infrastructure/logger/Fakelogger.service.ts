@@ -1,5 +1,4 @@
 import {Injectable, LoggerService } from '@nestjs/common';
-import { LogLevel } from 'src/application/enum/logger.enum';
 import { LoggerGateway } from 'src/application/ports/out-ports/logger.gateway';
 import * as signale from 'signale';
 

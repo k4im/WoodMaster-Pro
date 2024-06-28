@@ -14,8 +14,6 @@ export default class AuthAdminController {
     constructor(
         @Inject("AuthUseCase")
         private readonly authAdmService: IAuthCommand,
-        @Inject("LoggerGateway")
-        private readonly logger: LoggerGateway
     ) { }
 
     @Post('auth')
@@ -30,7 +28,6 @@ export default class AuthAdminController {
     @ApiResponse({ status: 200, description: 'Resposta de sucesso.' })
     async handle(@Req() { headers }: Request, @Body() payload: LoginDTO, @Res() res: Response) {
         const userAgent = headers['user-agent'];
-        console.log(payload)
         const authAdmTokenResult = await this.authAdmService
             .execute(payload.email, payload.password, userAgent);
         if (!authAdmTokenResult)

@@ -5,7 +5,6 @@ import { Phone } from "../valueObjects/phone.value.object";
 import { Name } from "../valueObjects/nameVo/name.value.object";
 import { Cpf } from "../valueObjects/cpfVo/cpf.value.object";
 import { RgDocument } from "../valueObjects/rgVo/rg.value.object";
-import { Tenant } from "../../infrastructure/database/models/Tenant.entity";
 
 export default class PersonDomainEntity  { 
     @ApiProperty({type: Name})
@@ -31,7 +30,7 @@ export default class PersonDomainEntity  {
     readonly IsCollaborator: boolean;
     
     readonly IsActive: boolean = true;
-    private Tenant: Tenant; 
+    private Tenant: any; 
 
     constructor(
         name: Name, 
@@ -64,7 +63,7 @@ export default class PersonDomainEntity  {
      * ira estar setando um tenant para a pessoa.
      * @param tenant Recebe um tenant para estar setando.
      */
-    setTenant(tenant: Tenant) {
+    setTenant(tenant: any) {
         this.Tenant = tenant
     };
 
