@@ -4,15 +4,15 @@ import { Person } from "./Person.entity";
 @Entity()
 export class Phone {
     @PrimaryGeneratedColumn()
-    Id: number;
+    Id?: number;
     @Column({nullable: true, unique: true})
     @Generated("uuid")  
-    Uuid: string
+    Uuid?: string
     @Column({nullable: true})
     Phone: string
     @Column({nullable: false})
     IsPrimary: boolean
 
     @ManyToOne(() => Person, (person) => person.Phones, {onUpdate: "CASCADE", onDelete: "SET NULL"})
-    Person: Person
+    Person?: Person
 }

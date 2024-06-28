@@ -32,8 +32,22 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             const repository = db.getRepository(Person);
             this.logger.log("Efetuado busca de pessoa por uuid... [PersonRepository]")
-            const result = await repository.findOne({relations: ['Tenant'], where: {Uuid: uuid.toString(), Tenant: {Uuid: tenantId.toString()}}});
-            return {Name: result.Name, isActive: result.isActive, Uuid: result.Uuid, Tenant: result.Tenant.Uuid};
+            const result = await repository.findOne({relations: {Addresses: true, Phones: true, Tenant: true}, where: {Uuid: uuid.toString(), Tenant: {Uuid: tenantId.toString()}}});
+            return {
+                Name: result.Name, 
+                isActive: result.isActive, 
+                Uuid: result.Uuid, 
+                Tenant: result.Tenant.Uuid, 
+                Email: result.Email, 
+                Addresses: result.Addresses.map(addr => addr),
+                MothersName: result.MothersName,
+                FathersName: result.FathersName,
+                Cpf: '***********',
+                Rg: '***********',
+                Phones: result.Phones.map(phone => {
+                    return {isPrimary: phone.IsPrimary, number: phone.Phone}
+                })
+            };
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar buscar pessoa... [PersonRepository]: ${error}`)
             throw new ExpectedError(error.message);
@@ -110,7 +124,7 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             await db.manager.transaction(async (entityManager) => {
                 const repo = entityManager.getRepository(Person)
-                
+                console.log(data)
                 this.logger.log("Criando pessoa... [PersonRepository]")
                 const person = repo.create({
                     ...data,
@@ -132,7 +146,13 @@ export default class PersonRepository implements IPersonRepository {
                         ad.StreetName = e.StreetName;
                         return ad
                     })],
-                    Phones: [...data.Phones],
+                    Phones: [...data.Phones.map(p => {
+                        this.logger.log('Criando telefones... [PersonRepository]');
+                        const phone = new Phone();
+                        phone.IsPrimary = p.IsPrimary;
+                        phone.Phone = p.Phone;
+                        return phone
+                    })],
                     Tenant: data.getTenant()
                 });
                 await entityManager.save(person);
@@ -142,7 +162,7 @@ export default class PersonRepository implements IPersonRepository {
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar criar a pessoa.... [PersonRespository]: ${error}`)
-            return false;
+            throw new ExpectedError(error.message);
         }
     }
 

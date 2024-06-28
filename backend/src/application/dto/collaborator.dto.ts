@@ -13,7 +13,7 @@ export default class CollaboratorDto {
     readonly Email: Email;
     @ApiProperty()
     readonly Addresses: Address[]
-    @ApiProperty()
+    @ApiProperty({type: Phone, isArray: true})
     readonly Phones: Phone[]
     @ApiProperty()
     readonly FathersName: Name

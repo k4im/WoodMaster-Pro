@@ -23,6 +23,9 @@ export default class GlobalFilter implements ExceptionFilter {
         if(exception instanceof HttpException)
             return res.status(exception.getStatus()).send({message: exception.message});
 
+        if(exception instanceof ExpectedError && exception.message.includes('Duplicate entry'))
+            return res.status(HttpStatus.CONFLICT)
+            .send({message: 'Value already in use.'})
         
         if(exception instanceof ExpectedError)
             return res.status(HttpStatus.BAD_REQUEST)
