@@ -19,7 +19,6 @@ export default class AuthGuard implements CanActivate {
             HttpStatus.UNAUTHORIZED);
         const cleanToken = authorization.replace("Bearer", '').trim();
         
-
         const {Tenant, UserAgent, Role} = await this.service.decodeJwt(cleanToken);
 
         if(Role === 'root' && UserAgent == request.headers["user-agent"] && !await this.service.isExpire(cleanToken))
