@@ -11,6 +11,7 @@ import { Address } from "src/infrastructure/database/models/Addresses.entity";
 import { Phone } from "src/infrastructure/database/models/Phone.entty";
 import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
+import ExpectedError from "src/domain/types/expected.error";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {
@@ -35,6 +36,7 @@ export default class PersonRepository implements IPersonRepository {
             return {Name: result.Name, isActive: result.isActive, Uuid: result.Uuid, Tenant: result.Tenant.Uuid};
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar buscar pessoa... [PersonRepository]: ${error}`)
+            throw new ExpectedError(error.message);
         }
     }
 
@@ -86,6 +88,7 @@ export default class PersonRepository implements IPersonRepository {
             }
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar paginar os resultados... [PersonRepository]: ${error}`)
+            throw new ExpectedError(error.message);
         }
     }
 

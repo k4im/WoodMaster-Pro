@@ -8,6 +8,7 @@ import { Person } from "src/infrastructure/database/models/Person.entity";
 import IRoleService from "src/infrastructure/services/Role/IRole.interface";
 import { IUserDto } from "src/application/dto/interfaces/IUser.dto";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
+import ExpectedError from "src/domain/types/expected.error";
 
 
 @Injectable()
@@ -38,6 +39,7 @@ export default class UserRepository implements IUserRespository {
             return valueReturn;
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca por Email.... [UserRespository]: ${error}`);
+            throw new ExpectedError(error.message);
         }
     }
 
@@ -63,6 +65,7 @@ export default class UserRepository implements IUserRespository {
             };
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca por UUID.... [UserRespository]: ${error}`);
+            throw new ExpectedError(error.message);
         }
     }
 
@@ -109,6 +112,7 @@ export default class UserRepository implements IUserRespository {
             };
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a paginação.... [UserRespository]: ${error}`);
+            throw new ExpectedError(error.message);
         }
     }
 

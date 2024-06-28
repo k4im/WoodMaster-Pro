@@ -7,6 +7,7 @@ import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import ExpectedHttpError from "src/domain/types/expectedhttp.error";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { IAdmin } from "src/application/dto/interfaces/IAdm.dto";
+import ExpectedError from "src/domain/types/expected.error";
 
 @Injectable()
 export default class AdministratorRepository implements IAdministratorRepository {
@@ -51,6 +52,7 @@ export default class AdministratorRepository implements IAdministratorRepository
             }
         } catch (error) {
             this.logger.error(`Houve um erro no repositorio de adm: ${error}`);
+            throw new ExpectedError(error.message);
         }
     }
 

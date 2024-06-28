@@ -6,6 +6,7 @@ import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { Stock } from "src/infrastructure/database/models/Stock.entity";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
+import ExpectedError from "src/domain/types/expected.error";
 
 export default class TenantRepository implements ITenantRepository {
     constructor(
@@ -65,6 +66,7 @@ export default class TenantRepository implements ITenantRepository {
             return {Uuid: result.Uuid, Name: result.Name, IsActive: result.IsActive};
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
+            throw new ExpectedError(error.message);
         }
     }
     
