@@ -14,23 +14,19 @@ export default class CreateAdministratorUseCase implements ICommandInterface<Adm
         private readonly repo: IAdministratorRepository,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
-    ){}
-    
+    ) { }
+
     /**
      * Efetua a criação de um novo administrador no sistema.
      * @param data dados do administrator
      * @returns boolean
      */
     async execute(data: AdminDto): Promise<boolean> {
-        try {
-            const administrator = new Administrator(
-                new Email(data.Email),
-                new Password(data.Password)
-            );
-            return await this.repo.createAdministrator(administrator);
-        } catch (error) {
-            this.logger.error(`Houve um erro ao tentar criar o admin usecase: ${error}`);
-        }
+        const administrator = new Administrator(
+            new Email(data.Email),
+            new Password(data.Password)
+        );
+        return await this.repo.createAdministrator(administrator);
     }
 
 }

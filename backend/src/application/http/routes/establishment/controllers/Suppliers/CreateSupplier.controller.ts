@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ICommandCreatePerson } from "src/application/usecases/Abstrations/ICoomands.interface";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
-import SupplierDto from  'src/application/dto/supplier.dto';
+import SupplierDto from 'src/application/dto/supplier.dto';
 import { Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
@@ -12,7 +12,7 @@ import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
 @Controller('establishment')
 @ApiTags('establishment')
 export default class CreateSupplierController {
-    
+
     constructor(
         @Inject("ITenantRepository")
         private readonly tenantRepo: ITenantRepository,
@@ -20,7 +20,7 @@ export default class CreateSupplierController {
         private readonly createSupplierUsecase: ICommandCreatePerson<SupplierDto, Tenant>,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
-    ){}
+    ) { }
 
     @Post('/:tenantId/supplier')
     @UseGuards(AuthAdmGuard)
@@ -29,18 +29,14 @@ export default class CreateSupplierController {
         description: `Rota poderá ser utilizada para realizar a operação de criação
         de um novo fornecedor.`,
     })
-    @ApiResponse({status: 200, description: 'Resposta de sucesso ao realizar a criação do fornecedor.'})
-    @ApiResponse({status: 500, description: 'Informa que houve um erro interno ao tentar realizar o processamento.'})
-    @ApiResponse({status: 401, description: 'Caso o token nao seja informado.'})
-    async handle(@Param() {tenantId}: any, @Body() supplier: SupplierDto, @Res() res: Response) {
-        try {
-            const tenant = await this.tenantRepo.findTenantByUuid(tenantId);
-            const result = this.createSupplierUsecase.execute(supplier, tenant);
-            result ? 
-            res.status(200).send({message: 'supplier successfully created.'}) : 
-            res.status(500).send({message: 'An internal error has ocurred.'})
-        } catch (error) {
-            this.logger.error(`Houve um erro no controlador de criar supplier: ${error}`)
-        }
+    @ApiResponse({ status: 200, description: 'Resposta de sucesso ao realizar a criação do fornecedor.' })
+    @ApiResponse({ status: 500, description: 'Informa que houve um erro interno ao tentar realizar o processamento.' })
+    @ApiResponse({ status: 401, description: 'Caso o token nao seja informado.' })
+    async handle(@Param() { tenantId }: any, @Body() supplier: SupplierDto, @Res() res: Response) {
+        const tenant = await this.tenantRepo.findTenantByUuid(tenantId);
+        const result = this.createSupplierUsecase.execute(supplier, tenant);
+        result ?
+            res.status(200).send({ message: 'supplier successfully created.' }) :
+            res.status(500).send({ message: 'An internal error has ocurred.' })
     }
 }

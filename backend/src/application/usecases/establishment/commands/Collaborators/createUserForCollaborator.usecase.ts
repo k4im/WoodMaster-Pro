@@ -15,19 +15,15 @@ export default class CreateUserForCollaborator implements ICommandInterface<User
         private readonly repo: IUserRespository,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
-    ) {}
+    ) { }
 
     execute(data: UserDto): Promise<boolean> {
-        try {
-            const collaboratorUser = new UserDomanEntity(
-                new Email(data.EmailAddr.email),
-                data.Password.value,
-                data.Role, data.PersonId
-            );
-            return this.repo.createNewUser(collaboratorUser);
-        } catch (error) {
-            this.logger.error(`Houve um erro ao criar usuario para colaborador usecase: ${error}`)
-        }
-    } 
+        const collaboratorUser = new UserDomanEntity(
+            new Email(data.EmailAddr.email),
+            data.Password.value,
+            data.Role, data.PersonId
+        );
+        return this.repo.createNewUser(collaboratorUser);
+    }
 
 }

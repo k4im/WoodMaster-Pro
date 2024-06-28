@@ -12,13 +12,9 @@ export default class FindSupplierByUuidUseCase implements ISingleCommandInterfac
         private readonly logger: LoggerGateway,
         @Inject("IPersonRepository")
         private readonly repo: IPersonRepository
-    ) {}
+    ) { }
     async execute(uuid: string, tenantId?: string): Promise<IPersonDto> {
-        try {
-            return await this.repo.findPersonByUuid(uuid, tenantId);
-        } catch (error) {
-            this.logger.error(`Houve um erro ao efetuar busca por uuid supplier usecase: ${error}`);
-        }
+        return await this.repo.findPersonByUuid(uuid, tenantId);
     }
 
 }

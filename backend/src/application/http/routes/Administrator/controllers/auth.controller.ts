@@ -8,15 +8,15 @@ import { IAuthCommand } from "src/application/usecases/Abstrations/ICoomands.int
 
 @Controller('admin')
 @ApiTags('admin')
-export default class AuthAdminController  {
-    
+export default class AuthAdminController {
+
     /** TODO */
     constructor(
         @Inject("AuthUseCase")
         private readonly authAdmService: IAuthCommand,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
-    ) {}
+    ) { }
 
     @Post('auth')
     @ApiOperation({
@@ -26,22 +26,15 @@ export default class AuthAdminController  {
         
         token: string`
     })
-    @ApiResponse({status: 500, description: 'Erro interno.'})
-    @ApiResponse({status: 200, description: 'Resposta de sucesso.'})
-    async handle(@Req() {headers}: Request, @Body() {email, password}: LoginDTO, @Res() res: Response) {
-        try {
-            const userAgent = headers['user-agent'];
-            const authAdmTokenResult = await this.authAdmService
+    @ApiResponse({ status: 500, description: 'Erro interno.' })
+    @ApiResponse({ status: 200, description: 'Resposta de sucesso.' })
+    async handle(@Req() { headers }: Request, @Body() { email, password }: LoginDTO, @Res() res: Response) {
+        const userAgent = headers['user-agent'];
+        const authAdmTokenResult = await this.authAdmService
             .execute(email, password, userAgent);
-            if(!authAdmTokenResult) 
-                throw new ExpectedHttpError('token not created.', 
+        if (!authAdmTokenResult)
+            throw new ExpectedHttpError('token not created.',
                 HttpStatus.INTERNAL_SERVER_ERROR);
-            return res.status(200).send({token: authAdmTokenResult})
-        } catch (error) {
-            if(error instanceof ExpectedHttpError) 
-                this.logger.error(`Expected controller adm login error: ${error}`);
-            this.logger.error(`Houve um erro no controlador de login ADM: ${error}`)
-            return res.status(error.getStatus()).send({message: error.message})
-        }
+        return res.status(200).send({ token: authAdmTokenResult })
     }
 }

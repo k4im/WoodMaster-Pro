@@ -9,13 +9,13 @@ import { filter } from "src/application/enum/filter.enum";
 
 @Injectable()
 export default class FindSupplierUseCase implements ICommandInterfacePaginate<ParamsPaginate, IResponse<IPersonDto>> {
-    
+
     constructor(
         @Inject("IPersonRepository")
         private readonly repo: IPersonRepository,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
-    ) {}
+    ) { }
 
     /**
      * Executa o caso de uso de paginação de supplier.
@@ -23,11 +23,7 @@ export default class FindSupplierUseCase implements ICommandInterfacePaginate<Pa
      * @returns 
      */
     execute(data: ParamsPaginate): Promise<IResponse<IPersonDto>> {
-        try {
-            return this.repo.paginateResults(data.page, data.limit, data.tenantId, filter.supplier);
-        } catch (error) {
-            this.logger.error(`Houve um erro ao paginar suppliers usecase: ${error}`);
-        }
+        return this.repo.paginateResults(data.page, data.limit, data.tenantId, filter.supplier);
     }
 
 }

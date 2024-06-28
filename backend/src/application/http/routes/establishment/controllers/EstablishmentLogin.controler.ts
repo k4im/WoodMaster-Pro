@@ -7,14 +7,14 @@ import { LoginDTO } from "src/application/dto/interfaces/login.dto";
 
 @Controller('establishment')
 @ApiTags('establishment')
-export default class EstablishmentLoginController { 
+export default class EstablishmentLoginController {
 
     constructor(
         @Inject("IAuthCommand")
         private readonly authUseCase: IAuthCommand,
         @Inject('LoggerGateway')
         private readonly logger: LoggerGateway
-    ) {}
+    ) { }
 
     @Post('login')
     @ApiOperation({
@@ -29,15 +29,13 @@ export default class EstablishmentLoginController {
         description: `deverá ser fornecido email e senha validas para
         que então seja realizado o login corretamente.`
     })
-    @ApiResponse({status: 200, description: 'ao realizar o login corretamente.'})
-    @ApiResponse({status: 500, description: 'erro interno ao realizar o login.'})
-    async handle(@Req() {headers}: Request, @Body() {email, password}: LoginDTO, res: Response) { 
-        try {
-            const userAgent = headers['user-agent'];
-            const result = await this.authUseCase.execute(email, password, userAgent);
-            result ? 
-            res.send(200).send({token: result}) :
-            res.send(500).send({message: 'An internal error has ocurred.'});
-        } catch (error) {this.logger.error(error)}
+    @ApiResponse({ status: 200, description: 'ao realizar o login corretamente.' })
+    @ApiResponse({ status: 500, description: 'erro interno ao realizar o login.' })
+    async handle(@Req() { headers }: Request, @Body() { email, password }: LoginDTO, res: Response) {
+        const userAgent = headers['user-agent'];
+        const result = await this.authUseCase.execute(email, password, userAgent);
+        result ?
+            res.send(200).send({ token: result }) :
+            res.send(500).send({ message: 'An internal error has ocurred.' });
     }
 }

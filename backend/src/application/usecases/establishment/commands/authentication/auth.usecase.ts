@@ -3,20 +3,16 @@ import AuthAbstraction from "src/infrastructure/services/auth/abstrations/AuthAb
 import { IAuthCommand } from "../../../Abstrations/ICoomands.interface";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 
-export default class AuthUseCase implements IAuthCommand { 
+export default class AuthUseCase implements IAuthCommand {
 
     constructor(
-        @Inject("AuthAbstraction") 
+        @Inject("AuthAbstraction")
         private readonly authService: AuthAbstraction,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
-    ) {}
-    
+    ) { }
+
     async execute(email: string, senha: string, userAgent: string): Promise<string> {
-        try {
-            return await this.authService.login(email, senha, userAgent);
-        } catch (error) {
-            this.logger.error(`Houve um erro ao tentar realizar a operação: ${error}`)            
-        }
+        return await this.authService.login(email, senha, userAgent);
     }
 }

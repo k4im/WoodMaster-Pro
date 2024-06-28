@@ -24,16 +24,16 @@ export default class ListTenantsController {
 
     constructor(
         @Inject('ListTenants')
-        private readonly listTenantUseCase : 
-        ICommandInterfacePaginate<
-        ParamsPaginate, IResponse<ITenantDto>>,
+        private readonly listTenantUseCase:
+            ICommandInterfacePaginate<
+                ParamsPaginate, IResponse<ITenantDto>>,
         @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
-    ) {}
-    
+    ) { }
+
     @Get('tenants')
     @Roles(Role.root)
-    @PermissionRequired({Action: [Actions.manage], Subject: 'all'})
+    @PermissionRequired({ Action: [Actions.manage], Subject: 'all' })
     @UseGuards(AuthAdmGuard, PermissionGuard, RolesGuard)
     @ApiOperation({
         summary: `Efetua a busca de tenants que encontram-se cadastrados no banco de dados.`,
@@ -55,7 +55,7 @@ export default class ListTenantsController {
         description: 'limite de resultados que serão repassados por pagina.'
     })
     @ApiResponse({
-        status: 200, 
+        status: 200,
         description: `retorno de sucesso ao realizar a requisição.`,
         type: ResponseSwaggerDoc
     })
@@ -63,18 +63,11 @@ export default class ListTenantsController {
         status: 404,
         description: 'Nenhum tenant encontrado.'
     })
-    async handle(@Query() { page, limit }: ParamsPaginate, @Res() res: Response) { 
-        try {
-            const tenantResults = await this.listTenantUseCase.execute({page, limit});
-            return tenantResults.resultados.length <= 0 ? 
-                res.status(404).send({message: 'No Tenants found.'}): 
-                res.status(200).send(tenantResults);
-         
-        } catch (error) {
-            this.logger.error(error);
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .send({message: error.message});
-        }
+    async handle(@Query() { page, limit }: ParamsPaginate, @Res() res: Response) {
+        const tenantResults = await this.listTenantUseCase.execute({ page, limit });
+        return tenantResults.resultados.length <= 0 ?
+            res.status(404).send({ message: 'No Tenants found.' }) :
+            res.status(200).send(tenantResults);
     }
 
 }

@@ -17,25 +17,21 @@ export default class CreateSupplierUseCase implements ICommandCreatePerson<Supll
         private readonly Logger: LoggerGateway,
         @Inject("IPersonRepository")
         private readonly repo: IPersonRepository
-    ) {}
+    ) { }
 
     async execute(data: SupllierDto, other: Tenant): Promise<boolean> {
-        try {
-            const supplier = new PersonDomainEntity(
-                new Name(data.Name.FirsName, data.Name.LastName),
-                new Email(data.Email.email),
-                data.Addresses, data.Phones,
-                new Name(data.FathersName.FirsName, data.FathersName.LastName),
-                new Name(data.MothersName.FirsName, data.MothersName.LastName),
-                new Cpf(data.Cpf.value),
-                new RgDocument(data.Rg.value),
-                false, data.IsSupplier, false, false
-            );
-            supplier.setTenant(other);
-            return await this.repo.createPerson(supplier);
-        } catch (error) {
-            this.Logger.error(`Houve um erro no usecase de supplier: ${error}`);  
-        }
+        const supplier = new PersonDomainEntity(
+            new Name(data.Name.FirsName, data.Name.LastName),
+            new Email(data.Email.email),
+            data.Addresses, data.Phones,
+            new Name(data.FathersName.FirsName, data.FathersName.LastName),
+            new Name(data.MothersName.FirsName, data.MothersName.LastName),
+            new Cpf(data.Cpf.value),
+            new RgDocument(data.Rg.value),
+            false, data.IsSupplier, false, false
+        );
+        supplier.setTenant(other);
+        return await this.repo.createPerson(supplier);
     }
 
 }

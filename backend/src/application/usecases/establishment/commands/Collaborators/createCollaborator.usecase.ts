@@ -15,23 +15,20 @@ export default class createCollaboratorUseCase implements ICommandCreatePerson<C
         @Inject("IPersonRepository") private readonly personRepository: IPersonRepository) { }
 
     async execute(data: CollaboratorDto, other: Tenant): Promise<boolean> {
-        try {
-            const collaborator = new PersonDomainEntity(
-                new Name(data.Name.FirsName, data.Name.LastName),
-                new Email(data.Email.email),
-                data.Addresses, data.Phones,
-                new Name(data.FathersName.FirsName, data.FathersName.LastName),
-                new Name(data.MothersName.FirsName, data.MothersName.LastName),
-                new Cpf(data.Cpf.value),
-                new RgDocument(data.Rg.value),
-                false, false, false,
-                data.IsCollaborator);
-                collaborator.setTenant(other)
-            const result = await this.personRepository.createPerson(collaborator);
-            return result;
-        } catch (error) {
-            console.log(`Houve um erro: ${error}`)
-        }
+        const isCollaborator = true;
+        const collaborator = new PersonDomainEntity(
+            new Name(data.Name.FirsName, data.Name.LastName),
+            new Email(data.Email.email),
+            data.Addresses, data.Phones,
+            new Name(data.FathersName.FirsName, data.FathersName.LastName),
+            new Name(data.MothersName.FirsName, data.MothersName.LastName),
+            new Cpf(data.Cpf.value),
+            new RgDocument(data.Rg.value),
+            false, false, false,
+            isCollaborator);
+        collaborator.setTenant(other)
+        const result = await this.personRepository.createPerson(collaborator);
+        return result;
     }
 
 }

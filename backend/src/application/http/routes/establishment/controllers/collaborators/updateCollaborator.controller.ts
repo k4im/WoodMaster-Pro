@@ -10,14 +10,14 @@ import AuthGuard from "src/application/http/guards/auth.guard";
 @Controller('establishment')
 @ApiTags('establishment')
 @ApiBearerAuth()
-export default class UpdateCollaboratorController { 
+export default class UpdateCollaboratorController {
     constructor(
         @Inject('updateCollaborator')
-        private readonly updateCollaboratorUseCase: 
-        ICommandInterfaceUpdate<CollaboratorDto>,
+        private readonly updateCollaboratorUseCase:
+            ICommandInterfaceUpdate<CollaboratorDto>,
         @Inject('LoggerGateway')
         private readonly logger: LoggerGateway
-    ) {}
+    ) { }
 
     @Put('collaborator/:tenantId/:uuid')
     @UseGuards(AuthGuard)
@@ -27,19 +27,17 @@ export default class UpdateCollaboratorController {
         a atualização de um colaborador, para isto será necessário
         informar o tenantId e o UUID do colaborador.`
     })
-    @ApiParam({name: 'tenantId', description: 'UUID de identificação do tenant.'})
-    @ApiParam({name: 'uuid', description: 'UUID de identificação do colaborador.'})
-    @ApiResponse({status: 200, description: 'Resposta de sucesso.'})
-    @ApiResponse({status: 500, description: 'Resposta erro interno.'})
-    async handle(@Req() {params: {uuid}}: Request, @Body() updateCollaborator: CollaboratorDto, @Res() res: Response) {
-        try {    
-            const updatedCollab = await this
+    @ApiParam({ name: 'tenantId', description: 'UUID de identificação do tenant.' })
+    @ApiParam({ name: 'uuid', description: 'UUID de identificação do colaborador.' })
+    @ApiResponse({ status: 200, description: 'Resposta de sucesso.' })
+    @ApiResponse({ status: 500, description: 'Resposta erro interno.' })
+    async handle(@Req() { params: { uuid } }: Request, @Body() updateCollaborator: CollaboratorDto, @Res() res: Response) {
+
+        const updatedCollab = await this
             .updateCollaboratorUseCase
             .execute(updateCollaborator, uuid);
-
-            updatedCollab ? 
-            res.status(200).send({message: 'collaborator updated.'}) : 
-            res.status(500).send({message: 'An internal error has ocurred.'});
-        } catch (error) {this.logger.error(error)}
+        updatedCollab ?
+            res.status(200).send({ message: 'collaborator updated.' }) :
+            res.status(500).send({ message: 'An internal error has ocurred.' });
     }
 }

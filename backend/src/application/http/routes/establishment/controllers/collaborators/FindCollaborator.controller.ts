@@ -17,18 +17,18 @@ import { PermissionGuard } from "src/application/http/guards/permissions.guard";
 @Controller('establishment')
 @ApiTags('establishment')
 @ApiBearerAuth()
-export default class FindCollaboratorController { 
+export default class FindCollaboratorController {
     constructor(
         @Inject("FindCollaborator")
-        private readonly findCollaboratorUseCase: 
-        ISingleCommandInterface<IPersonDto>,
+        private readonly findCollaboratorUseCase:
+            ISingleCommandInterface<IPersonDto>,
         @Inject('LoggerGateway')
         private readonly logger: LoggerGateway
-    ) {}
+    ) { }
 
     @Get("collaborator/:tenantId/:uuid")
     @Roles(Role.admin, Role.root)
-    @PermissionRequired({Action: [Actions.remove], Subject: CollaboratorDto})
+    @PermissionRequired({ Action: [Actions.remove], Subject: CollaboratorDto })
     @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: 'A rota poderá ser utilizada para busca de um colaborador.',
@@ -45,15 +45,13 @@ export default class FindCollaboratorController {
         description: `uuid de identificação
         do tenant.`
     })
-    @ApiResponse({status: 200, description: 'Resposta de sucesso.', type: PersonDomainEntity})
-    @ApiResponse({status: 404, description: 'Resposta caso o colaborador nao foi encontrado.'})
-    @ApiResponse({status: 500, description: 'Resposta caso ocorra um erro interno.'})
-    async handle(@Req() {params: {uuid, tenantId}}: Request, @Res() res: Response) {
-        try {
-            const collaborator = await this.findCollaboratorUseCase.execute(uuid, tenantId);
-            if(!collaborator) 
-                return res.status(404).send({message: 'collaborator not founded.'});
-            return res.status(200).send(collaborator);
-        } catch (error) {this.logger.error(error)};
+    @ApiResponse({ status: 200, description: 'Resposta de sucesso.', type: PersonDomainEntity })
+    @ApiResponse({ status: 404, description: 'Resposta caso o colaborador nao foi encontrado.' })
+    @ApiResponse({ status: 500, description: 'Resposta caso ocorra um erro interno.' })
+    async handle(@Req() { params: { uuid, tenantId } }: Request, @Res() res: Response) {
+        const collaborator = await this.findCollaboratorUseCase.execute(uuid, tenantId);
+        if (!collaborator)
+            return res.status(404).send({ message: 'collaborator not founded.' });
+        return res.status(200).send(collaborator);
     }
 }

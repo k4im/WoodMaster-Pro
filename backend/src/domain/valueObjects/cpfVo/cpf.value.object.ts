@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import ExpectedError from "src/domain/types/expected.error";
 
 export class Cpf { 
     @ApiProperty()  
@@ -21,9 +22,9 @@ export class Cpf {
             throw new Error("O CPF deverá ser composto apenas de numero.")
         const cleanCPF = cpf.replace(/\D/g, '');
         if(regexDigitosIguais.test(cleanCPF)) 
-            throw new Error("Todos os digitos do cpf não podem ser iguais.")
+            throw new ExpectedError("Todos os digitos do cpf não podem ser iguais.")
         if(this.validarCpf(cleanCPF)) return cleanCPF;
-        throw new Error("Cpf não é valido.") 
+        throw new ExpectedError("Cpf não é valido.") 
     }
 
     /**

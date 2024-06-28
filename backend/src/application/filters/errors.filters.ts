@@ -2,6 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Injec
 import { Response } from "express";
 import { TypeORMError } from "typeorm";
 import { LoggerGateway } from "../ports/out-ports/logger.gateway";
+import ExpectedError from "src/domain/types/expected.error";
 
 @Catch()
 export default class GlobalFilter implements ExceptionFilter {
@@ -22,10 +23,15 @@ export default class GlobalFilter implements ExceptionFilter {
         if(exception instanceof HttpException)
             return res.status(exception.getStatus()).send({message: exception.message});
 
-        this.logger.error(`Exception not handled: [${exception.message}]`);
         
+        if(exception instanceof ExpectedError)
+            return res.status(HttpStatus.BAD_REQUEST)
+            .send({message: exception.message});
+        
+        this.logger.error(`Exception not handled: [${exception.message}]`);
         return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({message: 'An internal error has ocurred.'})
+        .send({message: exception.message})
+        
     }
     
 }

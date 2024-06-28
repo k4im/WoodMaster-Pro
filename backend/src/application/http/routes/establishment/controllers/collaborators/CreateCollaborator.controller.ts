@@ -1,9 +1,9 @@
-import { Body, Controller, Inject, Param, Post, Res, UseGuards } from "@nestjs/common";
+import { Body, Controller, Inject, Param, Post, Req, Res, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 import CollaboratorDto from "src/application/dto/collaborator.dto";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { ICommandCreatePerson } from "src/application/usecases/Abstrations/ICoomands.interface";
 import AuthGuard from "src/application/http/guards/auth.guard";
@@ -17,19 +17,19 @@ import { PermissionGuard } from "src/application/http/guards/permissions.guard";
 @Controller('establishment')
 @ApiTags('establishment')
 @ApiBearerAuth()
-export default class CreateCollaboratorController { 
+export default class CreateCollaboratorController {
     constructor(
         @Inject("ITenantRepository")
         private readonly tenantRepository: ITenantRepository,
         @Inject("CreateCollaborator")
         private readonly createCollaboratorUseCase: ICommandCreatePerson<CollaboratorDto, Tenant>,
-        @Inject("LoggerGateway") 
+        @Inject("LoggerGateway")
         private readonly logger: LoggerGateway
-    ){}
-    
+    ) { }
+
     @Post('collaborator/:tenantId')
     @Roles(Role.admin, Role.root)
-    @PermissionRequired({Action: [Actions.manage], Subject: CollaboratorDto})
+    @PermissionRequired({ Action: [Actions.manage], Subject: CollaboratorDto })
     @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
     @ApiOperation({
         summary: `Rota utilizada para realizar a criação de colaboradores.`,
@@ -41,16 +41,14 @@ export default class CreateCollaboratorController {
         description: `Repassado o tenantId para realizar a operação de criação 
         do colaborador para determinado cliente.`
     })
-    @ApiBody({type: CollaboratorDto})
-    @ApiResponse({status: 200, description: 'resposta de sucesso.'})
-    @ApiResponse({status: 500, description: 'resposta de erro internal.'})
-    async handle(@Param() tenantId: string, @Body() collaborator: CollaboratorDto, @Res() res: Response) {
-        try {
-            const tenant = await this.tenantRepository.findTenantByUuid(tenantId);
-            const result = await this.createCollaboratorUseCase.execute(collaborator, tenant)
-            result ? 
-            res.status(200).send({message: 'collaborator created sucessefully.'}) : 
-            res.status(500).send({message: 'An internal error has ocurred.'});
-        } catch (error) {this.logger.error(error)}
+    @ApiBody({ type: CollaboratorDto })
+    @ApiResponse({ status: 200, description: 'resposta de sucesso.' })
+    @ApiResponse({ status: 500, description: 'resposta de erro internal.' })
+    async handle(@Req() { params: { tenantId } }: Request, @Body() collaborator: CollaboratorDto, @Res() res: Response) {
+        const tenant = await this.tenantRepository.findTenantByUuid(tenantId);
+        const result = await this.createCollaboratorUseCase.execute(collaborator, tenant)
+        result ?
+            res.status(200).send({ message: 'collaborator created sucessefully.' }) :
+            res.status(500).send({ message: 'An internal error has ocurred.' });
     }
 }

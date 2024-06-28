@@ -16,25 +16,21 @@ export default class UpdateSupplierUseCase implements ICommandInterfaceUpdate<Su
         private readonly logger: LoggerGateway,
         @Inject("IPersonRepository")
         private readonly repo: IPersonRepository
-    ) {}
+    ) { }
 
     async execute(data: SupplierDto, uuid: string): Promise<boolean> {
-        try {
-            const isSupplier = true;
-            const supplier = new PersonDomainEntity(
-                new Name(data.Name.FirsName, data.Name.LastName),
-                new Email(data.Email.email),
-                data.Addresses, data.Phones,
-                new Name(data.FathersName.FirsName, data.FathersName.LastName),
-                new Name(data.MothersName.FirsName, data.MothersName.LastName),
-                new Cpf(data.Cpf.value),
-                new RgDocument(data.Rg.value),
-                false, isSupplier, false, false
-            );
-            return await this.repo.updatePerson(supplier, uuid);
-        } catch (error) {
-            this.logger.error(`Houve um erro ao efetuar o update no supplier usecase: ${error} `);
-        }
+        const isSupplier = true;
+        const supplier = new PersonDomainEntity(
+            new Name(data.Name.FirsName, data.Name.LastName),
+            new Email(data.Email.email),
+            data.Addresses, data.Phones,
+            new Name(data.FathersName.FirsName, data.FathersName.LastName),
+            new Name(data.MothersName.FirsName, data.MothersName.LastName),
+            new Cpf(data.Cpf.value),
+            new RgDocument(data.Rg.value),
+            false, isSupplier, false, false
+        );
+        return await this.repo.updatePerson(supplier, uuid);
     }
 
 }

@@ -9,12 +9,7 @@ export default class findCollaboratorUseCase implements ISingleCommandInterface<
         @Inject("IPersonRepository") private readonly personRepository: IPersonRepository) { }
 
     async execute(uuid: string, tenantId?: string): Promise<IPersonDto> {
-        try {
-            const collaborator = await this.personRepository.findPersonByUuid(uuid, tenantId);
-            return collaborator;
-        } catch (error) {
-            console.log(`Houve um erro: ${error}`); 
-
-        }
+        const collaborator = await this.personRepository.findPersonByUuid(uuid, tenantId);
+        return collaborator;
     }
 }
