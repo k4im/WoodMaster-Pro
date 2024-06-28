@@ -21,7 +21,7 @@ export class User {
     @ManyToOne(() => Role, (role) => role.User, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     Role: Role
     @OneToOne(() => Person, (person) => person.User, {onUpdate: "CASCADE", onDelete: "SET NULL"})
-    Person: Person
+    Person?: Person
     @ManyToOne(() => Tenant, (tenant) => tenant.User, {onUpdate: "CASCADE", onDelete: "SET NULL"})
     @JoinColumn({name: "TenantId"})
     Tenant: Tenant

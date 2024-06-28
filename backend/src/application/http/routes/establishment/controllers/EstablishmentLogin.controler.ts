@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, Req } from "@nestjs/common";
+import { Body, Controller, HttpStatus, Inject, Post, Req, Res } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import { Request, Response } from "express";
@@ -31,11 +31,13 @@ export default class EstablishmentLoginController {
     })
     @ApiResponse({ status: 200, description: 'ao realizar o login corretamente.' })
     @ApiResponse({ status: 500, description: 'erro interno ao realizar o login.' })
-    async handle(@Req() { headers }: Request, @Body() { email, password }: LoginDTO, res: Response) {
+    async handle(@Req() { headers }: Request, @Body() { email, password }: LoginDTO, @Res() res: Response) {
         const userAgent = headers['user-agent'];
         const result = await this.authUseCase.execute(email, password, userAgent);
+
         result ?
-            res.send(200).send({ token: result }) :
-            res.send(500).send({ message: 'An internal error has ocurred.' });
+            res.status(HttpStatus.OK).send({ token: result }) :
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .send({ message: 'An internal error has ocurred.' });
     }
 }

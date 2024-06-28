@@ -28,10 +28,11 @@ export default class AuthAdminController {
     })
     @ApiResponse({ status: 500, description: 'Erro interno.' })
     @ApiResponse({ status: 200, description: 'Resposta de sucesso.' })
-    async handle(@Req() { headers }: Request, @Body() { email, password }: LoginDTO, @Res() res: Response) {
+    async handle(@Req() { headers }: Request, @Body() payload: LoginDTO, @Res() res: Response) {
         const userAgent = headers['user-agent'];
+        console.log(payload)
         const authAdmTokenResult = await this.authAdmService
-            .execute(email, password, userAgent);
+            .execute(payload.email, payload.password, userAgent);
         if (!authAdmTokenResult)
             throw new ExpectedHttpError('token not created.',
                 HttpStatus.INTERNAL_SERVER_ERROR);

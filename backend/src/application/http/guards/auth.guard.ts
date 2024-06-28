@@ -22,11 +22,11 @@ export default class AuthGuard implements CanActivate {
 
 
         const {Tenant, UserAgent, Role} = await this.service.decodeJwt(cleanToken);
-        
+
         if(Role === 'root' && UserAgent == request.headers["user-agent"])
             return true;
 
-        if(Tenant !== request.params.tenantId)
+        if(Tenant !== request.query.tenantId)
             throw new ExpectedHttpError('Cannot access data from another tenant.', 
             HttpStatus.FORBIDDEN);
         

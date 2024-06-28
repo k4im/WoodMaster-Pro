@@ -18,6 +18,7 @@ import ListTenantsController from "src/application/http/routes/Administrator/con
 import DeactivateTenantController from "src/application/http/routes/Administrator/controllers/Tenants/deactivateTenant.controller";
 import { CreateTenantController } from "src/application/http/routes/Administrator/controllers/Tenants/createTenant.controller";
 import CreateAdministratorController from "src/application/http/routes/Administrator/controllers/Administrator/createAdministrator.controller";
+import RoleService from "src/infrastructure/services/Role/role.service";
 
 @Module({
   imports: [CaslModule],
@@ -43,6 +44,7 @@ import CreateAdministratorController from "src/application/http/routes/Administr
     {provide: 'AuthAbstraction', useClass: AdmAuthService},
     {provide: 'ICreateAdmUseCase', useClass: CreateAdministratorUseCase},
     {provide: 'IAdminRepository', useClass: AdministratorRepository},
+    {provide: 'IRoleService', useClass: RoleService}
 ]
 })
 export class AdministrativeUseCaseModule {}

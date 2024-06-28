@@ -7,11 +7,17 @@ import { Stock } from "src/infrastructure/database/models/Stock.entity";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
 import ExpectedError from "src/domain/types/expected.error";
+import { User } from "src/infrastructure/database/models/User.entity";
+import IRoleService from "src/infrastructure/services/Role/IRole.interface";
+import RoleDomainEntity from "src/domain/entities/role.domain";
+import { Role } from "src/application/enum/roles.enum";
 
 export default class TenantRepository implements ITenantRepository {
     constructor(
         @Inject("DatabaseGateway") private readonly database: DatabaseGateway,
-        @Inject("LoggerGateway") private readonly logger: LoggerGateway) { }
+        @Inject("LoggerGateway") private readonly logger: LoggerGateway,
+        @Inject("IRoleService") private readonly roleService: IRoleService
+    ) { }
 
     /**
      * O metodo será utilizado para efetuar a paginação dos tenants que encontram-se
@@ -98,6 +104,7 @@ export default class TenantRepository implements ITenantRepository {
             await db.manager.transaction(async (manager) => {
                 const repo = manager.getRepository(Tenant);
                 const repoStock = manager.getRepository(Stock);
+                const userRepo = manager.getRepository(User);
                 const tenantCreated = repo.create({
                     Name: tenant.Name,
                 });
@@ -106,6 +113,14 @@ export default class TenantRepository implements ITenantRepository {
                     Tenant: savedTenant
                 });
                 await manager.save(stock);
+                const role = await this.roleService.getOrCreateRole(manager, new RoleDomainEntity(Role.admin))
+                const user = userRepo.create({
+                    EmailAddr: tenant.Email.email,
+                    HashPassword: tenant.Password.value,
+                    Tenant: tenantCreated,
+                    Role: role
+                });
+                await manager.save(user)
             })
             await this.database.closeConnection(db);
             return true;

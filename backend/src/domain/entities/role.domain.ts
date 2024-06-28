@@ -6,12 +6,9 @@ export default class RoleDomainEntity {
 
     @ApiProperty()
     private Name: Role
-    @ApiProperty()
-    private Permissions: Actions[];
     
-    constructor(name: Role, permissions: Actions[]) {
+    constructor(name: Role) {
         this.Name = name;
-        this.Permissions = permissions;
     }
 
     /**
@@ -20,13 +17,5 @@ export default class RoleDomainEntity {
      */
     getName(): string {
         return this.Name;
-    }
-
-    /**
-     * Metodo podera ser utilizado para buscar as ações atribuidas em uma permissão
-     * @returns string
-     */
-    getActionPermissions(): Actions[] {
-        return this.Permissions
     }
 }

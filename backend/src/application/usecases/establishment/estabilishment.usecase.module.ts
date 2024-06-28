@@ -41,7 +41,9 @@ import CaslModule from "src/application/casl/casl.module";
         {provide: 'CreateCollaborator', useClass: createCollaboratorUseCase},
         {provide: 'FindCollaborator', useClass: findCollaboratorUseCase},
         {provide: 'updateCollaborator', useClass: updateCollaboratorUseCase},
-        {provide: 'deactivateCollab', useClass: deactivateCollaboratorUseCase}
+        {provide: 'deactivateCollab', useClass: deactivateCollaboratorUseCase},
+        {provide: 'IRoleService', useClass: RoleService}
+        
     ]
 })
 export default class EstablishmentModule {}

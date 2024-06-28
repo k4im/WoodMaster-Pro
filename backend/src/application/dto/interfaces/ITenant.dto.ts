@@ -4,4 +4,8 @@ export interface ITenantDto {
     IsActive: boolean
 }
 
-export interface newTenantDto {Name: string}
+export interface newTenantDto {
+    Name: string
+    Email: string,
+    Password: string
+}

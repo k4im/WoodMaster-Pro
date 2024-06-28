@@ -11,5 +11,9 @@ import { newTenantDto } from "src/application/dto/interfaces/ITenant.dto";
 
 export class tenantSwaggerDocs implements newTenantDto {
     @ApiProperty()
+    Email: string;
+    @ApiProperty()
+    Password: string;
+    @ApiProperty()
     Name: string;
 }
