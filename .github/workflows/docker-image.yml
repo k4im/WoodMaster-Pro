@@ -39,6 +39,7 @@ jobs:
   # # Efetua o deploy no servidor
   deploy-on-server:
     runs-on: ubuntu-latest
+    environment: staging
     # needs: docker-build 
     steps:
       - name: print out example job
