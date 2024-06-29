@@ -7,9 +7,9 @@ jobs:
   tests:
     environment: staging
     runs-on: ubuntu-latest
-    if: env.RUN_TESTS == 1
     steps:
       - uses: actions/checkout@v4
+        if: ${{ github.event_name == 'workflow_dispatch' || env.RUN_TESTS == '1' }}    
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -20,10 +20,11 @@ jobs:
   docker-build:
     environment: staging
     needs:  tests
-    if: env.RUN_DOCKER_BUILD == 1
+
     runs-on: ubuntu-latest
     steps:
       -
+        if: ${{ github.event_name == 'workflow_dispatch' || env.RUN_DOCKER_BUILD == '1' }} 
         name: Extract branch name
         id: extract_branch
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
@@ -53,12 +54,12 @@ jobs:
   deploy-on-server:
     runs-on: ubuntu-latest
     environment: staging
-    if: env.RUN_DOCKER_DEPLOY == 1
     needs: docker-build 
     steps:
       -
         name: Extract branch name
         id: extract_branch
+        if: ${{ github.event_name == 'workflow_dispatch' || env.RUN_DOCKER_DEPLOY == '1' }} 
         run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
       - name: print out example job
