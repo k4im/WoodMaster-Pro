@@ -37,19 +37,19 @@ jobs:
         
   
   # # Efetua o deploy no servidor
-  # deploy-on-server:
-  #   runs-on: ubuntu-latest
-  #   needs: docker-build 
-  #   steps:
-  #     - name: print out example job
-  #       uses: appleboy/ssh-action@v0.1.10
-  #       with:
-  #         host: ${{ secrets.HOSTNAME }}
-  #         username: ${{ secrets.USERNAME_SSH }}
-  #         key: ${{ secrets.KEY_SSH }}
-  #         port: ${{ secrets.PORT }}
-  #         command_timeout: 30m
-  #         script: | 
-  #           echo "Nice Job!!!"
+  deploy-on-server:
+    runs-on: ubuntu-latest
+    needs: docker-build 
+    steps:
+      - name: print out example job
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USERNAME_SSH }}
+          password: ${{ secrets.PWD_SSH }}
+          port: ${{ secrets.PORT }}
+          command_timeout: 30m
+          script: | 
+            echo "Nice Job!!!"
     
   

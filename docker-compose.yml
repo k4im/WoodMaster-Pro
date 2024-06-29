@@ -25,17 +25,14 @@ services:
         reservations:
           memory: 512M
   api:
-    image: api
+    image: k4im/api_wood_master:main
     container_name: api_woodMaster
     depends_on:
       database:
         condition: service_started
     restart: always
-    build:
-      context: .
-      dockerfile: ./Dockerfile
     environment:
-      - HOST=database
+      - HOST=$HOST
       - PORT_DB=$PORT_DB
       - USER_DB=$USER_DB 
       - PWD_DB=$PWD_DB
