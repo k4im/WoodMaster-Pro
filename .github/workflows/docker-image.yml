@@ -3,6 +3,7 @@ name: Docker Image CI
 on:
   push:
     branches: [ "**" ]
+  workflow_dispatch: 
 
 jobs:
 
@@ -40,7 +41,7 @@ jobs:
   deploy-on-server:
     runs-on: ubuntu-latest
     environment: staging
-    # needs: docker-build 
+    needs: docker-build 
     steps:
       -
         name: Extract branch name
