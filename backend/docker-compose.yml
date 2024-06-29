@@ -5,7 +5,7 @@ services:
   database:
     image: mariadb
     container_name: container_db
-    restart: on-failure
+    restart: always
     environment:
       - MARIADB_USER=$USER_DB
       - MARIADB_PASSWORD=$PWD_DB
@@ -13,6 +13,8 @@ services:
       - MARIADB_ROOT_PASSWORD=$PWD_DB
     ports:
       - 3306:3306
+    networks:
+      - backend
     volumes:
       - database:/var/lib/mysql/data
     deploy:
@@ -22,5 +24,32 @@ services:
           memory: 512M
         reservations:
           memory: 512M
+  api:
+    image: api
+    container_name: api_woodMaster
+    depends_on:
+      database:
+        condition: service_started
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - HOST=database
+      - PORT_DB=$PORT_DB
+      - USER_DB=$USER_DB 
+      - PWD_DB=$PWD_DB
+      - DB_NAME=$DB_NAME
+      - PORT_APP=$PORT_APP
+      - SECRET_KEY=$SECRET_KEY
+    ports:
+      - $PORT_APP:$PORT_APP
+    networks:
+      - backend
+    entrypoint: ["sh", "-c", "npm run migration:run && npm start"]
+
 volumes:
   database:
+networks:
+  backend:
+    external: true
