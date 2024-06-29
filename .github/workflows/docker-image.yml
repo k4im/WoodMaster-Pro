@@ -30,7 +30,7 @@ jobs:
       -
         name: Build and push
         run: |
-          cd .. && ls -la
+          cd .. && cd .. && ls -la
   
   # # Efetua o deploy no servidor
   # deploy-on-server:
