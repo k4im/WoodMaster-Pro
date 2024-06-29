@@ -6,33 +6,33 @@ on:
 
 jobs:
 
-  # docker-build:
-  #   environment: staging
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     -
-  #       name: Extract branch name
-  #       id: extract_branch
-  #       run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+  docker-build:
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Extract branch name
+        id: extract_branch
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
-  #     -
-  #       name: Set up QEMU
-  #       uses: docker/setup-qemu-action@v3
-  #     -
-  #       name: Set up Docker Buildx
-  #       uses: docker/setup-buildx-action@v3
-  #     -
-  #       name: Login to Docker Hub
-  #       uses: docker/login-action@v3
-  #       with:
-  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
-  #     -
-  #       name: Build and push
-  #       uses: docker/build-push-action@v6
-  #       with:
-  #         push: true
-  #         tags: ${{ secrets.DOCKERHUB_USERNAME }}/api_wood_master:${{ env.BRANCH_NAME }}
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api_wood_master:${{ env.BRANCH_NAME }}
         
         
   
@@ -40,8 +40,13 @@ jobs:
   deploy-on-server:
     runs-on: ubuntu-latest
     environment: staging
-    # needs: docker-build 
+    needs: docker-build 
     steps:
+      -
+        name: Extract branch name
+        id: extract_branch
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
       - name: print out example job
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -49,6 +54,10 @@ jobs:
           username: ${{ secrets.USERNAME_SSH }}
           password: ${{ secrets.PWD_SSH }}
           port: ${{ secrets.PORT }}
-          script: whoami
+          script: |
+            export TAG=${{ env.BRANCH_NAME }} && \\ 
+            cd api_wood_master && \\ 
+            docker-compose down api_woodMaster rmi ${{ secrets.DOCKERHUB_USERNAME }}/api_wood_master && \\
+            docker-compose up -d 
     
   
