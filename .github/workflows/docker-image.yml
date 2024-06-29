@@ -55,9 +55,11 @@ jobs:
           password: ${{ secrets.PWD_SSH }}
           port: ${{ secrets.PORT }}
           script: |
-            export TAG=${{ env.BRANCH_NAME }} && \\ 
-            cd api_wood_master && \\ 
-            docker-compose down api_woodMaster rmi ${{ secrets.DOCKERHUB_USERNAME }}/api_wood_master && \\
-            docker-compose up -d 
+            export TAG=${{ env.BRANCH_NAME }} && \
+            cd api_wood_master && \
+            docker-compose down && \
+            docker-compose rm -f api_woodMaster && \
+            docker rmi ${{secrets.DOCKERHUB_USERNAME}}/api_wood_master && \
+            docker-compose up -d
     
   
