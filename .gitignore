@@ -4,3 +4,4 @@ backend/.env
 backend/WoodMaster.log
 backend/package-lock.json
 backend/:memory
+.env
