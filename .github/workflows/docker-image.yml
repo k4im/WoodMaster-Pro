@@ -30,7 +30,7 @@ jobs:
       -
         name: Build and push
         run: |
-          docker build . -f Dockerfile -t api_woodmaster:${{ env.BRANCH_NAME }}
+          docker build . -t api_woodmaster:${{ env.BRANCH_NAME }}
   
   # # Efetua o deploy no servidor
   # deploy-on-server:
