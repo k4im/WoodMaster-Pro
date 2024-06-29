@@ -56,7 +56,7 @@ jobs:
           script: |
             export TAG=${{ env.BRANCH_NAME }} && \
             cd api_wood_master && \
-            docker-compose down api && \
+            docker-compose down && \
             docker-compose build && docker-compose up -d
     
   
