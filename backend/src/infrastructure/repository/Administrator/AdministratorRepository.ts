@@ -1,13 +1,13 @@
 import { HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { IAdministratorRepository } from "../abstraction/IAdministratorRepository.interface";
-import Administrator  from "src/domain/entities/admin.domain.entity";
-import * as adm from 'src/infrastructure/database/models/Administrator.entity';
+import * as AdmModel  from "src/domain/entities/admin.domain.entity";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import ExpectedHttpError from "src/domain/types/expectedhttp.error";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { IAdmin } from "src/application/dto/interfaces/IAdm.dto";
 import ExpectedError from "src/domain/types/expected.error";
+import { Administrator } from "src/infrastructure/database/models/Administrator.entity";
 
 @Injectable()
 export default class AdministratorRepository implements IAdministratorRepository {
@@ -31,7 +31,7 @@ export default class AdministratorRepository implements IAdministratorRepository
         try {
             const pages = (page -1) * limit;
             const db = await this.database.getDataSource();
-            const repo = db.getRepository(adm.Administrator)
+            const repo = db.getRepository(Administrator)
             const result = await repo.findAndCount({
                 select: {Id: true, Uuid: true, EmailAddr: true, IsActive: true},
                 take: pages, skip: limit});
@@ -68,7 +68,7 @@ export default class AdministratorRepository implements IAdministratorRepository
     async getAdministrator(uuid: string): Promise<IAdmin> {
         try {
             const db = await this.database.getDataSource();
-            const repo = db.getRepository(adm.Administrator);
+            const repo = db.getRepository(Administrator);
             const result = await repo.findOneBy({Uuid: uuid.toString()});
             if(!result) {
                 await this.database.closeConnection(db);
@@ -96,7 +96,7 @@ export default class AdministratorRepository implements IAdministratorRepository
     async getAdministratorByEmail(email: string): Promise<IAdmin> {
         try {
             const db = await this.database.getDataSource();
-            const repo = db.getRepository(adm.Administrator);
+            const repo = db.getRepository(Administrator);
             const administrator = await repo.findOneBy({EmailAddr: email.toString()});
             if(!administrator){
                 await this.database.closeConnection(db);
@@ -120,17 +120,16 @@ export default class AdministratorRepository implements IAdministratorRepository
      * @param admin dados de administrador.
      * @returns boolean
      */
-    async createAdministrator(admin: Administrator): Promise<boolean> {
+    async createAdministrator(admin: AdmModel.default): Promise<boolean> {
         try {
             const db = await this.database.getDataSource();
-            db.manager.transaction(async (transaction) => {
-                const repo = transaction.getRepository(adm.Administrator);
-                const adminCreated = repo.create({
-                    EmailAddr: admin.Email.email,
-                    HashPassword: admin.Password.value,
-                    IsActive: true});
-                transaction.save(adminCreated);
-            })
+            const repo = db.getRepository(Administrator);
+                
+            const adminCreated = repo.create({
+                EmailAddr: admin.Email.email,
+                HashPassword: admin.Password.value,
+                IsActive: true});
+            await repo.save(adminCreated)
             await this.database.closeConnection(db);
             return true;
         } catch (error) {
@@ -151,7 +150,7 @@ export default class AdministratorRepository implements IAdministratorRepository
         try {
             const db = await this.database.getDataSource();
             db.manager.transaction(async (transcation) => {
-                await transcation.getRepository(adm.Administrator)
+                await transcation.getRepository(Administrator)
                 .update({Uuid: uuid.toString()}, {IsActive: false});
             });
             await this.database.closeConnection(db);
