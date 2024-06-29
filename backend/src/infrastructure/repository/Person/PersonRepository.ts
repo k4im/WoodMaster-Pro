@@ -208,25 +208,18 @@ export default class PersonRepository implements IPersonRepository {
                 person.IsSupplier = data.IsSupplier;
                 person.IsCollaborator = data.IsCollaborator;
                 person.IsOperator = data.IsOperator;
-                person.Phones = [...data.Phones.map(e => {
-                    const phone = new Phone()
-                    phone.Phone = e.Phone;
-                    phone.IsPrimary = e.IsPrimary;
-                    return phone;
-                })];
-                person.Addresses = [...data.Addresses.map(e => {
-                    this.logger.log("Criando endereços... [PersonRepository]")
-                    const ad = new Address();
-                    ad.City = e.City;
-                    ad.Country = e.Country;
-                    ad.Neighborhood = e.Neighborhood;
-                    ad.Observations = e.Observations;
-                    ad.ZipCode = e.ZipCode;
-                    ad.State = e.State;
-                    ad.StreetName = e.StreetName;
-                    return ad
-                })];
                 await repo.save(person);
+                data.Addresses.map(async ad => {
+                    await entityManager.getRepository(Address).update({Person: person}, 
+                        {City: ad.City, Country: ad.Country, Neighborhood: ad.Neighborhood,
+                            Observations: ad.Observations, ZipCode: ad.ZipCode, State: ad.State,
+                            StreetName: ad.StreetName, Person: person
+                        })
+                })
+                data.Phones.map(async p => {
+                    await entityManager.getRepository(Phone).update({Person: person}, 
+                    {Phone: p.Phone, IsPrimary: p.IsPrimary, Person: person})
+                })
             })
             this.logger.log("Efetuado update de pessoa.... [PersonRepository]");
             await this.database.closeConnection(db);
