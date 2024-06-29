@@ -31,8 +31,11 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
+          context: backend/
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/api_wood_master:${{ env.BRANCH_NAME }}
+        
+        
   
   # # Efetua o deploy no servidor
   # deploy-on-server:
