@@ -7,7 +7,7 @@ jobs:
   tests:
     environment: staging
     runs-on: ubuntu-latest
-    if: github.env.RUN_TESTS == 1
+    if: env.RUN_TESTS == 1
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -20,7 +20,7 @@ jobs:
   docker-build:
     environment: staging
     needs:  tests
-    if: github.env.RUN_DOCKER_BUILD == 1
+    if: env.RUN_DOCKER_BUILD == 1
     runs-on: ubuntu-latest
     steps:
       -
@@ -53,7 +53,7 @@ jobs:
   deploy-on-server:
     runs-on: ubuntu-latest
     environment: staging
-    if: github.env.RUN_DOCKER_DEPLOY == 1
+    if: env.RUN_DOCKER_DEPLOY == 1
     needs: docker-build 
     steps:
       -
