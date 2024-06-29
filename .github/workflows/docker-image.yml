@@ -57,6 +57,7 @@ jobs:
             export TAG=${{ env.BRANCH_NAME }} && \
             cd api_wood_master && \
             docker-compose down && \
+            docker images | grep k4im/api_wood_master | awk '{print $3}' | xargs docker rmi -f && \
             docker-compose build && docker-compose up -d
     
   
