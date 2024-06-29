@@ -60,6 +60,6 @@ jobs:
             docker-compose down && \
             docker-compose rm -f api_woodMaster && \
             docker rmi ${{secrets.DOCKERHUB_USERNAME}}/api_wood_master && \
-            docker-compose up -d
+            docker-compose config && docker-compose up -d
     
   
