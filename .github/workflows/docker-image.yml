@@ -40,7 +40,7 @@ jobs:
   deploy-on-server:
     runs-on: ubuntu-latest
     environment: staging
-    needs: docker-build 
+    # needs: docker-build 
     steps:
       -
         name: Extract branch name
@@ -59,7 +59,6 @@ jobs:
             cd api_wood_master && \
             docker-compose down && \
             docker-compose rm -f api && \
-            docker rmi ${{secrets.DOCKERHUB_USERNAME}}/api_wood_master && \
-            docker-compose config && docker-compose up -d
+            docker-compose build && docker-compose up -d
     
   
