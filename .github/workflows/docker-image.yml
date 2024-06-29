@@ -42,14 +42,12 @@ jobs:
     needs: docker-build 
     steps:
       - name: print out example job
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTNAME }}
           username: ${{ secrets.USERNAME_SSH }}
           password: ${{ secrets.PWD_SSH }}
           port: ${{ secrets.PORT }}
-          command_timeout: 30m
-          script: | 
-            echo "Nice Job!!!"
+          script: whoami
     
   
