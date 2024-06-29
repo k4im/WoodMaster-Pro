@@ -49,4 +49,3 @@ volumes:
   database:
 networks:
   backend:
-    external: true
