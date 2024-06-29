@@ -26,6 +26,7 @@ export class Migrations1719608322294 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE \`order\` ADD CONSTRAINT \`FK_7853202400ba8726242baa7a916\` FOREIGN KEY (\`tenantId\`) REFERENCES \`tenant\`(\`Id\`) ON DELETE SET NULL ON UPDATE CASCADE`);
         await queryRunner.query(`ALTER TABLE \`tenant\` ADD CONSTRAINT \`FK_3176ac89b41d2af6731cb08eac1\` FOREIGN KEY (\`stockId\`) REFERENCES \`stock\`(\`Id\`) ON DELETE SET NULL ON UPDATE CASCADE`);
         await queryRunner.query("INSERT INTO WoodMaster.administrator (Uuid, EmailAddr, HashPassword) VALUES('9faf97f7-e29d-47b0-8dcb-b25608db8f04', 'contato.vitorsantos@hotmail.com', '$2b$10$L2Ah4o6M4xFgZ5o7mH/20etN2xBmI6TbQ6CP.Jr9E3wiLPP8EUms2')")
+        await queryRunner.query("INSERT INTO WoodMaster.administrator (Uuid, EmailAddr, HashPassword) VALUES('200fed00-b8f9-41c8-bae5-620bbefad07b', 'lucas.presley.bnu@gmail.com', '$2b$10$av8RZMPnaAePA5tqW0MXa.rqN6Qu7958j8nqPxVc/4yzB9x85aQ/e')")
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
