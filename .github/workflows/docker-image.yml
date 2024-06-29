@@ -30,7 +30,7 @@ jobs:
       -
         name: Build and push
         run: |
-          ls -la
+          cd .. && ls -la
         working-directory: WoodMaster
   
   # # Efetua o deploy no servidor
