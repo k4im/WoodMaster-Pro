@@ -11,7 +11,7 @@ export default class CollaboratorDto {
     readonly Name: Name;
     @ApiProperty()
     readonly Email: Email;
-    @ApiProperty()
+    @ApiProperty({type: Address, isArray: true})
     readonly Addresses: Address[]
     @ApiProperty({type: Phone, isArray: true})
     readonly Phones: Phone[]

@@ -6,7 +6,7 @@ import { IAuthCommand } from "src/application/usecases/Abstrations/ICoomands.int
 import { LoginDTO } from "src/application/dto/interfaces/login.dto";
 
 @Controller('establishment')
-@ApiTags('establishment')
+@ApiTags('Tenant Login')
 export default class EstablishmentLoginController {
 
     constructor(

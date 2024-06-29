@@ -9,7 +9,7 @@ import { CheckFilter } from "src/infrastructure/helpers/checkFilter.helper";
 import { Person } from "src/infrastructure/database/models/Person.entity";
 import { Address } from "src/infrastructure/database/models/Addresses.entity";
 import { Phone } from "src/infrastructure/database/models/Phone.entty";
-import { IPersonDto } from "src/application/dto/interfaces/Person.dto";
+import { Addr, IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import ExpectedError from "src/domain/types/expected.error";
 
@@ -39,7 +39,13 @@ export default class PersonRepository implements IPersonRepository {
                 Uuid: result.Uuid, 
                 Tenant: result.Tenant.Uuid, 
                 Email: result.Email, 
-                Addresses: result.Addresses.map(addr => addr),
+                Addresses: result.Addresses.map(addr =>{ 
+                    const addrs: Addr = {City: addr.City, Country: addr.Country, 
+                        Neighborhood: addr.Neighborhood, Observations: addr.Observations,
+                        State: addr.State, StreetName: addr.StreetName, ZipCode: addr.ZipCode
+                    }
+                    return addrs;
+                }),
                 MothersName: result.MothersName,
                 FathersName: result.FathersName,
                 Cpf: '***********',
@@ -124,6 +130,9 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             await db.manager.transaction(async (entityManager) => {
                 const repo = entityManager.getRepository(Person)
+                const repoAddr = entityManager.getRepository(Address)
+                const repoPhone = entityManager.getRepository(Phone)
+
                 this.logger.log("Criando pessoa... [PersonRepository]")
                 const person = repo.create({
                     ...data,
@@ -133,28 +142,31 @@ export default class PersonRepository implements IPersonRepository {
                     MothersName: data.MothersName.getFullName(),
                     Cpf: data.Cpf.value,
                     Rg: data.Rg.value,
-                    Addresses: [...data.Addresses.map(e => {
-                        this.logger.log("Criando endereços... [PersonRepository]")
-                        const ad = new Address();
-                        ad.City = e.City;
-                        ad.Country = e.Country;
-                        ad.Neighborhood = e.Neighborhood;
-                        ad.Observations = e.Observations;
-                        ad.ZipCode = e.ZipCode;
-                        ad.State = e.State;
-                        ad.StreetName = e.StreetName;
-                        return ad
-                    })],
-                    Phones: [...data.Phones.map(p => {
-                        this.logger.log('Criando telefones... [PersonRepository]');
-                        const phone = new Phone();
-                        phone.IsPrimary = p.IsPrimary;
-                        phone.Phone = p.Phone;
-                        return phone
-                    })],
                     Tenant: data.getTenant()
                 });
                 await entityManager.save(person);
+                const addr = await Promise.all(data.Addresses.map(async addr => {
+                    const addrObj = await repoAddr.create({
+                        City: addr.City,
+                        Country: addr.Country,
+                        Neighborhood: addr.Neighborhood,
+                        StreetName: addr.StreetName,
+                        State: addr.State,
+                        ZipCode: addr.ZipCode,
+                        Person: person
+                    })
+                    return addrObj;
+                }));
+                await entityManager.save(addr);
+                const phones = await Promise.all(data.Phones.map(async phon => {
+                    const phones = await repoPhone.create({
+                        Person: person,
+                        IsPrimary: phon.IsPrimary,
+                        Phone: phon.Phone
+                    })
+                    return phones;
+                }))
+                await entityManager.save(phones);
             });
             await this.database.closeConnection(db);
             this.logger.log("Pessoa inserida no banco de dados com sucesso... [PersonRepository]")

@@ -22,31 +22,44 @@ import deactivateCollaboratorUseCase from "./commands/Collaborators/deactivateCo
 import CaslModule from "src/application/casl/casl.module";
 import CreateSupplierController from "src/application/http/routes/establishment/controllers/Suppliers/CreateSupplier.controller";
 import CreateSupplierUseCase from "./commands/Supplier/createSupplier.usecase";
+import ListSupplierController from "src/application/http/routes/establishment/controllers/Suppliers/ListSupplier.controller";
+import FindSupplierUseCase from "./commands/Supplier/findSuppliers.usecase";
+import CreateUserForCollaboratorController from "src/application/http/routes/establishment/controllers/collaborators/CreateUserCollaborator.controller";
+import CreateUserForCollaborator from "./commands/Collaborators/createUserForCollaborator.usecase";
+import FindSupplierByUuidUseCase from "./commands/Supplier/findSupplierByUuid.usecase";
+import FindSupplierByUuidController from "src/application/http/routes/establishment/controllers/Suppliers/FindSupplier.controller";
 
 @Module({
     imports: [CaslModule],
-    controllers: [
-        EstablishmentLoginController, ListCollaboratorsController,
-        CreateCollaboratorController, FindCollaboratorController,
-        UpdateCollaboratorController, DeactiveCollaboratorController, CreateSupplierController],
-    providers: [        
-        {provide: 'LoggerGateway', useClass: CustomLogger},
-        {provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter},
-        {provide: "IAuthCommand", useClass: AuthUseCase},
-        {provide: "AuthAbstraction", useClass: AuthService},
-        {provide: 'ITenantRepository', useClass: TenantRepository},
-        {provide: 'IUserRepository', useClass: UserRepository},
-        {provide: 'IJwtService', useClass: JwtCustomService},
-        {provide: 'RoleService', useClass: RoleService},
-        {provide: 'listCollaborators', useClass: PaginateCollaboratorsUseCase},
-        {provide: 'IPersonRepository', useClass: PersonRepository},
-        {provide: 'CreateCollaborator', useClass: createCollaboratorUseCase},
-        {provide: 'FindCollaborator', useClass: findCollaboratorUseCase},
-        {provide: 'updateCollaborator', useClass: updateCollaboratorUseCase},
-        {provide: 'deactivateCollab', useClass: deactivateCollaboratorUseCase},
-        {provide: 'IRoleService', useClass: RoleService},
-        {provide: 'ICreateSupplierUseCase', useClass: CreateSupplierUseCase}
-        
-    ]
+    controllers:
+        [
+            EstablishmentLoginController, ListCollaboratorsController,
+            CreateCollaboratorController, FindCollaboratorController,
+            UpdateCollaboratorController, DeactiveCollaboratorController, CreateSupplierController,
+            ListSupplierController, CreateUserForCollaboratorController, FindSupplierByUuidController
+        ],
+    providers:
+        [
+            { provide: 'LoggerGateway', useClass: CustomLogger },
+            { provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter },
+            { provide: "IAuthCommand", useClass: AuthUseCase },
+            { provide: "AuthAbstraction", useClass: AuthService },
+            { provide: 'ITenantRepository', useClass: TenantRepository },
+            { provide: 'IUserRepository', useClass: UserRepository },
+            { provide: 'IJwtService', useClass: JwtCustomService },
+            { provide: 'RoleService', useClass: RoleService },
+            { provide: 'listCollaborators', useClass: PaginateCollaboratorsUseCase },
+            { provide: 'IPersonRepository', useClass: PersonRepository },
+            { provide: 'CreateCollaborator', useClass: createCollaboratorUseCase },
+            { provide: 'FindCollaborator', useClass: findCollaboratorUseCase },
+            { provide: 'updateCollaborator', useClass: updateCollaboratorUseCase },
+            { provide: 'deactivateCollab', useClass: deactivateCollaboratorUseCase },
+            { provide: 'IRoleService', useClass: RoleService },
+            { provide: 'ICreateSupplierUseCase', useClass: CreateSupplierUseCase },
+            { provide: 'IListSupplierUseCase', useClass: FindSupplierUseCase },
+            { provide: 'ICreateUserForCollaborator', useClass: CreateUserForCollaborator },
+            { provide: 'IFindSupplierByUuidUseCase', useClass: FindSupplierByUuidUseCase },
+
+        ]
 })
-export default class EstablishmentModule {}
+export default class EstablishmentModule { }

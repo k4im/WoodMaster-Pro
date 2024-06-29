@@ -19,8 +19,8 @@ export default class CreateUserForCollaborator implements ICommandInterface<User
 
     execute(data: UserDto): Promise<boolean> {
         const collaboratorUser = new UserDomanEntity(
-            new Email(data.EmailAddr.email),
-            data.Password.value,
+            data.Email,
+            data.Password,
             data.Role, data.PersonId
         );
         return this.repo.createNewUser(collaboratorUser);

@@ -14,7 +14,7 @@ import { ICommandInterface } from "src/application/usecases/Abstrations/ICoomand
 
 @Controller('establishment')
 @ApiTags('collaborators')
-export default class CreateUserForCollaboratorUseCase {
+export default class CreateUserForCollaboratorController {
 
     constructor(
         @Inject('ICreateUserForCollaborator')
@@ -25,12 +25,15 @@ export default class CreateUserForCollaboratorUseCase {
     @Roles(Role.admin, Role.root)
     @PermissionRequired({ Action: [Actions.create], Subject: CollaboratorDto })
     @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
-    async handle(@Req() req: Request, @Res() res: Response, @Body() user: UserDto) {
+    async handle(@Req() _req: Request, @Res() res: Response, @Body() user: UserDto) {
         const isUserCreated = await this.createUserForCollabUseCase
             .execute(user);
+            
         isUserCreated ?
-            res.status(HttpStatus.OK).send({ message: 'User created.' }) :
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({ message: 'An internal error has ocurred.' })
+            res.status(HttpStatus.OK)
+                .send({ message: 'User created.' }) :
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .send({ message: 'An internal error has ocurred.' })
     }
 
 

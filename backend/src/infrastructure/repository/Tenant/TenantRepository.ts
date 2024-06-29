@@ -54,7 +54,7 @@ export default class TenantRepository implements ITenantRepository {
             }
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar o processo de paginação:  [TenantRepository] ${error}`);
-            return null;
+            throw new ExpectedError(error.message);
         }
     }
 
@@ -89,7 +89,7 @@ export default class TenantRepository implements ITenantRepository {
             return result;
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
-            return null;
+            throw new ExpectedError(error.message);
         }
     }
     
@@ -126,7 +126,7 @@ export default class TenantRepository implements ITenantRepository {
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
-            return false;
+            throw new ExpectedError(error.message);
         }
     }
     
@@ -144,7 +144,7 @@ export default class TenantRepository implements ITenantRepository {
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
-            return false;
+            throw new ExpectedError(error.message);
         }
     }
 }

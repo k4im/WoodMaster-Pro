@@ -20,6 +20,7 @@ export default class CreateSupplierUseCase implements ICommandCreatePerson<Supll
     ) { }
 
     async execute(data: SupllierDto, other: Tenant): Promise<boolean> {
+        const IsSupplier = true;
         const supplier = new PersonDomainEntity(
             new Name(data.Name.FirsName, data.Name.LastName),
             new Email(data.Email.email),
@@ -28,7 +29,7 @@ export default class CreateSupplierUseCase implements ICommandCreatePerson<Supll
             new Name(data.MothersName.FirsName, data.MothersName.LastName),
             new Cpf(data.Cpf.value),
             new RgDocument(data.Rg.value),
-            false, data.IsSupplier, false, false
+            false, IsSupplier, false, false
         );
         supplier.setTenant(other);
         return await this.repo.createPerson(supplier);

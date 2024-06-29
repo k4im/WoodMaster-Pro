@@ -11,9 +11,9 @@ export default class SupplierDto {
     readonly Name: Name;
     @ApiProperty()
     readonly Email: Email;
-    @ApiProperty()
+    @ApiProperty({type: Address, isArray: true})
     readonly Addresses: Address[]
-    @ApiProperty()
+    @ApiProperty({type: Phone, isArray: true})
     readonly Phones: Phone[]
     @ApiProperty()
     readonly FathersName: Name

@@ -146,7 +146,7 @@ export default class UserRepository implements IUserRespository {
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar criar o usuario [UserRepositoy]: ${error}`)
-            return false;
+            throw new ExpectedError(error.message);
         }
     }
 

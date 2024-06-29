@@ -2,27 +2,28 @@ import { ApiProperty } from "@nestjs/swagger";
 import RoleDomainEntity from "src/domain/entities/role.domain";
 import Password from "src/domain/valueObjects/PasswordVo/password.value.object";
 import { Email } from "src/domain/valueObjects/emailVo/email.value.object";
+import { Role } from "../enum/roles.enum";
 
 export default class UserDto { 
     readonly IsActive: boolean = true;
-    @ApiProperty({type: Email})
-    readonly EmailAddr: Email;
     @ApiProperty()
-    readonly Password: Password;
-    @ApiProperty({type: RoleDomainEntity})
-    readonly Role: RoleDomainEntity
+    readonly Email: string;
+    @ApiProperty()
+    readonly Password: string;
+    @ApiProperty()
+    readonly Role: Role
     @ApiProperty()
     readonly PersonId: string
     
     constructor(
-        email: Email, 
+        email: string, 
         password: string, 
-        role: RoleDomainEntity,
+        role: Role,
         personId: string) {
         
-            this.EmailAddr = email;
+            this.Email = email;
             this.Role = role;
-            this.Password = new Password(password)
+            this.Password = password
             this.PersonId = personId;
         }
 }

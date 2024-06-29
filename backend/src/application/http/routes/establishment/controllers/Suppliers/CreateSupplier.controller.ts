@@ -1,10 +1,10 @@
-import { Body, Controller, Inject, Param, Post, Res, UseGuards } from "@nestjs/common";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Inject, Param, Post, Req, Res, UseGuards } from "@nestjs/common";
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ICommandCreatePerson } from "src/application/usecases/Abstrations/ICoomands.interface";
 import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import ITenantRepository from "src/infrastructure/repository/abstraction/ITenantRepository.interface";
 import SupplierDto from 'src/application/dto/supplier.dto';
-import { Response } from "express";
+import { Request, Response } from "express";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import AuthAdmGuard from "src/application/http/guards/authAdm.guard";
 import { RolesGuard } from "src/application/http/guards/role.guard";
@@ -17,6 +17,7 @@ import { Actions } from "src/application/enum/permissoes.enum";
 
 @Controller('establishment')
 @ApiTags('supplier')
+@ApiBearerAuth()
 export default class CreateSupplierController {
 
     constructor(
@@ -38,7 +39,11 @@ export default class CreateSupplierController {
     @ApiResponse({ status: 200, description: 'Resposta de sucesso ao realizar a criação do fornecedor.' })
     @ApiResponse({ status: 500, description: 'Informa que houve um erro interno ao tentar realizar o processamento.' })
     @ApiResponse({ status: 401, description: 'Caso o token nao seja informado.' })
-    async handle(@Param() { tenantId }: any, @Body() supplier: SupplierDto, @Res() res: Response) {
+    @ApiParam({
+        name: 'tenantId',
+        description: 'Parametro de identificação do tenant'
+    })
+    async handle(@Req() { params: {tenantId} }: Request, @Body() supplier: SupplierDto, @Res() res: Response) {
         const tenant = await this.tenantRepo.findTenantByUuid(tenantId);
         const result = this.createSupplierUsecase.execute(supplier, tenant);
         result ?

@@ -9,6 +9,7 @@ services:
     environment:
       - MARIADB_USER=$USER_DB
       - MARIADB_PASSWORD=$PWD_DB
+      - MARIADB_DATABASE=WoodMaster
       - MARIADB_ROOT_PASSWORD=$PWD_DB
     ports:
       - 3306:3306

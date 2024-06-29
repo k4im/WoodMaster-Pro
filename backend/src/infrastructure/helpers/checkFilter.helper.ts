@@ -14,7 +14,7 @@ export async function CheckFilter(tenantId: string, filterStatement: filter, log
             return {IsCollaborator: true, Tenant: {Uuid: tenantId}}
         case filter.supplier:   
             logger.log("Where Statement IsSupplier=true... [PersonRepository]")
-            return {isSupplier: true, Tenant: {Uuid: tenantId}}
+            return {IsSupplier: true, Tenant: {Uuid: tenantId}}
         default:
             break;
     };
