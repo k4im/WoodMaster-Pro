@@ -58,9 +58,8 @@ jobs:
             export TAG=${{ env.BRANCH_NAME }} && \
             cd api_wood_master && \
             docker-compose down && \
-            docker-compose rm -f api_woodMaster && \
+            docker-compose rm -f api && \
             docker rmi ${{secrets.DOCKERHUB_USERNAME}}/api_wood_master && \
             docker-compose config && docker-compose up -d
     
-            
   
