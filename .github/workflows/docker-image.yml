@@ -29,12 +29,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          context: src/backend
-          file: backend/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/api_wood_master:${{ env.BRANCH_NAME }}
+        run: |
+          docker buildx build -f backend/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/api_woodmaster:${{ env.BRANCH_NAME }}
         
         
   
