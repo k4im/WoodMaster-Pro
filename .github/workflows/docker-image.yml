@@ -30,7 +30,7 @@ jobs:
       -
         name: Build and push
         run: |
-          docker buildx build -f backend/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/api_woodmaster:${{ env.BRANCH_NAME }}
+          docker build -f backend/Dockerfile -t ${{ secrets.DOCKERHUB_USERNAME }}/api_woodmaster:${{ env.BRANCH_NAME }}
         
         
   
