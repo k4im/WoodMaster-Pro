@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Deploy on staging
 
 on:
   workflow_dispatch: 
@@ -57,7 +57,6 @@ jobs:
             export TAG=${{ env.BRANCH_NAME }} && \
             cd api_wood_master && \
             docker-compose down api && \
-            docker-compose rm -f api && \
             docker-compose build && docker-compose up -d
     
   

@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpStatus, Inject, Post, Req, Res, UseGuards } from "@nestjs/common";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { PermissionRequired } from "src/application/decorators/permission.decorator";
 import { Roles } from "src/application/decorators/role.decorator";
@@ -14,6 +14,7 @@ import { ICommandInterface } from "src/application/usecases/Abstrations/ICoomand
 
 @Controller('admin')
 @ApiTags('admin')
+@ApiBearerAuth()
 export default class CreateAdministratorController {
     constructor(
         @Inject('LoggerGateway')
