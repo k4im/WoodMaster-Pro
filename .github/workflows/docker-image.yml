@@ -15,6 +15,7 @@ jobs:
         with:
           node-version: 20.14.0
       - run: npm i
+        working-directory: backend/
       - run: npm test
         working-directory: backend/
 
