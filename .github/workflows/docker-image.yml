@@ -16,6 +16,7 @@ jobs:
           node-version: 20.14.0
       - run: npm i
       - run: npm test
+        working-directory: backend
 
   docker-build:
     environment: staging
