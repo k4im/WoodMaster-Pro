@@ -30,8 +30,8 @@ jobs:
       -
         name: Build and push
         run: |
-          docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/api_woodmaster:${{ env.BRANCH_NAME }}
-        working-directory: ./WoodMaster-Pro/backend
+          docker build . --file backend/Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/api_woodmaster:${{ env.BRANCH_NAME }}
+        working-directory: .
   
   # # Efetua o deploy no servidor
   # deploy-on-server:
