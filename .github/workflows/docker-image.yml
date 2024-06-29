@@ -30,7 +30,7 @@ jobs:
       -
         name: Build and push
         run: |
-          cd backend && docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/api_woodmaster:${{ env.BRANCH_NAME }}
+          ls -la
   
   # # Efetua o deploy no servidor
   # deploy-on-server:
