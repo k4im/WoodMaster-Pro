@@ -9,4 +9,6 @@ export default interface ITenantRepository {
     findTenantByUuid(uuid: string): Promise<Tenant>;
     createTenant(tenant: any): Promise<boolean>;
     deactiveTenant(uuid: string): Promise<boolean>;
+    reactivateTenant(uuid: string): Promise<boolean>;
+    updateTenantName(uuid: string, name: string): Promise<boolean>;
 }

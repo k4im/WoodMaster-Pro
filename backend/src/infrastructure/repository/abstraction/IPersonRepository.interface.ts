@@ -13,4 +13,5 @@ export default interface IPersonRepository {
     updatePerson(data: PersonDomainEntity, uuid: string): Promise<boolean>;
     
     deactivePerson(uuid: string): Promise<boolean>;
+    reactivatePerson(uuid: string): Promise<boolean>;
 }

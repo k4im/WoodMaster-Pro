@@ -28,6 +28,8 @@ import CreateUserForCollaboratorController from "src/application/http/routes/est
 import CreateUserForCollaborator from "./commands/Collaborators/createUserForCollaborator.usecase";
 import FindSupplierByUuidUseCase from "./commands/Supplier/findSupplierByUuid.usecase";
 import FindSupplierByUuidController from "src/application/http/routes/establishment/controllers/Suppliers/FindSupplier.controller";
+import reactivateCollaboratorUseCase from "./commands/Collaborators/reactivateCollaborator.usecase";
+import ReactiveCollaboratorController from "src/application/http/routes/establishment/controllers/collaborators/ReactivateCollaborator.controller";
 
 @Module({
     imports: [CaslModule],
@@ -36,7 +38,8 @@ import FindSupplierByUuidController from "src/application/http/routes/establishm
             EstablishmentLoginController, ListCollaboratorsController,
             CreateCollaboratorController, FindCollaboratorController,
             UpdateCollaboratorController, DeactiveCollaboratorController, CreateSupplierController,
-            ListSupplierController, CreateUserForCollaboratorController, FindSupplierByUuidController
+            ListSupplierController, CreateUserForCollaboratorController, FindSupplierByUuidController,
+            ReactiveCollaboratorController
         ],
     providers:
         [
@@ -54,6 +57,7 @@ import FindSupplierByUuidController from "src/application/http/routes/establishm
             { provide: 'FindCollaborator', useClass: findCollaboratorUseCase },
             { provide: 'updateCollaborator', useClass: updateCollaboratorUseCase },
             { provide: 'deactivateCollab', useClass: deactivateCollaboratorUseCase },
+            { provide: 'reactivateCollab', useClass: reactivateCollaboratorUseCase },
             { provide: 'IRoleService', useClass: RoleService },
             { provide: 'ICreateSupplierUseCase', useClass: CreateSupplierUseCase },
             { provide: 'IListSupplierUseCase', useClass: FindSupplierUseCase },

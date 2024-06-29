@@ -1,5 +1,5 @@
 import { Body, Controller, HttpStatus, Inject, Post, Req, Res, UseGuards } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiParam, ApiTags } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import { PermissionRequired } from "src/application/decorators/permission.decorator";
 import { Roles } from "src/application/decorators/role.decorator";
@@ -14,6 +14,7 @@ import { ICommandInterface } from "src/application/usecases/Abstrations/ICoomand
 
 @Controller('establishment')
 @ApiTags('collaborators')
+@ApiBearerAuth()
 export default class CreateUserForCollaboratorController {
 
     constructor(
@@ -25,6 +26,10 @@ export default class CreateUserForCollaboratorController {
     @Roles(Role.admin, Role.root)
     @PermissionRequired({ Action: [Actions.create], Subject: CollaboratorDto })
     @UseGuards(AuthGuard, RolesGuard, PermissionGuard)
+    @ApiParam({
+        name: 'tenantId',
+        description: 'Parametro para identificação do tenant.'
+    })
     async handle(@Req() _req: Request, @Res() res: Response, @Body() user: UserDto) {
         const isUserCreated = await this.createUserForCollabUseCase
             .execute(user);

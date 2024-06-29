@@ -36,7 +36,7 @@ export default class AuthService implements AuthAbstraction {
     async login(email: string, pwd: string, useragent: string): Promise<string> {
             const user = await this._repository.findUserByEmail(email);
             const tenant  = await this._repositoryTenant.findTenantByUuid(user.Tenant);
-            if(tenant.IsActive) {
+            if(tenant.IsActive && user.IsActive) {
                 if(await this.checkPassword(pwd, user.Hash)) {
                     const payload: UserPayloadToken = {
                         Email: user.Email, Role: user.Role, 

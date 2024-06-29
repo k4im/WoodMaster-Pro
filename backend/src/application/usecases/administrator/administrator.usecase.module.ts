@@ -19,32 +19,39 @@ import DeactivateTenantController from "src/application/http/routes/Administrato
 import { CreateTenantController } from "src/application/http/routes/Administrator/controllers/Tenants/createTenant.controller";
 import CreateAdministratorController from "src/application/http/routes/Administrator/controllers/Administrator/createAdministrator.controller";
 import RoleService from "src/infrastructure/services/Role/role.service";
+import reactiveTenantUsecase from "./commands/reactivateTenant.usecase";
+import ReactivateTenantController from "src/application/http/routes/Administrator/controllers/Tenants/reactivateTenant.controller";
 
 @Module({
   imports: [CaslModule],
-  controllers: [
-    AuthAdminController,
-    FindTenantController, 
-    ListTenantsController, 
-    DeactivateTenantController, 
-    CreateTenantController,
-    CreateAdministratorController],
+  controllers:
+    [
+      AuthAdminController,
+      FindTenantController,
+      ListTenantsController,
+      DeactivateTenantController,
+      CreateTenantController,
+      CreateAdministratorController,
+      ReactivateTenantController
+    ],
+
   providers: [
-    {provide: "IFindTenant", useClass: findTenantByUuidUsecase},
-    {provide: 'LoggerGateway', useClass: CustomLogger},
-    {provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter},
-    {provide: 'ListTenants', useClass: listTenantsUseCase},
-    {provide: 'CreateTenant', useClass: createNewTenantUsecase},
-    {provide: 'DeactivateTenant', useClass: deactiveTenantUsecase},
-    {provide: "ITenantRepository", useClass: TenantRepository},
-    {provide: 'AuthAbstracion', useClass: AdmAuthService},
-    {provide: 'IJwtService', useClass: JwtCustomService},
-    {provide: 'IAdministratorRepository', useClass: AdministratorRepository},
-    {provide: 'AuthUseCase', useClass: AuthAdministratorUseCase},
-    {provide: 'AuthAbstraction', useClass: AdmAuthService},
-    {provide: 'ICreateAdmUseCase', useClass: CreateAdministratorUseCase},
-    {provide: 'IAdminRepository', useClass: AdministratorRepository},
-    {provide: 'IRoleService', useClass: RoleService}
-]
+    { provide: "IFindTenant", useClass: findTenantByUuidUsecase },
+    { provide: 'LoggerGateway', useClass: CustomLogger },
+    { provide: 'DatabaseGateway', useClass: DatabaseMysqlAdapter },
+    { provide: 'ListTenants', useClass: listTenantsUseCase },
+    { provide: 'CreateTenant', useClass: createNewTenantUsecase },
+    { provide: 'DeactivateTenant', useClass: deactiveTenantUsecase },
+    { provide: "ITenantRepository", useClass: TenantRepository },
+    { provide: 'AuthAbstracion', useClass: AdmAuthService },
+    { provide: 'IJwtService', useClass: JwtCustomService },
+    { provide: 'IAdministratorRepository', useClass: AdministratorRepository },
+    { provide: 'AuthUseCase', useClass: AuthAdministratorUseCase },
+    { provide: 'AuthAbstraction', useClass: AdmAuthService },
+    { provide: 'ICreateAdmUseCase', useClass: CreateAdministratorUseCase },
+    { provide: 'IAdminRepository', useClass: AdministratorRepository },
+    { provide: 'IRoleService', useClass: RoleService },
+    { provide: 'ReactivateTenant', useClass: reactiveTenantUsecase }
+  ]
 })
-export class AdministrativeUseCaseModule {}
+export class AdministrativeUseCaseModule { }

@@ -37,7 +37,6 @@ export default class UpdateCollaboratorController {
     @ApiResponse({ status: 200, description: 'Resposta de sucesso.' })
     @ApiResponse({ status: 500, description: 'Resposta erro interno.' })
     async handle(@Req() { params: { uuid } }: Request, @Body() updateCollaborator: CollaboratorDto, @Res() res: Response) {
-
         const updatedCollab = await this
             .updateCollaboratorUseCase
             .execute(updateCollaborator, uuid);

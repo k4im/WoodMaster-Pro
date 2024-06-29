@@ -1,7 +1,7 @@
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { filter } from "../../../application/enum/filter.enum";
 import IPersonRepository from "../abstraction/IPersonRepository.interface";
-import { Inject, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
 import PersonDomainEntity from "../../../domain/entities/person.domain";
 
@@ -12,14 +12,14 @@ import { Phone } from "src/infrastructure/database/models/Phone.entty";
 import { Addr, IPersonDto } from "src/application/dto/interfaces/Person.dto";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import ExpectedError from "src/domain/types/expected.error";
+import { User } from "src/infrastructure/database/models/User.entity";
 
 @Injectable()
 export default class PersonRepository implements IPersonRepository {
     constructor(
-       @Inject("DatabaseGateway") private readonly database: DatabaseGateway,  
-       @Inject("LoggerGateway") private readonly logger: LoggerGateway) 
-    {}
-    
+        @Inject("DatabaseGateway") private readonly database: DatabaseGateway,
+        @Inject("LoggerGateway") private readonly logger: LoggerGateway) { }
+
     /**
      * Deve buscar uma pessoa no banco de dados.
      * @param uuid uuid do cliente
@@ -32,15 +32,16 @@ export default class PersonRepository implements IPersonRepository {
             const db = await this.database.getDataSource();
             const repository = db.getRepository(Person);
             this.logger.log("Efetuado busca de pessoa por uuid... [PersonRepository]")
-            const result = await repository.findOne({relations: {Addresses: true, Phones: true, Tenant: true}, where: {Uuid: uuid.toString(), Tenant: {Uuid: tenantId.toString()}}});
+            const result = await repository.findOne({ relations: { Addresses: true, Phones: true, Tenant: true }, where: { Uuid: uuid.toString(), Tenant: { Uuid: tenantId.toString() } } });
             return {
-                Name: result.Name, 
-                isActive: result.isActive, 
-                Uuid: result.Uuid, 
-                Tenant: result.Tenant.Uuid, 
-                Email: result.Email, 
-                Addresses: result.Addresses.map(addr =>{ 
-                    const addrs: Addr = {City: addr.City, Country: addr.Country, 
+                Name: result.Name,
+                isActive: result.isActive,
+                Uuid: result.Uuid,
+                Tenant: result.Tenant.Uuid,
+                Email: result.Email,
+                Addresses: result.Addresses.map(addr => {
+                    const addrs: Addr = {
+                        City: addr.City, Country: addr.Country,
                         Neighborhood: addr.Neighborhood, Observations: addr.Observations,
                         State: addr.State, StreetName: addr.StreetName, ZipCode: addr.ZipCode
                     }
@@ -51,7 +52,7 @@ export default class PersonRepository implements IPersonRepository {
                 Cpf: '***********',
                 Rg: '***********',
                 Phones: result.Phones.map(phone => {
-                    return {isPrimary: phone.IsPrimary, number: phone.Phone}
+                    return { isPrimary: phone.IsPrimary, number: phone.Phone }
                 })
             };
         } catch (error) {
@@ -77,12 +78,12 @@ export default class PersonRepository implements IPersonRepository {
             this.logger.log("Criando repository para pessoa... [PersonRepository]")
             const db = await this.database.getDataSource();
             const respository = db.getRepository(Person);
-            
+
             let whereStatement: any = await CheckFilter(tenantId, filterStatement, this.logger);
-            const pages = (page -1) * limit;
-            
+            const pages = (page - 1) * limit;
+
             const result = await respository.findAndCount({
-                select: {Id: true, Uuid: true, Name: true, isActive: true, Tenant: {Uuid: true}},
+                select: { Id: true, Uuid: true, Name: true, isActive: true, Tenant: { Uuid: true } },
                 relations: ['Tenant'],
                 where: whereStatement,
                 skip: pages,
@@ -91,7 +92,7 @@ export default class PersonRepository implements IPersonRepository {
             const totalPages = Math.ceil(result[1] / limit);
             this.logger.log("Efetuado busca de resultados paginados... [PersonRepository]")
             await this.database.closeConnection(db);
-            
+
             return {
                 pagina_atual: page,
                 total_paginas: totalPages,
@@ -192,12 +193,13 @@ export default class PersonRepository implements IPersonRepository {
         try {
             this.logger.log("Gerando transcation.... [PersonRepository]");
             const db = await this.database.getDataSource();
-            await db.transaction(async (entityManager) =>  {
+            await db.transaction(async (entityManager) => {
                 const repo = entityManager.getRepository(Person);
-                const person = await repo.findOneBy({Uuid: uuid.toString()});
-                if(!person) {
+                const person = await repo.findOneBy({ Uuid: uuid.toString() });
+                if (!person) {
                     this.logger.error(`Não foi possivel localizar a pessoa com este uuid... [PersonRepository]`);
-                    return false;
+                    throw new HttpException('Person not founded.',
+                        HttpStatus.NOT_FOUND)
                 };
                 person.Name = data.Name.getFullName();
                 person.Email = data.Email.email;
@@ -210,15 +212,16 @@ export default class PersonRepository implements IPersonRepository {
                 person.IsOperator = data.IsOperator;
                 await repo.save(person);
                 data.Addresses.map(async ad => {
-                    await entityManager.getRepository(Address).update({Person: person}, 
-                        {City: ad.City, Country: ad.Country, Neighborhood: ad.Neighborhood,
+                    await entityManager.getRepository(Address).update({ Person: person },
+                        {
+                            City: ad.City, Country: ad.Country, Neighborhood: ad.Neighborhood,
                             Observations: ad.Observations, ZipCode: ad.ZipCode, State: ad.State,
                             StreetName: ad.StreetName, Person: person
                         })
                 })
                 data.Phones.map(async p => {
-                    await entityManager.getRepository(Phone).update({Person: person}, 
-                    {Phone: p.Phone, IsPrimary: p.IsPrimary, Person: person})
+                    await entityManager.getRepository(Phone).update({ Person: person },
+                        { Phone: p.Phone, IsPrimary: p.IsPrimary, Person: person })
                 })
             })
             this.logger.log("Efetuado update de pessoa.... [PersonRepository]");
@@ -226,7 +229,9 @@ export default class PersonRepository implements IPersonRepository {
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar atualizar a pessoa.... [PersonRepository]: ${error}`)
-            return false;
+            if(error instanceof HttpException)
+                throw error
+            throw new ExpectedError(error.message)
         }
     }
     /**
@@ -238,17 +243,64 @@ export default class PersonRepository implements IPersonRepository {
         try {
             this.logger.log("Gerando transcation.... [PersonRepository]");
             const db = await this.database.getDataSource();
-            await db.transaction(async (entityManager) =>  {
+            await db.transaction(async (entityManager) => {
+                const person = await entityManager.getRepository(Person)
+                    .findOne({
+                        relations: { User: true },
+                        where: { Uuid: uuid }
+                    });
                 const repo = entityManager.getRepository(Person);
-                await repo.update({Uuid: uuid.toString()}, {isActive: false});
+                try {
+                    await entityManager
+                        .getRepository(User)
+                        .update({ EmailAddr: person.User.EmailAddr },
+                            { IsActive: false })
+                } catch (error) {
+                    this.logger.log(`usuario não encontrado para esta pessoa: ${error.message} `)
+                }
+                await repo.update({ Uuid: uuid.toString() }, { isActive: false });
             });
             this.logger.log("Efetuado desativação de pessoa.... [PersonRepository]");
             await this.database.closeConnection(db);
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar desativar a pessoa.... [PersonRepository]: ${error}`)
-            return false;
+            throw new ExpectedError(error.message)
         }
-    } 
-    
+    }
+    /**
+  * O metodo sera utilizado para realizar a reativação de uma pessoa.
+  * @param uuid Recebe o uuid da pessoa que sera desativada.
+  * @returns Promise<boolean>
+  */
+    async reactivatePerson(uuid: string): Promise<boolean> {
+        try {
+            this.logger.log("Gerando transcation.... [PersonRepository]");
+            const db = await this.database.getDataSource();
+            await db.transaction(async (entityManager) => {
+                const person = await entityManager.getRepository(Person)
+                    .findOne({
+                        relations: { User: true },
+                        where: { Uuid: uuid }
+                    });
+                const repo = entityManager.getRepository(Person);
+                try {
+                    await entityManager
+                        .getRepository(User)
+                        .update({ EmailAddr: person.User.EmailAddr },
+                            { IsActive: true })
+                } catch (error) {
+                    this.logger.log(`usuario não encontrado para esta pessoa: ${error.message} `)
+                }
+                await repo.update({ Uuid: uuid.toString() }, { isActive: true });
+            });
+            this.logger.log("Efetuado desativação de pessoa.... [PersonRepository]");
+            await this.database.closeConnection(db);
+            return true;
+        } catch (error) {
+            this.logger.error(`Houve um erro ao tentar desativar a pessoa.... [PersonRepository]: ${error}`)
+            throw new ExpectedError(error.message)
+
+        }
+    }
 }

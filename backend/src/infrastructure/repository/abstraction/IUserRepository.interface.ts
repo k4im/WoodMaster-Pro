@@ -9,4 +9,5 @@ export default interface IUserRespository {
     createNewUser(data: UserDomanEntity): Promise<boolean>;
     updateUser(data: UserDomanEntity, uuid: string): Promise<boolean>;
     deactiveUser(uuid: string): Promise<boolean>;
+    reactivateUser(uuid: string): Promise<boolean>;
 }

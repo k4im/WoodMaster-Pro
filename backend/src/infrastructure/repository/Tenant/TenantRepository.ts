@@ -18,6 +18,7 @@ export default class TenantRepository implements ITenantRepository {
         @Inject("LoggerGateway") private readonly logger: LoggerGateway,
         @Inject("IRoleService") private readonly roleService: IRoleService
     ) { }
+  
 
     /**
      * O metodo será utilizado para efetuar a paginação dos tenants que encontram-se
@@ -145,6 +146,41 @@ export default class TenantRepository implements ITenantRepository {
         } catch (error) {
             this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
             throw new ExpectedError(error.message);
+        }
+    }
+    /**
+     * Efetua a reativação de um tenant.
+     * @param uuid recebe o uuid para desativar o tenant.
+     * @returns boolean
+     */
+    async reactivateTenant(uuid: string): Promise<boolean> {
+        try {
+            const db = await this.database.getDataSource();
+            const repo = db.getRepository(Tenant);
+            await repo.update({ Uuid: uuid }, { IsActive: true })
+            await this.database.closeConnection(db);
+            return true;
+        } catch (error) {
+            this.logger.error(`Houve um erro ao efetuar a busca do Tenant:  [TenantRepository] ${error}`);
+            throw new ExpectedError(error.message);
+        }
+    }
+    
+    /**
+     * Atualiza o nome de um tenant.
+     * @param uuid uuid do tenant
+     * @param name novo nome
+     * @returns boolean
+     */
+    async updateTenantName(uuid: string, name: string): Promise<boolean> {
+        try {
+            const db = await this.database.getDataSource();
+            const repo = db.getRepository(Tenant);
+            await repo.update({Uuid: uuid}, {Name: name})
+            return true;
+        } catch (error) {
+            this.logger.error(`Houve um erro ao efetuar a atualização do Tenant:  [TenantRepository] ${error}`)
+            throw new ExpectedError(error.message)
         }
     }
 }

@@ -178,7 +178,7 @@ export default class UserRepository implements IUserRespository {
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar atualizar o usuario [UserRepositoy]: ${error}`)
-            return false;
+            throw new ExpectedError(error.message)
         }
     }
 
@@ -195,8 +195,25 @@ export default class UserRepository implements IUserRespository {
             return true;
         } catch (error) {
             this.logger.error(`Houve um erro ao tentar desativar o usuario [UserRepositoy]: ${error}`)
-            return false;
+            throw new ExpectedError(error.message)
         }
     }
+
+        /**
+     * Estará desativando um usuario a partir do uuid.
+     * @param uuid uuid do usuario para desativação
+     * @returns boolean
+     */
+        async reactivateUser(uuid: string): Promise<boolean> {
+            try {
+                const db = await this.database.getDataSource();
+                await db.getRepository(User).update({ Uuid: uuid.toString() }, { IsActive: true });
+                await this.database.closeConnection(db);
+                return true;
+            } catch (error) {
+                this.logger.error(`Houve um erro ao tentar desativar o usuario [UserRepositoy]: ${error}`)
+                throw new ExpectedError(error.message)
+            }
+        }
 
 }
