@@ -101,9 +101,9 @@ describe("Auth", () => {
         await repo.save(person);
         await db.destroy();
         const user = new UserDomanEntity(
-            new Email("auth@exemplo.com.br"),
+            "auth@exemplo.com.br",
             'Gn$5P4gs23@$%',
-            new RoleDomainEntity(Role.suport),
+            Role.suport,
             person.Uuid,
         );
         await repository.createNewUser(user);

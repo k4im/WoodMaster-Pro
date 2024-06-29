@@ -90,9 +90,9 @@ describe("UserRepository", () =>  {
     });
     test("Deve criar usuario", async () => {
         const user = new UserDomanEntity(
-            new Email("exemplo@exemplo.com.br"),
+            "exemplo@exemplo.com.br",
             'Gn$5P4gs23@$%',
-            new RoleDomainEntity(Role.root),
+            Role.root,
             person.Uuid,
         );
         const result = await repository.createNewUser(user);

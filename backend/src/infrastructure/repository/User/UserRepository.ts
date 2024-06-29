@@ -20,7 +20,12 @@ export default class UserRepository implements IUserRespository {
         @Inject("LoggerGateway") private readonly logger: LoggerGateway) { }
 
 
-
+    /**
+     * Estará realizando a busca de um usuario baseando-se
+     * no endereço de email fornecido.
+     * @param email endereço de email a ser pesquisado.
+     * @returns IUserDto
+     */
     async findUserByEmail(email: string): Promise<IUserDto> {
         try {
             const db = await this.database.getDataSource();
@@ -33,7 +38,7 @@ export default class UserRepository implements IUserRespository {
                 Uuid: result.Uuid,
                 Email: result.EmailAddr, IsActive: result.IsActive,
                 Role: result.Role.Name,
-                Hash: result.HashPassword, 
+                Hash: result.HashPassword,
                 Tenant: result.Tenant.Uuid,
             }
             return valueReturn;
@@ -84,11 +89,12 @@ export default class UserRepository implements IUserRespository {
             const pages = (page - 1) * limit;
 
             const result = await repo.findAndCount({
-                select: { 
-                    Id: true, Uuid: true, 
-                    EmailAddr: true, IsActive: true, 
-                    Role: { Name: true}, 
-                    Tenant: {} },
+                select: {
+                    Id: true, Uuid: true,
+                    EmailAddr: true, IsActive: true,
+                    Role: { Name: true },
+                    Tenant: {}
+                },
                 relations: ['Tenant', 'Role'],
                 where: { Tenant: { Uuid: tenantId } },
                 skip: pages,
@@ -128,7 +134,11 @@ export default class UserRepository implements IUserRespository {
                 const userRepo = manager.getRepository(User);
                 const role = await this.roleService.getOrCreateRole(manager, data.Role);
 
-                const person = await manager.getRepository(Person).findOne({ relations: ['Tenant'], where: { Uuid: data.PersonId } });
+                const person = await manager.getRepository(Person)
+                    .findOne({
+                        relations: ['Tenant'],
+                        where: { Uuid: data.PersonId }
+                    });
 
                 const user = userRepo.create({
                     EmailAddr: data.EmailAddr.email,

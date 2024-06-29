@@ -50,7 +50,7 @@ describe('PersonRepository', () => {
             new Name("Joao", "Victor"), 
             new Email("contato@exampleer.com"),
             [new Address("José Berlim", "Lages", "Uni", "88525860", "Brasil", "SC", true)], 
-            [new Phone()],
+            [new Phone('123123123123', true)],
             new Name("Joao", "Vsictor"),
             new Name("Joao", "Victor"), 
             new Cpf("77282174024"),
