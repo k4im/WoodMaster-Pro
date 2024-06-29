@@ -11,9 +11,14 @@ async function bootstrap() {
   envChecker.checkEnv();
 
   let logger = new CustomLogger();
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {cors: true});
   const envLogger = new EnvLogger();
-
+  
+  app.enableCors({
+    allowedHeaders: '*',
+    methods: ['GET', 'POST', 'PUT'],
+    origin: '*',
+  })
     
   const config = new DocumentBuilder()
   .setTitle("WoodMaster-Pro API")
