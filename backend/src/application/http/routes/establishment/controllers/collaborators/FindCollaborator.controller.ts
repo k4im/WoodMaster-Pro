@@ -42,7 +42,7 @@ export default class FindCollaboratorController {
         description: `uuid de identificação
         do tenant.`
     })
-    @ApiResponse({ status: 200, description: 'Resposta de sucesso.', type: PersonDomainEntity })
+    @ApiResponse({ status: 200, description: 'Resposta de sucesso.' })
     @ApiResponse({ status: 404, description: 'Resposta caso o colaborador nao foi encontrado.' })
     @ApiResponse({ status: 500, description: 'Resposta caso ocorra um erro interno.' })
     async handle(@Req() { params: { uuid, tenantId } }: Request, @Res() res: Response) {

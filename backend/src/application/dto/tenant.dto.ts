@@ -4,11 +4,11 @@ import { newTenantDto } from "./interfaces/ITenant.dto";
 
 export class TenantDto extends DomainEntity implements newTenantDto {
     @IsNotEmpty()
-    Name: string;
+    name: string;
     @IsNotEmpty()
-    Email: string;
+    email: string;
     @IsNotEmpty()
-    Password: string;
+    password: string;
     constructor() {
         super()
         this.name = 'TenantDto'

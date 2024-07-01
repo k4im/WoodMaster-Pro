@@ -5,7 +5,7 @@ export interface ITenantDto {
 }
 
 export interface newTenantDto {
-    Name: string
-    Email: string,
-    Password: string
+    name: string
+    email: string,
+    password: string
 }

@@ -1,4 +1,3 @@
-import { ApiProperty } from "@nestjs/swagger";
 import { Address } from "../valueObjects/AddressVo/address.value.object";
 import { Email } from "../valueObjects/emailVo/email.value.object";
 import { Phone } from "../valueObjects/phone.value.object";
@@ -7,21 +6,13 @@ import { Cpf } from "../valueObjects/cpfVo/cpf.value.object";
 import { RgDocument } from "../valueObjects/rgVo/rg.value.object";
 
 export default class PersonDomainEntity  { 
-    @ApiProperty({type: Name})
     readonly Name: Name;
-    @ApiProperty()
     readonly Email: Email;
-    @ApiProperty({isArray: true, type: Address})
     readonly Addresses: Address[]
-    @ApiProperty({isArray: true, type: Phone})
     readonly Phones: Phone[]
-    @ApiProperty({type: Name})
     readonly FathersName: Name
-    @ApiProperty({type: Name})
     readonly MothersName: Name 
-    @ApiProperty({type: Cpf})
     readonly Cpf: Cpf
-    @ApiProperty({type: RgDocument})
     readonly Rg: RgDocument
     
     readonly IsClient: boolean;

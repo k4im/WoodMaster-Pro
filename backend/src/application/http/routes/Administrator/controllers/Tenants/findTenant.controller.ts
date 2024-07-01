@@ -44,7 +44,7 @@ export default class FindTenantController {
         a operação de busca do mesmo.`,
         example: "4ece8486-4011-4beb-ad1e-c3ed011d00cf"
     })
-    @ApiResponse({ status: 200, description: 'Resposta de sucesso', type: TenantDomainEntity })
+    @ApiResponse({ status: 200, description: 'Resposta de sucesso' })
     @ApiResponse({ status: 404, description: 'uuid not found ou  Tenant Not Found' })
     async handle(@Req() { query: { uuid } }: Request, @Res() res: Response) {
         if (!uuid)

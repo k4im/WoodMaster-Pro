@@ -1,4 +1,3 @@
-import { ApiProperty } from "@nestjs/swagger";
 import { Email } from "../valueObjects/emailVo/email.value.object";
 import RoleDomainEntity from "./role.domain";
 import Password from "../valueObjects/PasswordVo/password.value.object";

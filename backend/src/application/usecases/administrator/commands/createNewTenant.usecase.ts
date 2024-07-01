@@ -8,7 +8,7 @@ export default class createNewTenantUsecase implements ICommandInterface<newTena
     constructor(@Inject("ITenantRepository") private readonly repository: ITenantRepository) { }
 
     async execute(data: newTenantDto): Promise<boolean> {
-        const tenant = new TenantDomainEntity(data.Name, data.Email, data.Password)
+        const tenant = new TenantDomainEntity(data.name, data.email, data.password)
         return await this.repository.createTenant(tenant);
     }
 
