@@ -1,3 +1,9 @@
+/**
+ * Entidade que resepresenta um determinado usuario
+ * dentro do sistema.
+ * 
+ * @author João Victor.
+ */
 import { Email } from "../valueObjects/emailVo/email.value.object";
 import RoleDomainEntity from "./role.domain";
 import Password from "../valueObjects/PasswordVo/password.value.object";

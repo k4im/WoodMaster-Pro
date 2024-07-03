@@ -10,7 +10,6 @@ import { IAuthCommand } from "src/application/usecases/Abstrations/ICoomands.int
 @ApiTags('admin')
 export default class AuthAdminController {
 
-    /** TODO */
     constructor(
         @Inject("AuthUseCase")
         private readonly authAdmService: IAuthCommand,

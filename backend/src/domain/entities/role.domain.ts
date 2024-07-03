@@ -1,3 +1,11 @@
+/**
+ * Entidade que representa um papel dentro do sistema.
+ * 
+ * Através desta entidade será possivel estar realizando
+ * a apresentação de determinados papeis dentro do sistema.
+ * 
+ * @author João Victor.
+ */
 import { Role } from "../../application/enum/roles.enum";
 
 export default class RoleDomainEntity { 

@@ -1,3 +1,12 @@
+/**
+ * Entidade de valor, que representa os dados
+ * de um determinado endereço vinculado a uma pessoa.
+ * 
+ * Através desta entidade será possivel estar realizando 
+ * o mapeamento e apresentação de endereços dentro do sistema.
+ * 
+ * @author João Victor.
+ */
 import { ApiProperty } from "@nestjs/swagger"
 
 export class Address { 

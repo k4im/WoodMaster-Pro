@@ -1,3 +1,13 @@
+/**
+ * Entidade que representa uma pessoa dentro do sistema
+ * através desta entidade é possivel estar criando pessoas
+ * que estejam com o vinculo de cliente, colaborador ou fornecedor.
+ * 
+ * Portanto será possivel estar reutilizando a mesma entidade de dominio
+ * para mapeamento de diversos tipos de pessoas dentro do sistema.
+ * 
+ * @author João Victor.
+ */
 import { Address } from "../valueObjects/AddressVo/address.value.object";
 import { Email } from "../valueObjects/emailVo/email.value.object";
 import { Phone } from "../valueObjects/phone.value.object";
