@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Request, Response } from "express";
 import { LoginDTO } from "src/application/dto/interfaces/login.dto";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import ExpectedHttpError from "src/domain/types/expectedhttp.error";
+import ExpectedHttpError from "src/domain/exceptions/expectedhttp.error";
 import { IAuthCommand } from "src/application/usecases/Abstrations/ICoomands.interface";
 
 @Controller('admin')

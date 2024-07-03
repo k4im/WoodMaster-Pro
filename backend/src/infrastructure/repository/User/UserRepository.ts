@@ -8,7 +8,7 @@ import { Person } from "src/infrastructure/database/models/Person.entity";
 import IRoleService from "src/infrastructure/services/Role/IRole.interface";
 import { IUserDto } from "src/application/dto/interfaces/IUser.dto";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
-import ExpectedError from "src/domain/types/expected.error";
+import ExpectedError from "src/domain/exceptions/expected.error";
 
 
 @Injectable()

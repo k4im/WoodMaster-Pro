@@ -1,7 +1,7 @@
 import { HttpStatus, Inject } from "@nestjs/common";
 import { IAuthCommand } from "../../Abstrations/ICoomands.interface";
 import AuthAbstraction from "src/infrastructure/services/auth/abstrations/AuthAbstrancion";
-import ExpectedHttpError from "src/domain/types/expectedhttp.error";
+import ExpectedHttpError from "src/domain/exceptions/expectedhttp.error";
 
 export default class AuthAdministratorUseCase implements IAuthCommand {
     constructor(

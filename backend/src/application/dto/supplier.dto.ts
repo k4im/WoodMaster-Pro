@@ -1,3 +1,14 @@
+/**
+ * Classe utilizada para apresentação dentro
+ * do swagger, assim como para recebimento do
+ * payload de uma requisição http.
+ * 
+ * Além disto também a mesma classe encontra-se
+ * sendo utilizada para realizar a passagem de subjects
+ * para o CASLJS.
+ * 
+ * @author João Victor.
+ */
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 import { Address } from "src/domain/valueObjects/AddressVo/address.value.object";

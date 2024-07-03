@@ -1,3 +1,14 @@
+/**
+ * Classe utilizada para realizar a operaçao de 
+ * passagem de dados em chamdas HTTP além de apresentação
+ * dos schemas dentro do swagger.
+ * 
+ * A mesma classe encontra-se também sendo utilizada
+ * para realizar a passagem de subjects do CASLJS.
+ * 
+ * @author João Victor.
+ * 
+ */
 import { ApiProperty } from "@nestjs/swagger";
 import { Role } from "../enum/roles.enum";
 import { IsNotEmpty } from "class-validator";

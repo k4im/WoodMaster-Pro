@@ -1,3 +1,12 @@
+/**
+ * Classe de DTO utilizada para apresentação
+ * dentro do swagger.
+ * 
+ * Portanto estará sendo utilizada para receber o payload
+ * da requisição partindo do frontend.
+ * 
+ * @author João Victor.
+ */
 import { ApiProperty } from "@nestjs/swagger"
 import { IsNotEmpty } from "class-validator"
 

@@ -2,7 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Injec
 import { Response } from "express";
 import { TypeORMError } from "typeorm";
 import { LoggerGateway } from "../ports/out-ports/logger.gateway";
-import ExpectedError from "src/domain/types/expected.error";
+import ExpectedError from "src/domain/exceptions/expected.error";
 
 @Catch()
 export default class GlobalFilter implements ExceptionFilter {

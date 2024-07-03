@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import ExpectedError from "src/domain/types/expected.error";
+import ExpectedError from "src/domain/exceptions/expected.error";
 
 export class Cpf { 
     @ApiProperty()  

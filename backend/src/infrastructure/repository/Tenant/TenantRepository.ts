@@ -6,7 +6,7 @@ import { Tenant } from "src/infrastructure/database/models/Tenant.entity";
 import { Stock } from "src/infrastructure/database/models/Stock.entity";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { ITenantDto } from "src/application/dto/interfaces/ITenant.dto";
-import ExpectedError from "src/domain/types/expected.error";
+import ExpectedError from "src/domain/exceptions/expected.error";
 import { User } from "src/infrastructure/database/models/User.entity";
 import IRoleService from "src/infrastructure/services/Role/IRole.interface";
 import RoleDomainEntity from "src/domain/entities/role.domain";

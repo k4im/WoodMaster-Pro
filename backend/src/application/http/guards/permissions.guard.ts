@@ -4,7 +4,7 @@ import { Reflector } from "@nestjs/core";
 import { Request } from "express";
 import AbilityFactory from "src/application/casl/providers/AbillityFactory.provider";
 import { PERMISSION_KEY, subject } from "src/application/decorators/permission.decorator";
-import ExpectedHttpError from "src/domain/types/expectedhttp.error";
+import ExpectedHttpError from "src/domain/exceptions/expectedhttp.error";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";
 
 @Injectable()

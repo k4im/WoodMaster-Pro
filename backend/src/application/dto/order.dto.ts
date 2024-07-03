@@ -1,3 +1,10 @@
+/**
+ * Dto utilizado atulamente apenas para estar
+ * sendo repassado ao CASLJS para identificação
+ * dos subjects.
+ * 
+ * @author João Victor.
+ */
 export class OrderDto { 
     Uuid: string
     OrderType: string

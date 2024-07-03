@@ -3,10 +3,10 @@ import { IAdministratorRepository } from "../abstraction/IAdministratorRepositor
 import * as AdmModel  from "src/domain/entities/admin.domain.entity";
 import { DatabaseGateway } from "src/application/ports/out-ports/database.gateway";
 import { LoggerGateway } from "src/application/ports/out-ports/logger.gateway";
-import ExpectedHttpError from "src/domain/types/expectedhttp.error";
+import ExpectedHttpError from "src/domain/exceptions/expectedhttp.error";
 import { IResponse } from "src/application/dto/interfaces/IResponse.interface";
 import { IAdmin } from "src/application/dto/interfaces/IAdm.dto";
-import ExpectedError from "src/domain/types/expected.error";
+import ExpectedError from "src/domain/exceptions/expected.error";
 import { Administrator } from "src/infrastructure/database/models/Administrator.entity";
 
 @Injectable()

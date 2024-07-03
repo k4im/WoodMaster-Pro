@@ -1,3 +1,12 @@
+/**
+ * Classe de DTO utilizado pelo swagger.
+ * 
+ * Através deste DTO é possivel estar realizando
+ * o envio de payload do front ou através de uma
+ * chamada http.
+ * 
+ * @author João Victor.
+ */
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 import { Address } from "src/domain/valueObjects/AddressVo/address.value.object";

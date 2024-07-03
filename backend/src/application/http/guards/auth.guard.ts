@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { Request } from "express";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";
-import ExpectedHttpError from "src/domain/types/expectedhttp.error";
+import ExpectedHttpError from "src/domain/exceptions/expectedhttp.error";
 @Injectable()
 export default class AuthGuard implements CanActivate {
     
