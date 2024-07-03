@@ -1,3 +1,13 @@
+/**
+ * Através desta guard será possivel validar
+ * se o cliente autenticado possui o papel
+ * dentro do sistema adequado para acesso a determinada rota.
+ * 
+ * Caso o mesmo nao possua, será negado o acesso ao controlador
+ * e emitido uma resposta adequada http.
+ * 
+ * @author João Victor.
+ */
 import { CanActivate, ExecutionContext, Inject, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { Request } from "express";

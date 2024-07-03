@@ -1,3 +1,10 @@
+/**
+ * Através deste provider será possivel
+ * estar realizando a configuração de permissões
+ * para todos os papeis disponiveis dentro do sistema.
+ * 
+ * @author João Victor.
+ */
 import { InferSubjects } from "nest-casl";
 import UserDomanEntity from "src/domain/entities/user.domain";
 import { 

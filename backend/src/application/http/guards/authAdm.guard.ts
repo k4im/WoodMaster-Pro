@@ -1,3 +1,14 @@
+/**
+ * Guard de autenticação.
+ * 
+ * Através deste guard será possivel estar validando 
+ * se determinado cliente encontra-se autenticado.
+ * 
+ * Caso o mesmo nao encontre-se autenticado, será
+ * emitido uma resposta http adequada.
+ * 
+ * @author João Victor.
+ */
 import { CanActivate, ExecutionContext, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { Request } from "express";
 import IJwtService from "src/infrastructure/services/jwt/IJwtService";

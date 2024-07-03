@@ -1,3 +1,18 @@
+/**
+ * Através desta guard será possivel especificar
+ * quais permissões determinados papeis deverão possuir
+ * para realizar acesso ao controlador.
+ * 
+ * Caso o nao exista nenhuma permissão informada
+ * será permitido acesso corretamente para o controller.
+ * 
+ * Dentro da classe existe um try/catch para efetuar
+ * a verificação de todas as permissões dentro do decorador
+ * para que seja iterado com o CASLJS e caso o papel não possua a permissão
+ * será negado acesso ao controlado para ele e enviado uma resposta http adequada.
+ * 
+ * @author João Victor.
+ */
 import { ForbiddenError } from "@casl/ability";
 import { CanActivate, ExecutionContext, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";

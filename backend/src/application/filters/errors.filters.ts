@@ -1,3 +1,15 @@
+/**
+ * Filtro geral de erros.
+ * 
+ * Este trata-se de um filtro 
+ * geral para todos os erros dentro do sistema
+ * que não estejam dentro do escopo try/catch.
+ * 
+ * portanto todos os erros que forem gerados dentro do sistema
+ * serão convertidos em respostas http adequadas.
+ * 
+ * @author João Victor.
+ */
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Inject } from "@nestjs/common";
 import { Response } from "express";
 import { TypeORMError } from "typeorm";
