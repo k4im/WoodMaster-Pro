@@ -77,7 +77,7 @@ jobs:
         with:
           host: ${{ secrets.HOSTNAME }}
           username: ${{ secrets.USERNAME_SSH }}
-          password: ${{ secrets.PWD_SSH }}
+          key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           script: |
             export TAG=${{ env.BRANCH_NAME }} && \
