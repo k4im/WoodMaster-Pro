@@ -33,6 +33,7 @@ jobs:
   docker-build:
     environment: staging
     if: inputs.docker-build
+    needs: unit-tests
     runs-on: ubuntu-latest
     steps:
       -
@@ -64,6 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: staging
     if: inputs.deploy
+    needs: docker-build
     steps:
       -
         name: Extract branch name
