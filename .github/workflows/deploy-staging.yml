@@ -32,7 +32,7 @@ jobs:
 
   docker-build:
     environment: staging
-    if: inputs.docker-build
+    if: inputs.docker-build == true && (inputs.run-tests == false || success())
     needs: unit-tests
     runs-on: ubuntu-latest
     steps:
@@ -64,7 +64,7 @@ jobs:
   deploy-on-server:
     runs-on: ubuntu-latest
     environment: staging
-    if: inputs.deploy
+    if: inputs.deploy == true && (inputs.docker-build == false || success())
     needs: docker-build
     steps:
       -
