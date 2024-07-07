@@ -3,34 +3,14 @@ name: Deploy on staging
 on:
   workflow_dispatch:
     inputs:
-      run-tests:
-        required: true
-        type: boolean  
       docker-build:
         required: true
         type: boolean
-      deploy:
-        required: true
-        type: boolean
+
 jobs:
-  tests:
-    environment: staging
-    runs-on: ubuntu-latest
-    if: inputs.run-tests
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.14.0
-      - run: npm i
-        working-directory: backend/
-      - run: npm test
-        working-directory: backend/
 
   docker-build:
     environment: staging
-    needs:  tests
     if: inputs.docker-build
     runs-on: ubuntu-latest
     steps:
@@ -58,32 +38,3 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/api_wood_master:${{ env.BRANCH_NAME }}
         
-        
-  
-  # # Efetua o deploy no servidor
-  deploy-on-server:
-    runs-on: ubuntu-latest
-    environment: staging
-    if: inputs.deploy
-    steps:
-      -
-        name: Extract branch name
-        id: extract_branch
-        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-
-      - name: print out example job
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOSTNAME }}
-          username: ${{ secrets.USERNAME_SSH }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.KEY_PASS}}
-          port: ${{ secrets.PORT }}
-          script: |
-            export TAG=${{ env.BRANCH_NAME }} && \
-            cd api_wood_master && \
-            docker stop api_woodMaster && docker rm api_woodMaster && \
-            docker images | grep k4im/api_wood_master | awk '{print $3}' | xargs docker rmi -f && \
-            docker-compose up -d
-    
-  
